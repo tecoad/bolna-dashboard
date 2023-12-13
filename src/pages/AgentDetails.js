@@ -1,19 +1,62 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Box, Typography, Button, Dialog } from '@mui/material';
+import { Box, Typography, Button, Dialog, CircularProgress } from '@mui/material';
 import CustomTabs from '../components/CustomTabs';
 import Analytics from './assistant-details/Analytics';
 import RunsTable from './assistant-details/RunsTable';
 import RequestLogs from './assistant-details/RequestLogs';
 import ChatComponent from '../components/ChatComponent'; // Import your ChatComponent
+import AgentFormStepper from '../components/AgentFormStepper';
+import { convertToCreateAgentForm, convertToText } from '../utils/utils';
+import axios from 'axios';
 
 function AgentDetails() {
     const location = useLocation();
     const navigate = useNavigate();
     const agent = location.state?.agent;
+    var [formData, setFormData] = useState(convertToCreateAgentForm(agent))
+    console.log(`Agent details ${JSON.stringify(agent)}`)
     const userId = location.state?.userId;
     const [openPlayground, setOpenPlayground] = useState(false);
     const agentId = agent?.range.split("#")[1]
+    const [loading, setLoading] = useState(false);
+    const [prompt, setPrompt] = useState(null);
+
+
+    // ...
+
+    useEffect(() => {
+        const fetchPromptData = async () => {
+            setLoading(true);
+            try {
+                const response = await axios.get(`${process.env.REACT_APP_FAST_API_BACKEND_URL}/assistant/prompts?user_id=${userId}&assistant_id=${agentId}`);
+                console.log(`GOT Deserialized prompt ${JSON.stringify(response.data)}`)
+
+                // Create a new object for formData
+                var newFormData = { ...formData };
+
+                if (newFormData.basicConfig.assistantType == "FreeFlowing") {
+                    setFormData({ ...formData, rulesConfig: { ...formData.rulesConfig, prompts: { ...response.data.data['task_1'] } } });
+                    newFormData = { ...formData, rulesConfig: { ...formData.rulesConfig, prompts: { ...response.data.data['task_1'] } } }
+                    console.log(`Everything is free flowing ${JSON.stringify(newFormData)}`)
+
+                } else {
+                    newFormData.rulesConfig.graph = { ...response.data.data.task_1 };
+                }
+
+                // Log the updated formData
+                console.log(`Updated formData ${JSON.stringify(newFormData)}`);
+
+            } catch (error) {
+                console.error('Error fetching prompt data:', error);
+            }
+            setLoading(false);
+        };
+
+        fetchPromptData();
+    }, [agentId, userId]);
+
+
     const handlePlaygroundOpen = () => {
         setOpenPlayground(true);
     };
@@ -25,33 +68,43 @@ function AgentDetails() {
     const tabsData = [
         { name: 'Analytics', component: <Analytics /> },
         { name: 'Agent Execution', component: <RunsTable /> },
-        { name: 'Request Logs', component: <RequestLogs /> },
+        { name: 'Edit agent details', component: <AgentFormStepper initialData={formData} userId={userId} isUpdate={true} agentId={agentId} /> },
     ];
 
     return (
         <Box>
-            <Box display="flex" justifyContent="space-between" alignItems="center">
-                <Typography variant="h4">Agent Details</Typography>
-                <Box>
-                    <Button onClick={() => navigate('/dashboard/my-agents')}
-                        sx={{ marginRight: 2, backgroundColor: '#f5f5f5', color: 'black', '&:hover': { backgroundColor: '#e0e0e0' } }}
-                    >
-                        Back to My Agents
-                    </Button>
-                    <Button
-                        onClick={handlePlaygroundOpen}
-                        sx={{ backgroundColor: '#50C878', color: 'white', '&:hover': { backgroundColor: '#369456' } }}
-                    >
-                        Playground
-                    </Button>
-                </Box>
-            </Box>
-            <CustomTabs tabsData={tabsData} orientation={"horizontal"} />
 
-            {/* Dialog for Playground */}
-            <Dialog open={openPlayground} onClose={handlePlaygroundClose} fullWidth maxWidth="md">
-                <ChatComponent agentId={agentId} userId={userId} isOpen={openPlayground} />
-            </Dialog>
+            {loading ? (
+                <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+                    <CircularProgress />
+                </Box>
+            ) : (
+                <>
+                    <Box display="flex" justifyContent="space-between" alignItems="center">
+                        <Typography variant="h4">Agent Details</Typography>
+                        <Box>
+                            <Button onClick={() => navigate('/dashboard/my-agents')}
+                                sx={{ marginRight: 2, backgroundColor: '#f5f5f5', color: 'black', '&:hover': { backgroundColor: '#e0e0e0' } }}
+                            >
+                                Back to My Agents
+                            </Button>
+                            <Button
+                                onClick={handlePlaygroundOpen}
+                                sx={{ backgroundColor: '#50C878', color: 'white', '&:hover': { backgroundColor: '#369456' } }}
+                            >
+                                Playground
+                            </Button>
+                        </Box>
+                    </Box>
+                    <CustomTabs tabsData={tabsData} orientation={"horizontal"} />
+
+                    {/* Dialog for Playground */}
+                    <Dialog open={openPlayground} onClose={handlePlaygroundClose} fullWidth maxWidth="md">
+                        <ChatComponent agentId={agentId} userId={userId} isOpen={openPlayground} />
+                    </Dialog>
+                </>
+            )}
+
         </Box>
     );
 }

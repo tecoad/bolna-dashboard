@@ -13,7 +13,7 @@ import axios from 'axios';
 import { CircularProgress } from '@mui/material';
 import Backdrop from '@mui/material/Backdrop';
 
-function AgentFormStepper({ initialData, session }) {
+function AgentFormStepper({ initialData, userId, isUpdate, agentId }) {
     const [activeStep, setActiveStep] = useState(0);
     const [formData, setFormData] = useState(initialData);
     const [completed, setCompleted] = useState({});
@@ -127,17 +127,27 @@ function AgentFormStepper({ initialData, session }) {
 
         }
 
-        console.log(`Sesssion ${JSON.stringify(session)} userID ${session.user.id}`)
 
         const payload = {
-            "user_id": session.user.id.toString(),
+            "user_id": userId.toString(),
             "assistant_config": transformedJson,
-            "assistant_prompts": JSON.stringify({ "task_1": promptJson })
+            "assistant_prompts": {
+                "serialized_prompts": JSON.stringify({ "task_1": promptJson }),
+                "deserialized_prompts": JSON.stringify({ "task_1": formData.rulesConfig.prompts })
+            }
+
         }
-        console.log(`Sending backkend reques to ${process.env.REACT_APP_FAST_API_BACKEND_URL}, json ${JSON.stringify(payload)}`)
+        console.log(`Sending backkend reques to ${process.env.REACT_APP_FAST_API_BACKEND_URL}, agentID ${agentId} json ${JSON.stringify(payload)}`)
         try {
-            const response = await axios.post(`${process.env.REACT_APP_FAST_API_BACKEND_URL}/assistant`, payload);
-            console.log(response.data); // handle response
+            if (isUpdate) {
+                const response = await axios.put(`${process.env.REACT_APP_FAST_API_BACKEND_URL}/assistant/${agentId}`, payload);
+                console.log(response.data); // handle response
+
+            } else {
+                const response = await axios.post(`${process.env.REACT_APP_FAST_API_BACKEND_URL}/assistant`, payload);
+                console.log(response.data); // handle response
+
+            }
             navigate('/dashboard/my-agents');
         } catch (error) {
             if (error.response && error.response.status === 422) {

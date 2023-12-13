@@ -1,3 +1,4 @@
+
 export const CREATE_AGENT_FORM = {
     basicConfig: {
         assistantType: "FreeFlowing",
@@ -93,11 +94,11 @@ export const convertToCreateAgentPayload = (agentData) => {
                         "language": agentData.modelsConfig.asrConfig.language
                     },
                     "input": {
-                        "provider": agentData.engagementConfig.channel == "Websocket" ? "default" : agentData.engagementConfig.channel.toLowerCase(),
+                        "provider": agentData.engagementConfig.channel == "Websocket" ? "default" : "twilio",
                         "format": agentData.engagementConfig.format.toLowerCase()
                     },
                     "output": {
-                        "provider": agentData.engagementConfig.channel == "Websocket" ? "default" : agentData.engagementConfig.channel.toLowerCase(),
+                        "provider": agentData.engagementConfig.channel == "Websocket" ? "default" : "twilio",
                         "format": agentData.engagementConfig.format.toLowerCase()
                     }
                 },
@@ -161,7 +162,7 @@ function getOriginalModel(model, modelType, assistantType) {
     }
 }
 
-function convertToCreateAgentForm(payload) {
+export const convertToCreateAgentForm = (payload) => {
     const agentData = payload.tasks[0];
     const llmAgent = agentData.tools_config.llm_agent;
     const synthesizer = agentData.tools_config.synthesizer;
