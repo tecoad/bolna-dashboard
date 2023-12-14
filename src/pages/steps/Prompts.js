@@ -39,17 +39,29 @@ function Prompts({ formData, onFormDataChange }) {
         console.log(`FORM DATA ${key} ${JSON.stringify(formData.rulesConfig.prompts)}`)
     };
 
-    const lines = [
-        { content: 'This is an editable line.', editable: true },
-        { content: 'This line is not editable.', editable: false },
-        { content: 'This is an editable line.', editable: true },
-        { content: 'This line is not editable.', editable: false },
+    var lines = [
+        { content: 'AI: Hello, am I speakking with {prospect_name}', editable: true },
+        { content: 'User: Yes, who\'s this.', editable: false },
+        { content: 'AI: I\'m Chaula from design your practice. Can I have a moment of your time? I\'m trying to understand problems that smaller architecture firms face in scaling', editable: true },
+        { content: 'User: Yes sure.', editable: false },
         { content: '', editable: true },];
+
+    var exampleConversation = lines.map(line => ({
+        type: 'paragraph',
+        children: [{ text: line.content, editable: line.editable }],
+    }));
+
+    console.log(`Example conversation ${JSON.stringify(exampleConversation)}`)
+
+    if (formData.rulesConfig.prompts.exampleConversation != null) {
+        exampleConversation = formData.rulesConfig.prompts.exampleConversation
+    }
+
 
     const tabsData = [
         { name: 'Agent Description', component: <PromptEditor identifier="assistantDescription" value={formData.rulesConfig.prompts.assistantDescription} onEditorDataChange={handleEditorChange} /> },
         { name: 'Rules', component: <PromptEditor value={formData.rulesConfig.prompts.rules} identifier={"rules"} onEditorDataChange={handleEditorChange} /> },
-        { name: 'Example Conversation', component: <PromptEditor value={lines} identifier={"exampleConversation"} onEditorDataChange={handleEditorChange} /> },
+        { name: 'Example Conversation', component: <PromptEditor value={exampleConversation} identifier={"exampleConversation"} onEditorDataChange={handleEditorChange} /> },
         { name: 'Objections', component: <PromptEditor value={formData.rulesConfig.prompts.objections} identifier={"objections"} onEditorDataChange={handleEditorChange} /> },
         { name: 'FAQs', component: <PromptEditor value={formData.rulesConfig.prompts.faqs} identifier={"faqs"} onEditorDataChange={handleEditorChange} /> }
     ];

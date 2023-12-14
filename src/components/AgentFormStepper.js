@@ -118,25 +118,33 @@ function AgentFormStepper({ initialData, userId, isUpdate, agentId }) {
         let transformedJson = convertToCreateAgentPayload(formData)
         console.log(`Transformed JSON ${JSON.stringify(transformedJson)} `)
         let promptJson = {}
-        if (formData.basicConfig.agentType == "IVRType") {
+
+        let payload = {
+            "user_id": userId.toString(),
+            "assistant_config": transformedJson,
+        }
+        console.log(`formData.basicConfig.agentType ${formData.basicConfig.assistantType} `)
+        if (formData.basicConfig.assistantType == "IVR") {
             promptJson = translateToJSON();
             console.log("Flow Data:", JSON.stringify(promptJson));
+
+            payload = {
+                ...payload,
+                "assistant_prompts": {
+                    "converation_graph": JSON.stringify({ "task_1": promptJson }),
+                }
+            }
         } else {
             promptJson["system_prompt"] = getPromptJsonFromRulesConfig(formData.rulesConfig.prompts)
             console.log(`Prompts JSON ${JSON.stringify(promptJson)} `)
-
-        }
-
-
-        const payload = {
-            "user_id": userId.toString(),
-            "assistant_config": transformedJson,
-            "assistant_prompts": {
-                "serialized_prompts": JSON.stringify({ "task_1": promptJson }),
-                "deserialized_prompts": JSON.stringify({ "task_1": formData.rulesConfig.prompts })
+            payload = {
+                ...payload, "assistant_prompts": {
+                    "serialized_prompts": JSON.stringify({ "task_1": promptJson }),
+                    "deserialized_prompts": JSON.stringify({ "task_1": formData.rulesConfig.prompts })
+                }
             }
-
         }
+
         console.log(`Sending backkend reques to ${process.env.REACT_APP_FAST_API_BACKEND_URL}, agentID ${agentId} json ${JSON.stringify(payload)}`)
         try {
             if (isUpdate) {

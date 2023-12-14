@@ -6,75 +6,80 @@ import SendIcon from '@mui/icons-material/Send';
 import MicIcon from '@mui/icons-material/Mic';
 import MicOffIcon from '@mui/icons-material/MicOff';
 
-function ChatComponent({ agentId, userId }) {
+
+function ChatComponent({ agentId, isOpen, userId }) {
     const [message, setMessage] = useState('');
-    //const [messages, setMessages] = useState([]);
+    const [messages, setMessages] = useState([]);
     const [recording, setRecording] = useState(false);
     const [isTyping, setIsTyping] = useState(false);
-    const [ongoingMessage, setOngoingMessage] = useState([]);
-
-    const [messages, dispatch] = useReducer(messagesReducer, []);
-
-    function messagesReducer(state, action) {
-        switch (action.type) {
-            case 'addMessage':
-                return [...state, action.payload];
-        }
-    }
-
-
+    const [wsConnected, setWsConnected] = useState(true);
     const ws = useRef(null);
     const mediaRecorder = useRef(null);
     const audioChunks = useRef([]);
-    var msg = ""
+
+    var incomingMessage = ""
+    var i = 0
+
+    function handleIncomingMessage(receivedMessage) {
+        console.log(`Data ${receivedMessage} JSON Sata ${JSON.stringify(receivedMessage)}`)
+        if (receivedMessage.data == '<beginning_of_stream>') {
+            setIsTyping(true);
+            incomingMessage = ""
+        } else if (receivedMessage.data == '<end_of_stream>') {
+            setIsTyping(false);
+            console.log(`Before pushing ${incomingMessage}`)
+            setMessages(prev => [...prev, { type: 'text', position: "left", text: incomingMessage, title: "AI" }]);
+        } else {
+            incomingMessage += receivedMessage.data;
+        }
+    }
+
     useEffect(() => {
-        console.log("Hello")
-        ws.current = new WebSocket(`${process.env.REACT_APP_WEBSOCKET_ENDPOINT}/${userId}/${agentId}?user_agent=dashboard`);
 
-        ws.current.onopen = () => console.log('WebSocket Connected');
-        ws.current.onmessage = (e) => {
-            const data = JSON.parse(e.data);
-            console.log(`Data ${data} JSON Sata ${JSON.stringify(data)}`)
-            if (data.data == '<beginning_of_stream>') {
-                setIsTyping(true);
-                msg = ""
-            } else if (data.data == '<end_of_stream>') {
-                setIsTyping(false);
-                console.log(`Before pushing ${msg}`)
-                dispatch({ type: 'addMessage', payload: msg });
+        messages.forEach((m) => {
+            console.log(`Logging mesages ${JSON.stringify(m)}`)
+        })
+        console.log("Hello " + i)
+        i += 1
+        console.log("Before websocket connection")
 
-                // setMessages((prevMessages) => [
-                //     ...prevMessages,
-                //     {
-                //         position: 'left',
-                //         type: 'text',
-                //         message: msg
-                //     },
-                // ]);
-                msg = ""
-            } else {
-                msg += data.data;
-            }
-        };
-        ws.current.onclose = () => console.log('WebSocket Disconnected');
-        ws.current.onerror = (error, err) => {
-            console.error('WebSocket Error:', err);
+        if (!ws.current) {
+            console.log("Starting websocket connection")
+            ws.current = new WebSocket(`${process.env.REACT_APP_WEBSOCKET_ENDPOINT}/${userId}/${agentId}?user_agent=dashboard`);
+
+            ws.current.addEventListener("open", () => {
+                console.log('WebSocket Connected');
+            });
+
+            ws.current.addEventListener("message", (event) => {
+                const receivedMessage = JSON.parse(event.data);
+                handleIncomingMessage(receivedMessage)
+            })
+
+            ws.current.addEventListener("close", () => {
+                console.log('WebSocket Disconnected')
+                ws.current = null;
+            });
+
+            ws.current.addEventListener = ("error", (err) => {
+                console.error('WebSocket Error:', err);
+                ws.current.close()
+                ws.current = null
+            });
         };
 
-        return () => {
-            if (ws.current) {
-                ws.current.close();
-            }
-        };
-    }, []);
+        if (!isOpen) {
+            ws.current.close()
+            console.error('Closing websocket');
+        }
+    });
 
 
 
     const sendMessage = () => {
         if (message !== '') {
-            const newMessage = { type: 'text', message, position: 'right' };
-            //setMessages((prevMessages) => [...prevMessages, newMessage]);
-            dispatch({ type: 'addMessage', payload: newMessage });
+            const newMessage = { type: 'text', text: message, position: 'right', title: "You" };
+            setMessages((prevMessages) => [...prevMessages, newMessage]);
             ws.current.send(JSON.stringify({ type: 'text', data: message }));
             setMessage('');
         }
@@ -101,60 +106,60 @@ function ChatComponent({ agentId, userId }) {
 
     const sendAudioMessage = () => {
         const audioBlob = new Blob(audioChunks.current, { type: 'audio/mpeg' });
-        // Convert blob to file here and send via WebSocket
-        // Example: ws.current.send(audioFile);
+        console.log(`Sending audio message`)
+
+        const reader = new FileReader();
+        reader.readAsDataURL(audioBlob);
+        reader.onloadend = () => {
+            const base64AudioMessage = reader.result;
+            ws.current.send(JSON.stringify({ "type": 'audio', "data": base64AudioMessage }));
+        };
+
     };
 
-    return (
-        <Box sx={{ maxWidth: 600, height: 600, overflowY: 'scroll', margin: 'auto', p: 2 }}>
-            <Paper sx={{ maxHeight: 500, overflowY: 'auto', p: 1 }}>
 
+    if (!wsConnected) {
+        return (
+            <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+                <CircularProgress />
+            </Box>
+        );
+    }
+
+    return (
+        <Box sx={{ height: '100vh', display: 'flex', flexDirection: 'column', mx: 'auto' }}>
+            <Paper sx={{ flex: 1, overflow: 'auto', my: 2 }}>
                 <MessageList
                     className='message-list'
                     lockable={true}
                     toBottomHeight={'100%'}
                     dataSource={messages}
                 />
-                {/* {messages.map((msg, index) => (
-                    <MessageBox
-                        key={index}
-                        position={msg.position}
-                        type={msg.type}
-                        text={msg.message}
-                        // Add custom styling for the message box here
-                        style={{
-                            margin: '5px',
-                            borderRadius: '10px',
-                            maxWidth: '70%',
-                            alignSelf: msg.position === 'right' ? 'flex-end' : 'flex-start',
-                            backgroundColor: msg.position === 'right' ? '#e0f7fa' : '#fff',
-                        }}
-                    />
-                ))} */}
+
                 {isTyping && (
                     <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: 2 }}>
-                        {/* Typing indicator, e.g., a spinner */}
                         <CircularProgress size={20} />
                     </Box>
                 )}
             </Paper>
-            <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', p: 1 }}>
                 <Input
                     fullWidth
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
                     placeholder="Type a message..."
+                    endAdornment={
+                        <IconButton edge="end" color="primary" onClick={sendMessage}>
+                            <SendIcon />
+                        </IconButton>
+                    }
                 />
-                <IconButton onClick={sendMessage} color="primary">
-                    <SendIcon />
-                </IconButton>
-                <IconButton onClick={recording ? stopRecording : startRecording} color="secondary">
+                <IconButton color="secondary" onClick={recording ? stopRecording : startRecording}>
                     {recording ? <MicOffIcon /> : <MicIcon />}
                 </IconButton>
             </Box>
-        </Box>
-
+        </Box >
     );
 }
 

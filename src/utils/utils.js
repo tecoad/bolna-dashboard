@@ -74,7 +74,7 @@ export const convertToCreateAgentPayload = (agentData) => {
                         "max_tokens": agentData.modelsConfig.llmConfig.maxTokens,
                         "family": "openai",
                         "streaming_model": getModel(agentData.modelsConfig.llmConfig.model, "llm", agentData.basicConfig.assistantType),
-                        "agent_flow_type": agentData.basicConfig.assistantType === "IVRType" ? "preprocessed" : "streaming",
+                        "agent_flow_type": agentData.basicConfig.assistantType === "IVR" ? "preprocessed" : "streaming",
                         "classification_model": getModel(agentData.modelsConfig.llmConfig.model, "llm", agentData.basicConfig.assistantType),
                         "use_fallback": true,
                         "agent_task": "conversation"

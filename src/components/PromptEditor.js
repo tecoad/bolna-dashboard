@@ -49,9 +49,14 @@ const Element = ({ attributes, children, element }) => {
     );
 };
 
+
 const Leaf = ({ attributes, children, leaf }) => {
-    const textStyle = leaf.editable !== false ? { color: 'black' } : { color: 'grey' };
-    return <span {...attributes} style={textStyle}>{children}</span>;
+    console.log(`${JSON.stringify(leaf.text)} leaf.editable ${leaf.editable}? `)
+    return (
+        <span {...attributes} style={{ color: leaf.editable ? 'black' : 'grey' }}>
+            {children}
+        </span>
+    );
 };
 
 export default PromptEditor;
