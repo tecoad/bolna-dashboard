@@ -48,7 +48,6 @@ const options = {
 }
 const supabaseUrl = process.env.REACT_APP_SUPABASE_URL;
 const supabaseAnonKey = process.env.REACT_APP_SUPABASE_SECRET;
-
 const supabase = createClient(supabaseUrl, supabaseAnonKey, options);
 
 
@@ -80,7 +79,7 @@ function App() {
                 !session ? (
                   <header className="App-header">
                     <Auth
-                      redirectTo="http://localhost:3000/dashboard"
+                      redirectTo="https://dashboard.bolna.dev/dashboard"
                       supabaseClient={supabase}
                       providers={["github", "google"]}
                       appearance={{
