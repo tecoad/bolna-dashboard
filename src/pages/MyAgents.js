@@ -13,7 +13,7 @@ function MyAgents({ session }) {
         const fetchAgents = async () => {
             setIsLoading(true);
             try {
-                const response = await axios.get(`http://localhost:5000/assistants?user_id=${session.user.id}`);
+                const response = await axios.get(`${process.env.REACT_APP_FAST_API_BACKEND_URL}/assistants?user_id=${session.user.id}`);
                 setAgents(response.data); // Assuming the response data is the array of agents
             } catch (error) {
                 console.error('Error fetching agents:', error);
