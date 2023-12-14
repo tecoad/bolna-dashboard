@@ -79,7 +79,7 @@ function App() {
                 !session ? (
                   <header className="App-header">
                     <Auth
-                      redirectTo="https://dashboard.bolna.dev/dashboard"
+                      redirectTo="https://dashboard.bolna.dev"
                       supabaseClient={supabase}
                       providers={["github", "google"]}
                       appearance={{
