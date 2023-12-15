@@ -17,8 +17,8 @@ function AgentFormStepper({ initialData, userId, isUpdate, agentId }) {
     const [activeStep, setActiveStep] = useState(0);
     const [formData, setFormData] = useState(initialData);
     const [completed, setCompleted] = useState({});
-    const [nodes, setNodes, onNodesChange] = useNodesState([]);
-    const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+    const [nodes, setNodes, onNodesChange] = useNodesState(initialData.basicConfig.assistantType == "IVR" ? initialData.rulesConfig?.graph?.nodes : []);
+    const [edges, setEdges, onEdgesChange] = useEdgesState(initialData.basicConfig.assistantType == "IVR" ? initialData.rulesConfig?.graph?.edges : []);
     const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
@@ -128,10 +128,17 @@ function AgentFormStepper({ initialData, userId, isUpdate, agentId }) {
             promptJson = translateToJSON();
             console.log("Flow Data:", JSON.stringify(promptJson));
 
+            // a hacky way to serialize and deserialize on the frontend to save development time
             payload = {
                 ...payload,
                 "assistant_prompts": {
-                    "converation_graph": JSON.stringify({ "task_1": promptJson }),
+                    "serialized_prompts": JSON.stringify({ "task_1": promptJson }),
+                    "deserialized_prompts": JSON.stringify({
+                        "task_1": {
+                            "nodes": nodes,
+                            "edges": edges,
+                        }
+                    })
                 }
             }
         } else {

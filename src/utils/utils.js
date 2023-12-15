@@ -171,7 +171,7 @@ export const convertToCreateAgentForm = (payload) => {
 
     return {
         basicConfig: {
-            assistantType: llmAgent.agent_flow_type === "preprocessed" ? "IVRType" : "FreeFlowing",
+            assistantType: llmAgent.agent_flow_type === "preprocessed" ? "IVR" : "FreeFlowing",
             assistantName: payload.assistant_name,
             assistantTask: payload.assistant_type
         },
