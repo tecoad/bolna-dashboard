@@ -38,8 +38,15 @@ export const CREATE_AGENT_FORM = {
         },
         graph: null
     },
-    followUpTasks: {
-        tasks: null
+    followUpTaskConfig: {
+        tasks: null,
+        notificationDetails: {
+            mechanisms: [],
+            emailTemplate: null,
+            whatsappTemplate: null,
+            smsTemeplate: null,
+        },
+        extractionDetails: null
     }
 }
 
@@ -63,12 +70,84 @@ function getModel(model, modelType, assistantType) {
     }
 }
 
+const getToolsConfig = (taskType, extraConfig) => {
+
+    var llm_task_config = {
+        "tools_config": {
+            "llm_agent": {
+                "max_tokens": 100,
+                "family": "openai",
+                "request_json": true
+            },
+
+            "output": {
+                "provider": "database",
+                "format": "json"
+            }
+        },
+    }
+    if (taskType === "notification") {
+        var apiTools = {}
+        extraConfig.mechanisms.forEach(mech => {
+            if (mech === "email") {
+                apiTools["email"] = {
+                    "provider": "sendgrid",
+                    "template": "EMAIL_TEMPLATE"
+                }
+            } else if (mech === "sms") {
+                apiTools["sms"] = {
+                    "provider": "twilio",
+                    "template": "SMS_TEMPLATE"
+                }
+            } else if (mech == "whatsapp") {
+                apiTools["whatsapp"] = {
+                    "provider": "twilio",
+                    "template": "WHATSAPP_TEMPLATE"
+                }
+            } else if (mech === "calendar") {
+                apiTools["calendar"] = {
+                    "provider": "google_calendar",
+                    "title": "",
+                    "email": "",
+                    "time": ""
+                }
+            }
+        })
+        return apiTools
+    } else if (taskType === "extraction") {
+        llm_task_config.toolsConfig.llmAgent.streaming_model = "gpt-4-1106-preview"
+        llm_task_config.toolsConfig.llmAgent.extractionDetails = extraConfig
+    } else {
+        llm_task_config.toolsConfig.llmAgent.streaming_model = "gpt-4"
+    }
+
+    return llm_task_config
+}
+const getJsonForTaskType = (taskType, extraConfig) => {
+    var toolChainSequence = taskType == "notification" ? "api_tools" : "llm"
+    let taskStructure = {
+        "agent_task": `${taskType}`,
+
+        "toolchain": {
+            "execution": "parallel",
+            "toolsConfig": getToolsConfig(taskType, extraConfig),
+            "pipelines": [
+                [
+                    `${toolChainSequence}`
+                ]
+            ]
+        }
+    }
+    return taskStructure
+}
+
 export const convertToCreateAgentPayload = (agentData) => {
-    return {
+    let payload = {
         "assistant_name": agentData.basicConfig.assistantName,
         "assistant_type": agentData.basicConfig.assistantTask,
         "tasks": [
             {
+                "task_type": "conversation",
                 "tools_config": {
                     "llm_agent": {
                         "max_tokens": agentData.modelsConfig.llmConfig.maxTokens,
@@ -77,7 +156,6 @@ export const convertToCreateAgentPayload = (agentData) => {
                         "agent_flow_type": agentData.basicConfig.assistantType === "IVR" ? "preprocessed" : "streaming",
                         "classification_model": getModel(agentData.modelsConfig.llmConfig.model, "llm", agentData.basicConfig.assistantType),
                         "use_fallback": true,
-                        "agent_task": "conversation"
                     },
                     "synthesizer": {
                         "model": getModel(agentData.modelsConfig.ttsConfig.voice, "tts"),
@@ -111,6 +189,19 @@ export const convertToCreateAgentPayload = (agentData) => {
             }
         ]
     };
+
+    if (agentData.followUpTasks.selectedTasks.length > 0) {
+        // Figure out extra config 
+        // Once that is done check Create
+        // 
+
+        agentData.followUpTasks.selectedTasks.forEach(task => {
+            let taskConf = task == "notification" ? agentData.followUpTaskConfig.notificationDetails : task == "extraction" ? agentData.followUpTaskConfig.extractionDetails : null
+            var followUpTask = getJsonForTaskType(task, taskConf)
+            payload.tasks.push(followUpTask)
+        })
+    }
+    return payload
 }
 
 
