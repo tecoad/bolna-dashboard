@@ -73,18 +73,17 @@ function getModel(model, modelType, assistantType) {
 const getToolsConfig = (taskType, extraConfig) => {
     console.log(`task type = ${taskType} extra config ${JSON.stringify(extraConfig)}`)
     var llmTaskConfig = {
-        "tools_config": {
-            "llm_agent": {
-                "max_tokens": 100,
-                "family": "openai",
-                "request_json": true
-            },
-
-            "output": {
-                "provider": "database",
-                "format": "json"
-            }
+        "llm_agent": {
+            "max_tokens": 100,
+            "family": "openai",
+            "request_json": true
         },
+
+        "output": {
+            "provider": "database",
+            "format": "json"
+        }
+
     }
 
     if (taskType === "notification") {
@@ -117,11 +116,11 @@ const getToolsConfig = (taskType, extraConfig) => {
         })
         return apiTools
     } else if (taskType === "extraction") {
-        llmTaskConfig.tools_config.llm_agent.streaming_model = "gpt-4-1106-preview"
-        llmTaskConfig.tools_config.llm_agent.extractionDetails = extraConfig
+        llmTaskConfig.llm_agent.streaming_model = "gpt-4-1106-preview"
+        llmTaskConfig.llm_agent.extraction_json = extraConfig
     } else {
-
-        llmTaskConfig.tools_config.llm_agent.streaming_model = "gpt-4"
+        console.log("SUmmarization task")
+        llmTaskConfig.llm_agent.streaming_model = "gpt-4-1106-preview"
     }
 
     return llmTaskConfig
