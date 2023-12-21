@@ -114,7 +114,7 @@ const getToolsConfig = (taskType, extraConfig) => {
                 }
             }
         })
-        return apiTools
+        return { api_tools: apiTools }
     } else if (taskType === "extraction") {
         llmTaskConfig.llm_agent.streaming_model = "gpt-4-1106-preview"
         llmTaskConfig.llm_agent.extraction_json = extraConfig
@@ -250,14 +250,47 @@ function getOriginalModel(model, modelType, assistantType) {
     }
 }
 
+const getFollowupTasks = (followUpTasks) => {
+
+    if (followUpTasks.length == 0) {
+        return null
+    }
+    let followupTaskConfig = {
+        tasks: [],
+        extractionDetails: null,
+        notificationDetails: {
+            notificationMethods: []
+        }
+    }
+    followUpTasks.forEach(task => {
+        if (task.task_type == "extraction") {
+            followupTaskConfig.tasks.push("extraction")
+            followupTaskConfig.extractionDetails = task.llm_agent.extraction_json
+        } else if (task.task_type == "summarization") {
+            followupTaskConfig.tasks.push("summarization")
+        } else {
+            followupTaskConfig.tasks.push("notification")
+            Object.keys(task.tools_config.api_tools).forEach(apiTool => {
+                followupTaskConfig.notificationDetails.notificationMethods.push(apiTool)
+            })
+        }
+    })
+    return followupTaskConfig
+}
+
 export const convertToCreateAgentForm = (payload) => {
     console.log(`Agent payload ${JSON.stringify(payload)}`)
-    const agentData = payload.tasks[0];
-    console.log(`Agent data ${JSON.stringify(agentData)}`)
+    let agentTasks = [...payload.tasks]
+    console.log(`Agent tasks ${JSON.stringify(agentTasks)}`)
+    const agentData = agentTasks.shift()
+    const followupTasks = [...agentTasks]
+    console.log(`Agent data ${JSON.stringify(agentData)} followpTasks ${JSON.stringify(followupTasks)} payload ${JSON.stringify(payload)}`)
     const llmAgent = agentData.tools_config?.llm_agent;
     const synthesizer = agentData.tools_config?.synthesizer;
     const transcriber = agentData.tools_config?.transcriber;
     const input = agentData.tools_config?.input;
+    let followupTaskConfig = getFollowupTasks(followupTasks)
+    console.log(`followupTaskConfig ${JSON.stringify(followupTaskConfig)}`)
 
     var formData = {
         basicConfig: {
@@ -298,9 +331,7 @@ export const convertToCreateAgentForm = (payload) => {
             },
             graph: null
         },
-        followUpTasks: {
-            tasks: null
-        }
+        followUpTaskConfig: followupTaskConfig
     };
 
     return formData

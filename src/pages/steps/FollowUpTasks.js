@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Typography, Box, FormControl, InputLabel, Select, MenuItem, TextField, FormGroup, FormControlLabel, Checkbox, FormLabel, Chip, OutlinedInput } from '@mui/material';
 
 function FollowUpTasks({ formData, onFormDataChange }) {
-    const [selectedTasks, setSelectedTasks] = useState([]);
-    const [selectedNotificationMethods, setSelectedNotificationMethods] = useState([]);
+    const [selectedTasks, setSelectedTasks] = useState(formData.followUpTaskConfig.tasks);
+    const [selectedNotificationMethods, setSelectedNotificationMethods] = useState(formData.followUpTaskConfig.notificationDetails.notificationMethods);
 
     const handleTasksChange = (event) => {
         const { name, value } = event.target;
