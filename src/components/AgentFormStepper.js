@@ -80,7 +80,7 @@ function AgentFormStepper({ initialData, userId, isUpdate, agentId }) {
                 label: node.data.label,
                 children: childrenNodes,
                 content: [{ "text": node.data.content }],
-                is_root: node.data.isRoot,
+                is_root: node.data.isRoot == true ? true : false,
                 prompt: prompt,
                 classification_labels: classificationLabels
             };

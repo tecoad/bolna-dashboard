@@ -39,7 +39,7 @@ export const CREATE_AGENT_FORM = {
         graph: null
     },
     followUpTaskConfig: {
-        tasks: null,
+        tasks: [],
         notificationDetails: {
             notificationMethods: [],
             emailTemplate: null,
@@ -265,7 +265,7 @@ const getFollowupTasks = (followUpTasks) => {
     followUpTasks.forEach(task => {
         if (task.task_type == "extraction") {
             followupTaskConfig.tasks.push("extraction")
-            followupTaskConfig.extractionDetails = task.llm_agent.extraction_json
+            followupTaskConfig.extractionDetails = task.tools_config?.llm_agent?.extraction_json
         } else if (task.task_type == "summarization") {
             followupTaskConfig.tasks.push("summarization")
         } else {
