@@ -41,7 +41,10 @@ function AgentDetails() {
                     console.log(`Everything is free flowing ${JSON.stringify(newFormData)}`)
 
                 } else {
-                    newFormData.rulesConfig.graph = { ...response.data.data.task_1 };
+                    setFormData({ ...formData, rulesConfig: { ...formData.rulesConfig, graph: { ...response.data.data['task_1'] } } });
+                    newFormData = { ...formData, rulesConfig: { ...formData.rulesConfig, graph: { ...response.data.data['task_1'] } } }
+                    console.log(`ivr based ${JSON.stringify(newFormData)}`)
+
                 }
 
                 // Log the updated formData
