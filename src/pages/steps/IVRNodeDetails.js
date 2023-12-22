@@ -9,13 +9,18 @@ function NodeDetails({ nodeData, setNodeData }) {
     const handleInputChange = (e) => {
         console.log(`node data ${JSON.stringify(nodeData)}`)
         setNodeData({ ...nodeData, [e.target.name]: e.target.value });
-        setExamplesValue(e.target.value)
+        if (e.target.name === "examples" && useTemplate === true) {
+            setExamplesValue(e.target.value)
+        }
     };
 
     // Handle changes to the checkbox
     const handleCheckboxChange = (event) => {
+        if (!useTemplate) {
+            setExamplesValue(templateText)
+        }
         setUseTemplate(event.target.checked);
-        setExamplesValue(templateText)
+
     };
 
     // Template text
