@@ -1,26 +1,51 @@
 import React, { useState } from 'react';
-import { Typography, Box, FormControl, InputLabel, Select, MenuItem, TextField, RadioGroup, FormControlLabel, Radio, FormLabel, Chip, OutlinedInput } from '@mui/material';
+import { Typography, Box, FormControl, InputLabel, Select, MenuItem, TextField, FormGroup, FormControlLabel, Checkbox, FormLabel, Chip, OutlinedInput } from '@mui/material';
 
 function FollowUpTasks({ formData, onFormDataChange }) {
-    const [selectedTasks, setSelectedTasks] = useState([]);
-
+    const [selectedTasks, setSelectedTasks] = useState(formData.followUpTaskConfig.tasks);
+    const [selectedNotificationMethods, setSelectedNotificationMethods] = useState(formData.followUpTaskConfig.notificationDetails.notificationMethods);
 
     const handleTasksChange = (event) => {
-        setSelectedTasks(event.target.value);
-        var val = event.target.value
+        const { name, value } = event.target;
+        console.log(`Got task Chagne event ${name}, ${value}`)
+        if (name === "extractionDetails") {
+            onFormDataChange({
+                ...formData,
+                followUpTaskConfig: {
+                    ...formData.followUpTaskConfig,
+                    [name]: value,
+                },
+            });
+        } else if (name === "notificationMethods") {
+            const updatedNotificationMethods = event.target.checked
+                ? [...selectedNotificationMethods, value]
+                : selectedNotificationMethods.filter((method) => method !== value);
 
+            setSelectedNotificationMethods([...updatedNotificationMethods]);
 
-        if (event.target.name == "extractionDetails" || event.target.name == "NotificationMethod") {
-            console.log(`event.target.name ${event.target.name}, event.target.value ${event.target.value} `)
-            onFormDataChange({ ...formData, followUpTaskConfig: { ...formData.followUpTaskConfig, [event.target.name]: val.toLowerCase() } })
+            // Update form data
+            onFormDataChange({
+                ...formData,
+                followUpTaskConfig: {
+                    ...formData.followUpTaskConfig,
+                    notificationDetails: {
+                        ...formData.followUpTaskConfig.notificationDetails,
+                        notificationMethods: [...updatedNotificationMethods],
+                    }
+                },
+            });
+
+            console.log(`Updated notification MEthodss ${JSON.stringify(updatedNotificationMethods)}`)
         } else {
-            var val = event.target.value
-            setSelectedTasks(event.target.value);
-            console.log(`event.target.name ${event.target.name}, event.target.value ${val}  type = ${typeof val}`)
-            onFormDataChange({ ...formData, followUpTaskConfig: { ...formData.followUpTaskConfig, selectedTasks: val } })
+            setSelectedTasks(value);
+            onFormDataChange({
+                ...formData,
+                followUpTaskConfig: {
+                    ...formData.followUpTaskConfig,
+                    selectedTasks: value,
+                },
+            });
         }
-
-
     };
 
     const isNotificationSelected = selectedTasks.includes('notification');
@@ -54,12 +79,44 @@ function FollowUpTasks({ formData, onFormDataChange }) {
             {isNotificationSelected && (
                 <FormControl component="fieldset" margin="normal">
                     <FormLabel component="legend">Notification Method</FormLabel>
-                    <RadioGroup row onChange={handleTasksChange} name="notificationMethod">
-                        <FormControlLabel value="email" control={<Radio />} label="Email" />
-                        <FormControlLabel value="whatsapp" control={<Radio />} label="Whatsapp" />
-                        <FormControlLabel value="message" control={<Radio />} label="Message" />
-                        <FormControlLabel value="calendar" control={<Radio />} label="Calendar Invite" />
-                    </RadioGroup>
+                    <FormGroup>
+                        <FormControlLabel
+                            control={<Checkbox
+                                checked={selectedNotificationMethods.includes('email')}
+                                onChange={handleTasksChange}
+                                name="notificationMethods"
+                                value="email"
+                            />}
+                            label="Email"
+                        />
+                        <FormControlLabel
+                            control={<Checkbox
+                                checked={selectedNotificationMethods.includes('whatsapp')}
+                                onChange={handleTasksChange}
+                                name="notificationMethods"
+                                value="whatsapp"
+                            />}
+                            label="Whatsapp"
+                        />
+                        <FormControlLabel
+                            control={<Checkbox
+                                checked={selectedNotificationMethods.includes('sms')}
+                                onChange={handleTasksChange}
+                                name="notificationMethods"
+                                value="sms"
+                            />}
+                            label="SMS"
+                        />
+                        <FormControlLabel
+                            control={<Checkbox
+                                checked={selectedNotificationMethods.includes('calendar')}
+                                onChange={handleTasksChange}
+                                name="notificationMethods"
+                                value="calendar"
+                            />}
+                            label="Calendar Invite"
+                        />
+                    </FormGroup>
                 </FormControl>
             )}
 

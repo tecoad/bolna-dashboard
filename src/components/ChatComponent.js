@@ -5,6 +5,7 @@ import { Input, IconButton, Box, CircularProgress, Paper } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import MicIcon from '@mui/icons-material/Mic';
 import MicOffIcon from '@mui/icons-material/MicOff';
+import { base64ToBlob } from '../utils/utils';
 
 
 function ChatComponent({ agentId, isOpen, userId }) {
@@ -22,16 +23,44 @@ function ChatComponent({ agentId, isOpen, userId }) {
 
     function handleIncomingMessage(receivedMessage) {
         console.log(`Data ${receivedMessage} JSON Sata ${JSON.stringify(receivedMessage)}`)
-        if (receivedMessage.data == '<beginning_of_stream>') {
-            setIsTyping(true);
-            incomingMessage = ""
-        } else if (receivedMessage.data == '<end_of_stream>') {
+
+
+
+        if (receivedMessage.type == "text") {
+            if (receivedMessage.data == '<beginning_of_stream>') {
+                setIsTyping(true);
+                incomingMessage = ""
+            } else if (receivedMessage.data == '<end_of_stream>') {
+                if (incomingMessage.length != 0) {
+                    setIsTyping(false);
+                    console.log(`Before pushing ${incomingMessage}`)
+                    setMessages(prev => [...prev, { type: 'text', position: "left", text: incomingMessage, title: "AI" }]);
+                } else {
+                    console.log(`incoming message is null but still got end of stream`)
+                }
+            }
+            else {
+                incomingMessage += receivedMessage.data;
+            }
+        } else if (receivedMessage.type == "audio") {
+            console.log(`Got audio message`)
+            const base64Audio = receivedMessage.data;
+            const audioBlob = base64ToBlob(base64Audio, 'audio/mpeg');
+            const audioUrl = URL.createObjectURL(audioBlob);
+            const testAudio = new Audio(audioUrl);
+
+            const audioMessage = {
+                type: 'audio',
+                position: "left",
+                title: "AI",
+                data: {
+                    audioURL: audioUrl,
+                },
+            };
+            setMessages(prev => [...prev, audioMessage]);
             setIsTyping(false);
-            console.log(`Before pushing ${incomingMessage}`)
-            setMessages(prev => [...prev, { type: 'text', position: "left", text: incomingMessage, title: "AI" }]);
-        } else {
-            incomingMessage += receivedMessage.data;
         }
+
     }
 
     useEffect(() => {
@@ -88,7 +117,7 @@ function ChatComponent({ agentId, isOpen, userId }) {
     const startRecording = async () => {
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-            mediaRecorder.current = new MediaRecorder(stream);
+            mediaRecorder.current = new MediaRecorder(stream, { mimeType: 'audio/webm' });
             mediaRecorder.current.ondataavailable = (event) => audioChunks.current.push(event.data);
             mediaRecorder.current.onstop = sendAudioMessage;
             audioChunks.current = [];
@@ -105,26 +134,17 @@ function ChatComponent({ agentId, isOpen, userId }) {
     };
 
     const sendAudioMessage = () => {
-        const audioBlob = new Blob(audioChunks.current, { type: 'audio/mpeg' });
+        const audioBlob = new Blob(audioChunks.current, { type: 'audio/wav' });
         console.log(`Sending audio message`)
 
         const reader = new FileReader();
         reader.readAsDataURL(audioBlob);
         reader.onloadend = () => {
             const base64AudioMessage = reader.result;
+            console.log(`senfing ${base64AudioMessage}`);
             ws.current.send(JSON.stringify({ "type": 'audio', "data": base64AudioMessage }));
         };
-
     };
-
-
-    if (!wsConnected) {
-        return (
-            <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
-                <CircularProgress />
-            </Box>
-        );
-    }
 
     return (
         <Box sx={{ height: '100vh', display: 'flex', flexDirection: 'column', mx: 'auto' }}>

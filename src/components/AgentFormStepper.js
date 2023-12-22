@@ -16,8 +16,15 @@ import Backdrop from '@mui/material/Backdrop';
 function AgentFormStepper({ initialData, userId, isUpdate, agentId }) {
     const [activeStep, setActiveStep] = useState(0);
     const [formData, setFormData] = useState(initialData);
-    const [completed, setCompleted] = useState({});
-    const [nodes, setNodes, onNodesChange] = useNodesState(initialData.basicConfig.assistantType == "IVR" ? initialData.rulesConfig?.graph?.nodes : []);
+    const [completed, setCompleted] = useState({})
+    const defaultRootNode = {
+        id: 'root-node',
+        type: 'default',
+        data: { label: 'intro', content: 'Am I speaking with {}', examples: '', isRoot: true },
+        position: { x: 250, y: 5 },
+    };
+
+    const [nodes, setNodes, onNodesChange] = useNodesState(initialData.basicConfig.assistantType == "IVR" ? initialData.rulesConfig?.graph?.nodes : [defaultRootNode]);
     const [edges, setEdges, onEdgesChange] = useEdgesState(initialData.basicConfig.assistantType == "IVR" ? initialData.rulesConfig?.graph?.edges : []);
     const [loading, setLoading] = useState(false);
 
@@ -49,7 +56,7 @@ function AgentFormStepper({ initialData, userId, isUpdate, agentId }) {
     };
 
     const getPrompt = (examples, classification_labels) => {
-        var classification_prompt = `You're an helpful AI assistant who is tasked with classifying user's intent as per given conversations. Classify intent into following labels ${JSON.stringify(classification_labels)}.`
+        var classification_prompt = `You're an helpful AI assistant who is tasked with classifying user's intent as per given conversations. Classify intent into following labels ${JSON.stringify(classification_labels)}. ### Rules for classification Always respond in json format with following structure {classification_label : the label you'd classify the given text as}.`
         if (examples.length > 0) {
             classification_prompt += `\n\n###Examples: ${examples}`
         }
@@ -58,6 +65,7 @@ function AgentFormStepper({ initialData, userId, isUpdate, agentId }) {
 
     const translateToJSON = () => {
         let result = {};
+        var got_root = false;
         nodes.forEach(node => {
             // Find children nodes
             const childrenNodes = edges.filter(edge => edge.source === node.id).map(edge => edge.target);
@@ -72,7 +80,7 @@ function AgentFormStepper({ initialData, userId, isUpdate, agentId }) {
                 label: node.data.label,
                 children: childrenNodes,
                 content: [{ "text": node.data.content }],
-                is_root: node.data.is_root,
+                is_root: node.data.isRoot == true ? true : false,
                 prompt: prompt,
                 classification_labels: classificationLabels
             };

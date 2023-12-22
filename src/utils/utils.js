@@ -39,9 +39,9 @@ export const CREATE_AGENT_FORM = {
         graph: null
     },
     followUpTaskConfig: {
-        tasks: null,
+        tasks: [],
         notificationDetails: {
-            mechanisms: [],
+            notificationMethods: [],
             emailTemplate: null,
             whatsappTemplate: null,
             smsTemeplate: null,
@@ -55,8 +55,8 @@ function getModelFromVoice(voice) {
 }
 function getModel(model, modelType, assistantType) {
     if (modelType === "llm") {
-        if (assistantType == "IVRAgent") {
-            model = model.toLowerCase() == "gpt-3.5" ? "gpt-3.5-turbo-1106" : "gpt-4-1106-previe"
+        if (assistantType == "IVR") {
+            model = model.toLowerCase() == "gpt-3.5" ? "gpt-3.5-turbo-1106" : "gpt-4-1106-preview"
         } else {
             model = model.toLowerCase() == "gpt-3.5" ? "gpt-3.5-turbo-16k" : model.toLowerCase()
         }
@@ -71,24 +71,25 @@ function getModel(model, modelType, assistantType) {
 }
 
 const getToolsConfig = (taskType, extraConfig) => {
-
-    var llm_task_config = {
-        "tools_config": {
-            "llm_agent": {
-                "max_tokens": 100,
-                "family": "openai",
-                "request_json": true
-            },
-
-            "output": {
-                "provider": "database",
-                "format": "json"
-            }
+    console.log(`task type = ${taskType} extra config ${JSON.stringify(extraConfig)}`)
+    var llmTaskConfig = {
+        "llm_agent": {
+            "max_tokens": 100,
+            "family": "openai",
+            "request_json": true
         },
+
+        "output": {
+            "provider": "database",
+            "format": "json"
+        }
+
     }
+
     if (taskType === "notification") {
+        console.log(`Setting notification follow-up task`)
         var apiTools = {}
-        extraConfig.mechanisms.forEach(mech => {
+        extraConfig.notificationMethods.forEach(mech => {
             if (mech === "email") {
                 apiTools["email"] = {
                     "provider": "sendgrid",
@@ -113,24 +114,24 @@ const getToolsConfig = (taskType, extraConfig) => {
                 }
             }
         })
-        return apiTools
+        return { api_tools: apiTools }
     } else if (taskType === "extraction") {
-        llm_task_config.toolsConfig.llmAgent.streaming_model = "gpt-4-1106-preview"
-        llm_task_config.toolsConfig.llmAgent.extractionDetails = extraConfig
+        llmTaskConfig.llm_agent.streaming_model = "gpt-4-1106-preview"
+        llmTaskConfig.llm_agent.extraction_json = extraConfig
     } else {
-        llm_task_config.toolsConfig.llmAgent.streaming_model = "gpt-4"
+        console.log("SUmmarization task")
+        llmTaskConfig.llm_agent.streaming_model = "gpt-4-1106-preview"
     }
 
-    return llm_task_config
+    return llmTaskConfig
 }
 const getJsonForTaskType = (taskType, extraConfig) => {
     var toolChainSequence = taskType == "notification" ? "api_tools" : "llm"
     let taskStructure = {
-        "agent_task": `${taskType}`,
-
+        "task_type": `${taskType}`,
+        "tools_config": getToolsConfig(taskType, extraConfig),
         "toolchain": {
             "execution": "parallel",
-            "toolsConfig": getToolsConfig(taskType, extraConfig),
             "pipelines": [
                 [
                     `${toolChainSequence}`
@@ -190,12 +191,8 @@ export const convertToCreateAgentPayload = (agentData) => {
         ]
     };
 
-    if (agentData.followUpTasks.selectedTasks.length > 0) {
-        // Figure out extra config 
-        // Once that is done check Create
-        // 
-
-        agentData.followUpTasks.selectedTasks.forEach(task => {
+    if (agentData.followUpTaskConfig?.selectedTasks?.length > 0) {
+        agentData.followUpTaskConfig.selectedTasks.forEach(task => {
             let taskConf = task == "notification" ? agentData.followUpTaskConfig.notificationDetails : task == "extraction" ? agentData.followUpTaskConfig.extractionDetails : null
             var followUpTask = getJsonForTaskType(task, taskConf)
             payload.tasks.push(followUpTask)
@@ -253,14 +250,50 @@ function getOriginalModel(model, modelType, assistantType) {
     }
 }
 
-export const convertToCreateAgentForm = (payload) => {
-    const agentData = payload.tasks[0];
-    const llmAgent = agentData.tools_config.llm_agent;
-    const synthesizer = agentData.tools_config.synthesizer;
-    const transcriber = agentData.tools_config.transcriber;
-    const input = agentData.tools_config.input;
+const getFollowupTasks = (followUpTasks) => {
+    let followupTaskConfig = {
+        tasks: [],
+        extractionDetails: null,
+        notificationDetails: {
+            notificationMethods: []
+        }
+    }
 
-    return {
+    if (followUpTasks.length == 0) {
+        return followupTaskConfig
+    }
+
+    followUpTasks.forEach(task => {
+        if (task.task_type == "extraction") {
+            followupTaskConfig.tasks.push("extraction")
+            followupTaskConfig.extractionDetails = task.tools_config?.llm_agent?.extraction_json
+        } else if (task.task_type == "summarization") {
+            followupTaskConfig.tasks.push("summarization")
+        } else {
+            followupTaskConfig.tasks.push("notification")
+            Object.keys(task.tools_config.api_tools).forEach(apiTool => {
+                followupTaskConfig.notificationDetails.notificationMethods.push(apiTool)
+            })
+        }
+    })
+    return followupTaskConfig
+}
+
+export const convertToCreateAgentForm = (payload) => {
+    console.log(`Agent payload ${JSON.stringify(payload)}`)
+    let agentTasks = [...payload.tasks]
+    console.log(`Agent tasks ${JSON.stringify(agentTasks)}`)
+    const agentData = agentTasks.shift()
+    const followupTasks = [...agentTasks]
+    console.log(`Agent data ${JSON.stringify(agentData)} followpTasks ${JSON.stringify(followupTasks)} payload ${JSON.stringify(payload)}`)
+    const llmAgent = agentData.tools_config?.llm_agent;
+    const synthesizer = agentData.tools_config?.synthesizer;
+    const transcriber = agentData.tools_config?.transcriber;
+    const input = agentData.tools_config?.input;
+    let followupTaskConfig = getFollowupTasks(followupTasks)
+    console.log(`followupTaskConfig ${JSON.stringify(followupTaskConfig)}`)
+
+    var formData = {
         basicConfig: {
             assistantType: llmAgent.agent_flow_type === "preprocessed" ? "IVR" : "FreeFlowing",
             assistantName: payload.assistant_name,
@@ -299,8 +332,26 @@ export const convertToCreateAgentForm = (payload) => {
             },
             graph: null
         },
-        followUpTasks: {
-            tasks: null
-        }
+        followUpTaskConfig: followupTaskConfig
     };
+
+    return formData
+}
+
+export const base64ToBlob = (base64, contentType) => {
+    const byteCharacters = atob(base64);
+    const byteArrays = [];
+    for (let offset = 0; offset < byteCharacters.length; offset += 512) {
+        const slice = byteCharacters.slice(offset, offset + 512);
+
+        const byteNumbers = new Array(slice.length);
+        for (let i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+        }
+
+        const byteArray = new Uint8Array(byteNumbers);
+        byteArrays.push(byteArray);
+    }
+
+    return new Blob(byteArrays, { type: contentType });
 }
