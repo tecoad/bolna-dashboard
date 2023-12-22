@@ -7,9 +7,10 @@ function NodeDetails({ nodeData, setNodeData }) {
     const [examplesValue, setExamplesValue] = useState(nodeData.examples != "" && nodeData.examples != undefined && nodeData.examples != null ? nodeData.examples : "")
 
     const handleInputChange = (e) => {
-        console.log(`node data ${JSON.stringify(nodeData)}`)
+        console.log(`node data ${JSON.stringify(nodeData)} name ${e.target.name}`)
         setNodeData({ ...nodeData, [e.target.name]: e.target.value });
-        if (e.target.name === "examples" && useTemplate === true) {
+        if (e.target.name == "examples") {
+            console.log("Examples")
             setExamplesValue(e.target.value)
         }
     };
@@ -18,6 +19,7 @@ function NodeDetails({ nodeData, setNodeData }) {
     const handleCheckboxChange = (event) => {
         if (!useTemplate) {
             setExamplesValue(templateText)
+            setNodeData({ ...nodeData, examples: templateText });
         }
         setUseTemplate(event.target.checked);
 
