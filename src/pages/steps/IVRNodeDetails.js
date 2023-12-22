@@ -1,15 +1,37 @@
-import React from 'react';
-import { Box, TextField } from '@mui/material';
-import Prompts from './Prompts';
-import GraphSettings from './GraphSettings';
+import React, { useState } from 'react';
+import { Box, TextField, Checkbox, FormControlLabel } from '@mui/material';
 
 function NodeDetails({ nodeData, setNodeData }) {
-
+    // State for the checkbox
+    const [useTemplate, setUseTemplate] = useState(false);
+    const [examplesValue, setExamplesValue] = useState(nodeData.examples != "" && nodeData.examples != undefined && nodeData.examples != null ? nodeData.examples : "")
 
     const handleInputChange = (e) => {
         console.log(`node data ${JSON.stringify(nodeData)}`)
         setNodeData({ ...nodeData, [e.target.name]: e.target.value });
+        setExamplesValue(e.target.value)
     };
+
+    // Handle changes to the checkbox
+    const handleCheckboxChange = (event) => {
+        setUseTemplate(event.target.checked);
+        setExamplesValue(templateText)
+    };
+
+    // Template text
+    const templateText = `
+*Edit the given example to suit your needs and completely remove it if you do not want to classify message beyond this point*
+Explanation of children labels with examples go here. For child labels interested and not interested follow the possible example list should be.
+For If user utters anything that indicates that they're interested yield interested Example 
+1. Yes, speaking
+2. Who's this
+3. No, but who's speaking
+
+If user is not interested yield not_interested. For example
+1. Not interested
+2. Go screw yourself
+3. Yes speaking but call me later.
+`;
 
 
     return (
@@ -39,21 +61,30 @@ function NodeDetails({ nodeData, setNodeData }) {
                 onChange={handleInputChange}
             />
 
+            <FormControlLabel
+                control={
+                    <Checkbox
+                        checked={useTemplate}
+                        onChange={handleCheckboxChange}
+                    />
+                }
+                label="Use Template"
+            />
+
             <TextField
                 margin="dense"
                 id="examples"
-                label="Examples"
+                label="Few Shot Prompt"
                 name="examples"
                 type="text"
                 fullWidth
                 variant="outlined"
-                multiline  // Enable multiline input
-                rows={4}   // Set the number of rows
-                value={nodeData.examples}
+                multiline
+                rows={10}
+                value={examplesValue}
                 onChange={handleInputChange}
             />
         </Box>
-
     );
 }
 
