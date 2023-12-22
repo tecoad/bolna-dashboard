@@ -56,7 +56,7 @@ function AgentFormStepper({ initialData, userId, isUpdate, agentId }) {
     };
 
     const getPrompt = (examples, classification_labels) => {
-        var classification_prompt = `You're an helpful AI assistant who is tasked with classifying user's intent as per given conversations. Classify intent into following labels ${JSON.stringify(classification_labels)} Always respond in json format with following structure {classification_label : the label you'd classify the given text as}.`
+        var classification_prompt = `You're an helpful AI assistant who is tasked with classifying user's intent as per given conversations. Classify intent into following labels ${JSON.stringify(classification_labels)}. ### Rules for classification Always respond in json format with following structure {classification_label : the label you'd classify the given text as}.`
         if (examples.length > 0) {
             classification_prompt += `\n\n###Examples: ${examples}`
         }

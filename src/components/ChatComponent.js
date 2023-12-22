@@ -31,10 +31,15 @@ function ChatComponent({ agentId, isOpen, userId }) {
                 setIsTyping(true);
                 incomingMessage = ""
             } else if (receivedMessage.data == '<end_of_stream>') {
-                setIsTyping(false);
-                console.log(`Before pushing ${incomingMessage}`)
-                setMessages(prev => [...prev, { type: 'text', position: "left", text: incomingMessage, title: "AI" }]);
-            } else {
+                if (incomingMessage.length != 0) {
+                    setIsTyping(false);
+                    console.log(`Before pushing ${incomingMessage}`)
+                    setMessages(prev => [...prev, { type: 'text', position: "left", text: incomingMessage, title: "AI" }]);
+                } else {
+                    console.log(`incoming message is null but still got end of stream`)
+                }
+            }
+            else {
                 incomingMessage += receivedMessage.data;
             }
         } else if (receivedMessage.type == "audio") {

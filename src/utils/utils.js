@@ -251,10 +251,6 @@ function getOriginalModel(model, modelType, assistantType) {
 }
 
 const getFollowupTasks = (followUpTasks) => {
-
-    if (followUpTasks.length == 0) {
-        return null
-    }
     let followupTaskConfig = {
         tasks: [],
         extractionDetails: null,
@@ -262,6 +258,11 @@ const getFollowupTasks = (followUpTasks) => {
             notificationMethods: []
         }
     }
+
+    if (followUpTasks.length == 0) {
+        return followupTaskConfig
+    }
+
     followUpTasks.forEach(task => {
         if (task.task_type == "extraction") {
             followupTaskConfig.tasks.push("extraction")
