@@ -5,8 +5,9 @@ import { Input, IconButton, Box, CircularProgress, Paper } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import MicIcon from '@mui/icons-material/Mic';
 import MicOffIcon from '@mui/icons-material/MicOff';
-import { base64ToBlob } from '../utils/utils';
+import { base64ToBlob, getDefaultSampleRate } from '../utils/utils';
 
+const sampleRate = getDefaultSampleRate()
 
 function ChatComponent({ agentId, isOpen, userId }) {
     const [message, setMessage] = useState('');
@@ -47,7 +48,6 @@ function ChatComponent({ agentId, isOpen, userId }) {
             const base64Audio = receivedMessage.data;
             const audioBlob = base64ToBlob(base64Audio, 'audio/mpeg');
             const audioUrl = URL.createObjectURL(audioBlob);
-            const testAudio = new Audio(audioUrl);
 
             const audioMessage = {
                 type: 'audio',
@@ -115,9 +115,10 @@ function ChatComponent({ agentId, isOpen, userId }) {
     };
 
     const startRecording = async () => {
+        console.log(`sample rate ${sampleRate}`)
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-            mediaRecorder.current = new MediaRecorder(stream, { mimeType: 'audio/webm' });
+            mediaRecorder.current = new MediaRecorder(stream, { type: 'audio/webm' });
             mediaRecorder.current.ondataavailable = (event) => audioChunks.current.push(event.data);
             mediaRecorder.current.onstop = sendAudioMessage;
             audioChunks.current = [];
@@ -134,16 +135,28 @@ function ChatComponent({ agentId, isOpen, userId }) {
     };
 
     const sendAudioMessage = () => {
-        const audioBlob = new Blob(audioChunks.current, { type: "audio/ogg; codecs=opus" });
+        const audioBlob = new Blob(audioChunks.current, { type: "audio/webm" });
         console.log(`Sending audio message`)
 
         const reader = new FileReader();
         reader.readAsDataURL(audioBlob);
         reader.onloadend = () => {
-            const base64AudioMessage = reader.result;
+            var base64AudioMessage = reader.result;
+            base64AudioMessage = base64AudioMessage.split(',')[1];
             console.log(`senfing ${base64AudioMessage}`);
             ws.current.send(JSON.stringify({ "type": 'audio', "data": base64AudioMessage }));
         };
+        const audioUrl = URL.createObjectURL(audioBlob);
+        const audioMessage = {
+            type: 'audio',
+            position: "right",
+            title: "You",
+            data: {
+                audioURL: audioUrl,
+            },
+        };
+        setMessages(prev => [...prev, audioMessage]);
+        setIsTyping(true)
     };
 
     return (

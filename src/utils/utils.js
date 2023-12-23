@@ -355,3 +355,11 @@ export const base64ToBlob = (base64, contentType) => {
 
     return new Blob(byteArrays, { type: contentType });
 }
+
+
+export const getDefaultSampleRate = () => {
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const sampleRate = audioContext.sampleRate;
+    audioContext.close();
+    return sampleRate;
+}
