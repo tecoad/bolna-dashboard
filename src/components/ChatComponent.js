@@ -134,7 +134,7 @@ function ChatComponent({ agentId, isOpen, userId }) {
     };
 
     const sendAudioMessage = () => {
-        const audioBlob = new Blob(audioChunks.current, { type: 'audio/wav' });
+        const audioBlob = new Blob(audioChunks.current, { type: "audio/ogg; codecs=opus" });
         console.log(`Sending audio message`)
 
         const reader = new FileReader();

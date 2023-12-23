@@ -20,9 +20,9 @@ function GraphInterface({ nodes, onNodesChange, setNodes, edges, onEdgesChange, 
         setOpen(true);
         setSelectedNode(node);
         if (node && node.data) {
-            setNodeData(node.data); // Load existing data if node is selected
+            setNodeData(node.data);
         } else {
-            setNodeData({ label: '', content: '', examples: '' }); // Reset to blank for new node
+            setNodeData({ label: '', content: '', examples: '' });
         }
     };
 
@@ -45,6 +45,14 @@ function GraphInterface({ nodes, onNodesChange, setNodes, edges, onEdgesChange, 
 
     const onNodeClick = (event, node) => {
         handleOpenDialog(node);
+    };
+    const onDeleteNode = () => {
+        if (selectedNode) {
+            setNodes((nds) => nds.filter((n) => n.id !== selectedNode.id));
+            setEdges((eds) => eds.filter((e) => e.source !== selectedNode.id && e.target !== selectedNode.id));
+            setSelectedNode(null);
+            setOpen(false);
+        }
     };
 
     return (
@@ -72,6 +80,8 @@ function GraphInterface({ nodes, onNodesChange, setNodes, edges, onEdgesChange, 
                 <DialogActions>
                     <Button onClick={() => setOpen(false)}>Cancel</Button>
                     <Button onClick={onSaveNode}>{selectedNode ? 'Save Changes' : 'Add Node'}</Button>
+                    <Button variant="outlined" color="secondary" onClick={onDeleteNode} disabled={!selectedNode}>Delete Node</Button>
+
                 </DialogActions>
             </Dialog>
         </div>
