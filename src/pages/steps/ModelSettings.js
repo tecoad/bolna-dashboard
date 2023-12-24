@@ -7,6 +7,17 @@ function ModelSettings({ formData, onFormDataChange }) {
 
     const handleChange = (type, event) => {
         let conf = type + "Config"
+        let newFormData = {
+            ...formData,
+            modelsConfig: {
+                ...formData.modelsConfig,
+                [conf]: {
+                    ...formData.modelsConfig[conf],
+                    [event.target.name]: event.target.value
+                }
+            }
+        }
+        console.log(`Form data ${JSON.stringify(newFormData)}`);
         onFormDataChange({
             ...formData,
             modelsConfig: {
@@ -20,18 +31,28 @@ function ModelSettings({ formData, onFormDataChange }) {
     };
 
 
-    const handleSliderChange = (event, newValue) => {
-        onFormDataChange({ temperature: newValue });
-    };
+    // const handleSliderChange = (event, newValue) => {
+    //     console.log(`New value for slider ${event.target.value}`)
+    //     onFormDataChange({
+    //         ...formData,
+    //         modelsConfig: {
+    //             ...formData.modelsConfig,
+    //             llmConfig: {
+    //                 ...formData.modelsConfig.llmConfig,
+    //                 temperature: newValue
+    //             }
+    //         }
+    //     });
+    // };
 
     const marks = [
         { value: 0, label: 'Professional' },
         { value: 1, label: 'Highly Creative' },
     ];
 
-    const languages = ['En', 'Hi', 'Es', 'Fr'];
+    const languages = ['en', 'hi', 'es', 'fr', 'it'];
     const asrModels = ['AWS', 'Google', 'Nova-2', 'Whisper'];
-    const samplingRates = [8000, 16000, 24000, 44100];
+    const samplingRates = [8000, 16000, 24000, 44100, 48000];
     const channels = ['1', '2'];
     const ttsVoices = ['Mark', 'Jessica', 'Kamlesh', 'Rekha', 'Priya', 'Suresh'];
 
@@ -71,8 +92,8 @@ function ModelSettings({ formData, onFormDataChange }) {
                         <Typography gutterBottom>Temperature</Typography>
                         <Slider
                             name="temperature"
-                            value={formData.modelsConfig.llmConfig.temperature || 0.5}
-                            onChange={handleSliderChange}
+                            value={formData.modelsConfig.llmConfig.temperature || 0.3}
+                            onChange={e => handleChange("llm", e)}
                             step={0.01}
                             marks={marks}
                             min={0}
@@ -133,7 +154,7 @@ function ModelSettings({ formData, onFormDataChange }) {
                         <InputLabel>Streaming</InputLabel>
                         <Select
                             name="streaming"
-                            value={formData.modelsConfig.asrConfig.streaming || ''}
+                            value={formData.modelsConfig.asrConfig.streaming}
                             onChange={e => handleChange("asr", e)}
                         >
                             <MenuItem value={true}>True</MenuItem>
@@ -190,7 +211,7 @@ function ModelSettings({ formData, onFormDataChange }) {
                         <InputLabel>Streaming</InputLabel>
                         <Select
                             name="streaming"
-                            value={formData.modelsConfig.ttsConfig.streaming || ''}
+                            value={formData.modelsConfig.ttsConfig.streaming}
                             onChange={e => handleChange("tts", e)}
                         >
                             <MenuItem value={true}>True</MenuItem>
