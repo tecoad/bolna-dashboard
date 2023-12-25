@@ -109,8 +109,20 @@ function Analytics() {
             plugins: {
                 legend: {
                     position: 'bottom',
-                },
+                }
             },
+            title: {
+                display: true,
+                text: formatTitle(title),
+                font: {
+                    size: 18
+                },
+                padding: {
+                    top: 10,
+                    bottom: 10
+                }
+            },
+
         };
 
         return (

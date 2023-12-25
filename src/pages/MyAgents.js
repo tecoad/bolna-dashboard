@@ -47,7 +47,7 @@ function MyAgents({ session }) {
 
                 ) : (
                     <Box>
-                        <JsonTable sx={{ width: '70%' }} jsonData={agents} columnsToShow={["assistant_name", "assistant_type", "assistant_status"]} session={session} />
+                        <JsonTable sx={{ width: '70%' }} jsonData={agents} columnsToShow={["assistant_name", "assistant_type", "assistant_status"]} session={session} onClickPage={"agent-details"} />
                     </Box>
                 )
             }
