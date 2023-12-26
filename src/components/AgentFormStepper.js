@@ -96,9 +96,9 @@ function AgentFormStepper({ initialData, userId, isUpdate, agentId }) {
             ### Assistant Description
          ${convertToText(prompts['assistantDescription'])} 
         `
-        if (prompts['steps'] != null && prompts['steps'] != undefined) {
+        if (prompts['exampleConversation'] != null && prompts['exampleConversation'] != undefined) {
             base_prompt += `\n ### Steps
-            ${convertToText(prompts['steps'])}`
+            ${convertToText(prompts['exampleConversation'])}`
         }
 
         if (prompts['rules'] != null && prompts['rules'] != undefined) {
@@ -115,6 +115,8 @@ function AgentFormStepper({ initialData, userId, isUpdate, agentId }) {
             base_prompt += `\n ### FAQs
             ${convertToText(prompts['faqs'])}`
         }
+
+        base_prompt += `\n ### Note: \n 1. Just respond with one message at time. Always wait for user responses.`
 
         return base_prompt;
     }
