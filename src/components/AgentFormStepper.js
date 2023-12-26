@@ -92,8 +92,7 @@ function AgentFormStepper({ initialData, userId, isUpdate, agentId }) {
     };
 
     const getPromptJsonFromRulesConfig = (prompts) => {
-        var base_prompt = `You're an helpful assistant that is helping me roleplay. Find details for the role play like Assistant description, steps to follow while holding a conversation, rules to follow and objections that can be raised.
-
+        var base_prompt = `
             ### Assistant Description
          ${convertToText(prompts['assistantDescription'])} 
         `
