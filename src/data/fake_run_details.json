@@ -1,0 +1,152 @@
+[
+    {
+        "run_id": "081822c7-11dd-4d9c-86db-8d43ca88b9a1",
+        "run_duration": 68,
+        "run_date": "2023-12-21",
+        "total_cost": 2.91,
+        "cost_breakdown": {
+            "transcriber": 0.46,
+            "llm": 0.37,
+            "synth": 0.8,
+            "network": 0.93
+        },
+        "usageBreakdown": {
+            "transcriberModel": "nova2",
+            "transcriberDuration": 102,
+            "llmModel": "gpt-3.5-turbo",
+            "llmTokens": "103",
+            "synthesizerModel": "openai-tts",
+            "synthesizerCharacters": "504"
+        },
+        "transcript": "Random Convo",
+        "recording": "recording-url",
+        "followup-task details": {
+            "extraction_details": {
+                "value_1": 30,
+                "value_2": 24,
+                "value_3": 10
+            },
+            "summary": "A sample summary"
+        }
+    },
+    {
+        "run_id": "802d3179-8c3d-427d-9962-fc6ef18494a6",
+        "run_duration": 21,
+        "run_date": "2023-12-22",
+        "total_cost": 2.89,
+        "cost_breakdown": {
+            "transcriber": 0.45,
+            "llm": 0.71,
+            "synth": 0.69,
+            "network": 0.9
+        },
+        "usageBreakdown": {
+            "transcriberModel": "nova2",
+            "transcriberDuration": 102,
+            "llmModel": "gpt-3.5-turbo",
+            "llmTokens": "103",
+            "synthesizerModel": "openai-tts",
+            "synthesizerCharacters": "504"
+        },
+        "transcript": "Random Convo",
+        "recording": "",
+        "followup-task details": {
+            "extraction_details": {
+                "value_1": 30,
+                "value_2": 24,
+                "value_3": 10
+            },
+            "summary": "A sample summary"
+        }
+    },
+    {
+        "run_id": "1cca36cf-d66b-4138-ad9f-74f3556d4363",
+        "run_duration": 38,
+        "run_date": "2023-12-21",
+        "total_cost": 2.66,
+        "cost_breakdown": {
+            "transcriber": 0.46,
+            "llm": 0.93,
+            "synth": 0.45,
+            "network": 0.31
+        },
+        "usageBreakdown": {
+            "transcriberModel": "nova2",
+            "transcriberDuration": 102,
+            "llmModel": "gpt-3.5-turbo",
+            "llmTokens": "103",
+            "synthesizerModel": "openai-tts",
+            "synthesizerCharacters": "504"
+        },
+        "transcript": "Random Convo",
+        "recording": "",
+        "followup-task details": {
+            "extraction_details": {
+                "value_1": 30,
+                "value_2": 24,
+                "value_3": 10
+            },
+            "summary": "A sample summary"
+        }
+    },
+    {
+        "run_id": "68d17d2f-c48a-430f-be6c-695c395c037a",
+        "run_duration": 127,
+        "run_date": "2023-12-21",
+        "total_cost": 2.16,
+        "cost_breakdown": {
+            "transcriber": 0.48,
+            "llm": 0.4,
+            "synth": 0.86,
+            "network": 0.94
+        },
+        "usageBreakdown": {
+            "transcriberModel": "nova2",
+            "transcriberDuration": 102,
+            "llmModel": "gpt-3.5-turbo",
+            "llmTokens": "103",
+            "synthesizerModel": "openai-tts",
+            "synthesizerCharacters": "504"
+        },
+        "transcript": "Random Convo",
+        "recording": "",
+        "followup-task details": {
+            "extraction_details": {
+                "value_1": 30,
+                "value_2": 24,
+                "value_3": 10
+            },
+            "summary": "A sample summary"
+        }
+    },
+    {
+        "run_id": "85330a1a-0600-461f-a8fe-03e696a9a4f1",
+        "run_duration": 7,
+        "run_date": "2023-12-21",
+        "total_cost": 1.87,
+        "cost_breakdown": {
+            "transcriber": 0.19,
+            "llm": 0.1,
+            "synth": 0.65,
+            "network": 0.36
+        },
+        "usageBreakdown": {
+            "transcriberModel": "nova2",
+            "transcriberDuration": 102,
+            "llmModel": "gpt-3.5-turbo",
+            "llmTokens": "103",
+            "synthesizerModel": "openai-tts",
+            "synthesizerCharacters": "504"
+        },
+        "transcript": "Random Convo",
+        "recording": "",
+        "followup-task details": {
+            "extraction_details": {
+                "value_1": 30,
+                "value_2": 24,
+                "value_3": 10
+            },
+            "summary": "A sample summary"
+        }
+    }
+]

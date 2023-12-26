@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { Tabs, Tab, Box, Typography } from '@mui/material';
 
-function CustomTabs({ tabsData, orientation }) {
+function CustomTabs({ tabsData, orientation, setActiveTabInParent }) {
     const [activeTab, setActiveTab] = useState(0);
 
     const handleChange = (event, newValue) => {
         setActiveTab(newValue);
+        if (setActiveTabInParent != null && setActiveTabInParent != undefined) {
+            setActiveTabInParent(newValue)
+        }
     };
 
     const activeTabStyle = {

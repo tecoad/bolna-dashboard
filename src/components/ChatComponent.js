@@ -41,7 +41,7 @@ function ChatComponent({ agentId, isOpen, userId }) {
                 }
             }
             else {
-                incomingMessage += receivedMessage.data;
+                incomingMessage += " " + receivedMessage.data;
             }
         } else if (receivedMessage.type == "audio") {
             console.log(`Got audio message`)

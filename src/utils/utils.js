@@ -77,13 +77,7 @@ const getToolsConfig = (taskType, extraConfig) => {
             "max_tokens": 100,
             "family": "openai",
             "request_json": true
-        },
-
-        "output": {
-            "provider": "database",
-            "format": "json"
         }
-
     }
 
     if (taskType === "notification") {
