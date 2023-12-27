@@ -13,6 +13,7 @@ function GraphInterface({ nodes, onNodesChange, setNodes, edges, onEdgesChange, 
     const [open, setOpen] = useState(false);
     const [nodeData, setNodeData] = useState({ label: '', content: '', examples: '' });
     const [selectedNode, setSelectedNode] = useState(null);
+    const [selectedEdge, setSelectedEdge] = useState(null);
 
     const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), [setEdges]);
 
@@ -43,8 +44,15 @@ function GraphInterface({ nodes, onNodesChange, setNodes, edges, onEdgesChange, 
         setSelectedNode(null);
     };
 
+    const onPaneClick = () => {
+        setSelectedEdge(null);
+    };
+
+
     const onNodeClick = (event, node) => {
         handleOpenDialog(node);
+        setSelectedEdge(null);
+
     };
     const onDeleteNode = () => {
         if (selectedNode) {
@@ -54,6 +62,20 @@ function GraphInterface({ nodes, onNodesChange, setNodes, edges, onEdgesChange, 
             setOpen(false);
         }
     };
+
+    const onEdgeClick = (event, edge) => {
+        setSelectedEdge(edge);
+    };
+
+    const onDeleteEdge = () => {
+        if (selectedEdge) {
+            setEdges((eds) => eds.filter((e) => e.id !== selectedEdge.id));
+            setSelectedEdge(null); // Reset the selected edge
+        }
+    };
+
+
+
 
     return (
         <div style={{ height: 400 }}>
@@ -65,10 +87,16 @@ function GraphInterface({ nodes, onNodesChange, setNodes, edges, onEdgesChange, 
                 onConnect={onConnect}
                 onNodeClick={onNodeClick}
                 fitView
+                onEdgeClick={onEdgeClick}
+                onPaneClick={onPaneClick}
             >
                 <MiniMap />
                 <Controls />
             </ReactFlow>
+
+            {selectedEdge && (
+                <Button disabled={selectedEdge == null} onClick={onDeleteEdge}>Delete Edge</Button>
+            )}
 
             <Button variant="outlined" onClick={() => handleOpenDialog()}>Add Node</Button>
 

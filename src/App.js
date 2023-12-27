@@ -66,6 +66,8 @@ function App() {
     })
   }, [])
 
+  const redirectUrl = (process.env.REACT_APP_REDIRECT_URL == null || process.env.REACT_APP_REDIRECT_URL == undefined) ? "https://app.bolna.dev" : process.env.REACT_APP_REDIRECT_URL
+  console.log(`process.env.REACT_APP_REDIRECT_URL ${process.env.REACT_APP_REDIRECT_URL} redirectUrl ${redirectUrl}`)
 
   return (
     <ThemeProvider theme={theme}>
@@ -78,9 +80,9 @@ function App() {
                 !session ? (
                   <header className="App-header">
                     <Auth
-                      redirectTo="https://app.bolna.dev"
+                      redirectTo={redirectUrl}
                       supabaseClient={supabase}
-                      providers={["github", "google"]}
+                      providers={["github"]}
                       appearance={{
                         theme: ThemeSupa,
                         variables: {
