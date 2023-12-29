@@ -22,7 +22,7 @@ function Dashboard({ supabase }) {
     const logoutUser = () => {
 
         supabase.auth.signOut().then(() => {
-            alert("Logger out")
+            alert("Logged out")
         })
     }
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Stepper, Step, StepLabel, Button, Typography, Box, StepButton } from '@mui/material';
 import BasicConfiguration from '../pages/steps/BasicConfiguration'; // Import your step components
 import EngagementSettings from '../pages/steps/EngagementSettings';
@@ -17,12 +17,50 @@ function AgentFormStepper({ initialData, userId, isUpdate, agentId }) {
     const [activeStep, setActiveStep] = useState(0);
     const [formData, setFormData] = useState(initialData);
     const [completed, setCompleted] = useState({})
+    const [voices, setVoices] = useState([]);
+    const llmModels = ['GPT-3.5', 'GPT-4', 'Mixtral', 'Mistral-7B', 'Llama2-7B', 'Llama2-13B', 'Llama2-70B']; // Array of models
     const defaultRootNode = {
         id: 'root-node',
         type: 'default',
         data: { label: 'intro', content: 'Am I speaking with {}', examples: '', isRoot: true },
         position: { x: 250, y: 5 },
     };
+
+
+
+    useEffect(() => {
+        const fetchModels = async () => {
+            setLoading(true);
+            try {
+                const response = await axios.get(`${process.env.REACT_APP_FAST_API_BACKEND_URL}/user/voices?user_id=${userId}`);
+                setVoices(response.data);
+                console.log(`Voices ${JSON.stringify(response.data)}`)
+            } catch (error) {
+                console.error('Error fetching agents:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        if (userId) {
+            fetchModels();
+        }
+
+    }, [userId]);
+
+    var selectedVoice = null
+
+    if (initialData.modelsConfig.ttsConfig.voice != '') {
+        console.log(`Initial Data ${JSON.stringify(initialData)}`)
+        selectedVoice = voices.find(voice => voice.name === initialData.modelsConfig.ttsConfig.voice)
+    }
+
+    if (initialData.modelsConfig.ttsConfig.voice == '' && voices.length != 0) {
+        selectedVoice = voices[0]
+        console.log(`Setting voice to ${voices[0].name}`)
+        initialData.modelsConfig.ttsConfig.voice = voices[0].name;
+    }
+
 
     const [nodes, setNodes, onNodesChange] = useNodesState(initialData.basicConfig.assistantType == "IVR" ? initialData.rulesConfig?.graph?.nodes : [defaultRootNode]);
     const [edges, setEdges, onEdgesChange] = useEdgesState(initialData.basicConfig.assistantType == "IVR" ? initialData.rulesConfig?.graph?.edges : []);
@@ -161,16 +199,15 @@ function AgentFormStepper({ initialData, userId, isUpdate, agentId }) {
             }
         }
 
-        console.log(`Sending backkend reques to ${process.env.REACT_APP_FAST_API_BACKEND_URL}, agentID ${agentId} json ${JSON.stringify(payload)}`)
+        console.log(`Sending backkend request to ${process.env.REACT_APP_FAST_API_BACKEND_URL}, agentID ${agentId} json ${JSON.stringify(payload)}`)
         try {
             if (isUpdate) {
                 const response = await axios.put(`${process.env.REACT_APP_FAST_API_BACKEND_URL}/assistant/${agentId}`, payload);
-                console.log(response.data); // handle response
+                console.log(response.data);
 
             } else {
                 const response = await axios.post(`${process.env.REACT_APP_FAST_API_BACKEND_URL}/assistant`, payload);
-                console.log(response.data); // handle response
-
+                console.log(response.data);
             }
             navigate('/dashboard/my-agents');
         } catch (error) {
@@ -180,7 +217,7 @@ function AgentFormStepper({ initialData, userId, isUpdate, agentId }) {
                 console.error('Error during API call', error);
             }
         } finally {
-            setLoading(false); // Stop loading regardless of the outcome
+            setLoading(false);
         }
     };
 
@@ -194,7 +231,7 @@ function AgentFormStepper({ initialData, userId, isUpdate, agentId }) {
             case 0:
                 return <BasicConfiguration formData={formData} onFormDataChange={handleFormDataChange} />;
             case 1:
-                return <ModelSettings formData={formData} onFormDataChange={handleFormDataChange} />;
+                return <ModelSettings formData={formData} onFormDataChange={handleFormDataChange} llmModels={llmModels} voices={voices} initiallySelectedVoice={selectedVoice} />;
             case 2:
                 return <EngagementSettings formData={formData} onFormDataChange={handleFormDataChange} />;
             case 3:

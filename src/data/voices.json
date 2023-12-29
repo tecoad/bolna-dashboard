@@ -1,0 +1,857 @@
+[
+    {
+        "name": "Isabelle",
+        "id": "Isabelle",
+        "languageCode": "fr-BE",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Belgium (French)"
+    },
+    {
+        "name": "Danielle",
+        "id": "Danielle",
+        "languageCode": "en-US",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "United States (English)"
+    },
+    {
+        "name": "Gregory",
+        "id": "Gregory",
+        "languageCode": "en-US",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "United States (English)"
+    },
+    {
+        "name": "Kevin",
+        "id": "Kevin",
+        "languageCode": "en-US",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "United States (English)"
+    },
+    {
+        "name": "Filiz",
+        "id": "Filiz",
+        "languageCode": "tr-TR",
+        "model": "standard",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Turkish"
+    },
+    {
+        "name": "Elin",
+        "id": "Elin",
+        "languageCode": "sv-SE",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Swedish"
+    },
+    {
+        "name": "Astrid",
+        "id": "Astrid",
+        "languageCode": "sv-SE",
+        "model": "standard",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Swedish"
+    },
+    {
+        "name": "Tatyana",
+        "id": "Tatyana",
+        "languageCode": "ru-RU",
+        "model": "standard",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Russia"
+    },
+    {
+        "name": "Maxim",
+        "id": "Maxim",
+        "languageCode": "ru-RU",
+        "model": "standard",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Russia"
+    },
+    {
+        "name": "Carmen",
+        "id": "Carmen",
+        "languageCode": "ro-RO",
+        "model": "standard",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Romanian"
+    },
+    {
+        "name": "Inês",
+        "id": "Inês",
+        "languageCode": "pt-PT",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Portugal"
+    },
+    {
+        "name": "Cristiano",
+        "id": "Cristiano",
+        "languageCode": "pt-PT",
+        "model": "standard",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Portugal"
+    },
+    {
+        "name": "Vitória",
+        "id": "Vitória",
+        "languageCode": "pt-BR",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Brazilian"
+    },
+    {
+        "name": "Ricardo",
+        "id": "Ricardo",
+        "languageCode": "pt-BR",
+        "model": "standard",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Brazilian"
+    },
+    {
+        "name": "Camila",
+        "id": "Camila",
+        "languageCode": "pt-BR",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Brazilian"
+    },
+    {
+        "name": "Maja",
+        "id": "Maja",
+        "languageCode": "pl-PL",
+        "model": "standard",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Polish"
+    },
+    {
+        "name": "Jan",
+        "id": "Jan",
+        "languageCode": "pl-PL",
+        "model": "standard",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Polish"
+    },
+    {
+        "name": "Jacek",
+        "id": "Jacek",
+        "languageCode": "pl-PL",
+        "model": "standard",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Polish"
+    },
+    {
+        "name": "Ewa",
+        "id": "Ewa",
+        "languageCode": "pl-PL",
+        "model": "standard",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Polish"
+    },
+    {
+        "name": "Ola",
+        "id": "Ola",
+        "languageCode": "pl-PL",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Polish"
+    },
+    {
+        "name": "Lisa",
+        "id": "Lisa",
+        "languageCode": "nl-BE",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Belgium (Flemish)"
+    },
+    {
+        "name": "Ruben",
+        "id": "Ruben",
+        "languageCode": "nl-NL",
+        "model": "standard",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Netherlands"
+    },
+    {
+        "name": "Lotte",
+        "id": "Lotte",
+        "languageCode": "nl-NL",
+        "model": "standard",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Netherlands"
+    },
+    {
+        "name": "Laura",
+        "id": "Laura",
+        "languageCode": "nl-NL",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Netherlands"
+    },
+    {
+        "name": "Ida",
+        "id": "Ida",
+        "languageCode": "nb-NO",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Norwegian"
+    },
+    {
+        "name": "Liv",
+        "id": "Liv",
+        "languageCode": "nb-NO",
+        "model": "standard",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Norwegian"
+    },
+    {
+        "name": "Seoyeon",
+        "id": "Seoyeon",
+        "languageCode": "ko-KR",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "South Korean"
+    },
+    {
+        "name": "Kazuha",
+        "id": "Kazuha",
+        "languageCode": "ja-JP",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Japan"
+    },
+    {
+        "name": "Tomoko",
+        "id": "Tomoko",
+        "languageCode": "ja-JP",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Japan"
+    },
+    {
+        "name": "Takumi",
+        "id": "Takumi",
+        "languageCode": "ja-JP",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Japan"
+    },
+    {
+        "name": "Mizuki",
+        "id": "Mizuki",
+        "languageCode": "ja-JP",
+        "model": "standard",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Japan"
+    },
+    {
+        "name": "Bianca",
+        "id": "Bianca",
+        "languageCode": "it-IT",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Italian"
+    },
+    {
+        "name": "Giorgio",
+        "id": "Giorgio",
+        "languageCode": "it-IT",
+        "model": "standard",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Italian"
+    },
+    {
+        "name": "Carla",
+        "id": "Carla",
+        "languageCode": "it-IT",
+        "model": "standard",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Italian"
+    },
+    {
+        "name": "Karl",
+        "id": "Karl",
+        "languageCode": "is-IS",
+        "model": "standard",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Iceland"
+    },
+    {
+        "name": "Dóra",
+        "id": "Dóra",
+        "languageCode": "is-IS",
+        "model": "standard",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Iceland"
+    },
+    {
+        "name": "Mathieu",
+        "id": "Mathieu",
+        "languageCode": "fr-FR",
+        "model": "standard",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "French"
+    },
+    {
+        "name": "Léa",
+        "id": "Léa",
+        "languageCode": "fr-FR",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "French"
+    },
+    {
+        "name": "Céline",
+        "id": "Céline",
+        "languageCode": "fr-FR",
+        "model": "standard",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "French"
+    },
+    {
+        "name": "Chantal",
+        "id": "Chantal",
+        "languageCode": "fr-CA",
+        "model": "standard",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Canadian (French)"
+    },
+    {
+        "name": "Gabrielle",
+        "id": "Gabrielle",
+        "languageCode": "fr-CA",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Canadian (French)"
+    },
+    {
+        "name": "Penélope",
+        "id": "Penélope",
+        "languageCode": "es-US",
+        "model": "standard",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "United States (Spanish)"
+    },
+    {
+        "name": "Miguel",
+        "id": "Miguel",
+        "languageCode": "es-US",
+        "model": "standard",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "United States (Spanish)"
+    },
+    {
+        "name": "Lupe",
+        "id": "Lupe",
+        "languageCode": "es-US",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "United States (Spanish)"
+    },
+    {
+        "name": "Mia",
+        "id": "Mia",
+        "languageCode": "es-MX",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Mexican"
+    },
+    {
+        "name": "Lucia",
+        "id": "Lucia",
+        "languageCode": "es-ES",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Spanish (Castilian)"
+    },
+    {
+        "name": "Enrique",
+        "id": "Enrique",
+        "languageCode": "es-ES",
+        "model": "standard",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Spanish (Castilian)"
+    },
+    {
+        "name": "Conchita",
+        "id": "Conchita",
+        "languageCode": "es-ES",
+        "model": "standard",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Spanish (Castilian)"
+    },
+    {
+        "name": "Geraint",
+        "id": "Geraint",
+        "languageCode": "en-GB-WLS",
+        "model": "standard",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Welsh"
+    },
+    {
+        "name": "Salli",
+        "id": "Salli",
+        "languageCode": "en-US",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "United States (English)"
+    },
+    {
+        "name": "Matthew",
+        "id": "Matthew",
+        "languageCode": "en-US",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "United States (English)"
+    },
+    {
+        "name": "Kimberly",
+        "id": "Kimberly",
+        "languageCode": "en-US",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "United States (English)"
+    },
+    {
+        "name": "Kendra",
+        "id": "Kendra",
+        "languageCode": "en-US",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "United States (English)"
+    },
+    {
+        "name": "Justin",
+        "id": "Justin",
+        "languageCode": "en-US",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "United States (English)"
+    },
+    {
+        "name": "Joey",
+        "id": "Joey",
+        "languageCode": "en-US",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "United States (English)"
+    },
+    {
+        "name": "Joanna",
+        "id": "Joanna",
+        "languageCode": "en-US",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "United States (English)"
+    },
+    {
+        "name": "Ivy",
+        "id": "Ivy",
+        "languageCode": "en-US",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "United States (English)"
+    },
+    {
+        "name": "Aria",
+        "id": "Aria",
+        "languageCode": "en-NZ",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "New Zealand"
+    },
+    {
+        "name": "Ayanda",
+        "id": "Ayanda",
+        "languageCode": "en-ZA",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "South African"
+    },
+    {
+        "name": "Raveena",
+        "id": "Raveena",
+        "languageCode": "en-IN",
+        "model": "standard",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Indian"
+    },
+    {
+        "name": "Aditi",
+        "id": "Aditi",
+        "languageCode": "en-IN",
+        "model": "standard",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Indian"
+    },
+    {
+        "name": "Emma",
+        "id": "Emma",
+        "languageCode": "en-GB",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "British"
+    },
+    {
+        "name": "Brian",
+        "id": "Brian",
+        "languageCode": "en-GB",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "British"
+    },
+    {
+        "name": "Amy",
+        "id": "Amy",
+        "languageCode": "en-GB",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "British"
+    },
+    {
+        "name": "Russell",
+        "id": "Russell",
+        "languageCode": "en-AU",
+        "model": "standard",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Australian"
+    },
+    {
+        "name": "Nicole",
+        "id": "Nicole",
+        "languageCode": "en-AU",
+        "model": "standard",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Australian"
+    },
+    {
+        "name": "Olivia",
+        "id": "Olivia",
+        "languageCode": "en-AU",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Australian"
+    },
+    {
+        "name": "Vicki",
+        "id": "Vicki",
+        "languageCode": "de-DE",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "German"
+    },
+    {
+        "name": "Marlene",
+        "id": "Marlene",
+        "languageCode": "de-DE",
+        "model": "standard",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "German"
+    },
+    {
+        "name": "Hans",
+        "id": "Hans",
+        "languageCode": "de-DE",
+        "model": "standard",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "German"
+    },
+    {
+        "name": "Naja",
+        "id": "Naja",
+        "languageCode": "da-DK",
+        "model": "standard",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Denmark"
+    },
+    {
+        "name": "Mads",
+        "id": "Mads",
+        "languageCode": "da-DK",
+        "model": "standard",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Denmark"
+    },
+    {
+        "name": "Sofie",
+        "id": "Sofie",
+        "languageCode": "da-DK",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Denmark"
+    },
+    {
+        "name": "Gwyneth",
+        "id": "Gwyneth",
+        "languageCode": "cy-GB",
+        "model": "standard",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "United Kingdom (Welsh)"
+    },
+    {
+        "name": "Zhiyu",
+        "id": "Zhiyu",
+        "languageCode": "cmn-CN",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "China Mainland"
+    },
+    {
+        "name": "Zeina",
+        "id": "Zeina",
+        "languageCode": "arb",
+        "model": "standard",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Standard Arabic"
+    },
+    {
+        "name": "Hala",
+        "id": "Hala",
+        "languageCode": "ar-AE",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Arab"
+    },
+    {
+        "name": "Arlet",
+        "id": "Arlet",
+        "languageCode": "ca-ES",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Catalan"
+    },
+    {
+        "name": "Hannah",
+        "id": "Hannah",
+        "languageCode": "de-AT",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Austrian"
+    },
+    {
+        "name": "Ruth",
+        "id": "Ruth",
+        "languageCode": "en-US",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "United States (English)"
+    },
+    {
+        "name": "Stephen",
+        "id": "Stephen",
+        "languageCode": "en-US",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "United States (English)"
+    },
+    {
+        "name": "Kajal",
+        "id": "Kajal",
+        "languageCode": "en-IN",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Indian"
+    },
+    {
+        "name": "Hiujin",
+        "id": "Hiujin",
+        "languageCode": "yue-CN",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Guangdong/Hong Kong"
+    },
+    {
+        "name": "Suvi",
+        "id": "Suvi",
+        "languageCode": "fi-FI",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Finish"
+    },
+    {
+        "name": "Niamh",
+        "id": "Niamh",
+        "languageCode": "en-IE",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Irish"
+    },
+    {
+        "name": "Arthur",
+        "id": "Arthur",
+        "languageCode": "en-GB",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "British"
+    },
+    {
+        "name": "Daniel",
+        "id": "Daniel",
+        "languageCode": "de-DE",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "German"
+    },
+    {
+        "name": "Liam",
+        "id": "Liam",
+        "languageCode": "fr-CA",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Canadian (French)"
+    },
+    {
+        "name": "Pedro",
+        "id": "Pedro",
+        "languageCode": "es-US",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "United States (Spanish)"
+    },
+    {
+        "name": "Sergio",
+        "id": "Sergio",
+        "languageCode": "es-ES",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Spanish (Castilian)"
+    },
+    {
+        "name": "Andrés",
+        "id": "Andrés",
+        "languageCode": "es-MX",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Mexican"
+    },
+    {
+        "name": "Rémi",
+        "id": "Rémi",
+        "languageCode": "fr-FR",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "French"
+    },
+    {
+        "name": "Adriano",
+        "id": "Adriano",
+        "languageCode": "it-IT",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Italian"
+    },
+    {
+        "name": "Thiago",
+        "id": "Thiago",
+        "languageCode": "pt-BR",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Brazilian"
+    },
+    {
+        "name": "Zayd",
+        "id": "Zayd",
+        "languageCode": "ar-AE",
+        "model": "neural",
+        "provider": "polly",
+        "lowLatency": true,
+        "accent": "Arab"
+    }
+]

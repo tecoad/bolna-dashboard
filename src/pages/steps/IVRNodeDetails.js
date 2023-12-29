@@ -27,18 +27,23 @@ function NodeDetails({ nodeData, setNodeData }) {
 
     // Template text
     const templateText = `
-*Edit the given example to suit your needs and completely remove it if you do not want to classify message beyond this point*
-Explanation of children labels with examples go here. For child labels interested and not interested follow the possible example list should be.
-For If user utters anything that indicates that they're interested yield interested Example 
-1. Yes, speaking
-2. Who's this
-3. No, but who's speaking
+    (Edit the example to suit your needs. Delete explanatory messages when done)
 
-If user is not interested yield not_interested. For example
-1. Not interested
-2. Go screw yourself
-3. Yes speaking but call me later.
-`;
+    If user says anything that indicates they are interested yield interested. Example
+
+    1. Yes, speaking
+    2. No, who is this?
+    3. Who are you
+    4. Yes tell me
+
+    If user says anything that indicates they are not interested in this conversation yield not_interested. Example
+
+    1. Don’t bother me
+    2. How dare you call me
+    3. I am not interested
+
+    (You should make 2 nodes with the label interested and not_interested and connect this node to those. If this is the final node of the conversation, this entire text box should be blank)
+    `;
 
 
     return (

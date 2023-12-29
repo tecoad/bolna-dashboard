@@ -1,49 +1,41 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { TextField, FormControl, InputLabel, Select, MenuItem, Slider, Typography, Grid, Box, Autocomplete } from '@mui/material';
 
-const models = ['GPT-3.5', 'GPT-4', 'Mixtral', 'Mistral-7B', 'Llama2-7B', 'Llama2-13B', 'Llama2-70B']; // Array of models
 
-function ModelSettings({ formData, onFormDataChange }) {
-
+function ModelSettings({ formData, onFormDataChange, llmModels, voices, initiallySelectedVoice }) {
+    var val = null
+    var key = null
+    const [selectedVoice, setSelectedVoice] = useState(initiallySelectedVoice);
     const handleChange = (type, event) => {
-        let conf = type + "Config"
-        let newFormData = {
-            ...formData,
-            modelsConfig: {
-                ...formData.modelsConfig,
-                [conf]: {
-                    ...formData.modelsConfig[conf],
-                    [event.target.name]: event.target.value
-                }
+        if (event?.target?.name == undefined || event?.target?.name == null) {
+            if (type == "asr") {
+                val = event
+                key = "language"
+            } else {
+                val = event.name
+                key = "voice"
+                setSelectedVoice(event)
             }
+
+        } else {
+            val = event.target.value
         }
-        console.log(`Form data ${JSON.stringify(newFormData)}`);
+
+        console.log(`Name ${key} Value ${val}`)
+
+        let conf = type + "Config"
         onFormDataChange({
             ...formData,
             modelsConfig: {
                 ...formData.modelsConfig,
                 [conf]: {
                     ...formData.modelsConfig[conf],
-                    [event.target.name]: event.target.value
+                    [key]: val
                 }
             }
         });
     };
 
-
-    // const handleSliderChange = (event, newValue) => {
-    //     console.log(`New value for slider ${event.target.value}`)
-    //     onFormDataChange({
-    //         ...formData,
-    //         modelsConfig: {
-    //             ...formData.modelsConfig,
-    //             llmConfig: {
-    //                 ...formData.modelsConfig.llmConfig,
-    //                 temperature: newValue
-    //             }
-    //         }
-    //     });
-    // };
 
     const marks = [
         { value: 0, label: 'Professional' },
@@ -54,7 +46,6 @@ function ModelSettings({ formData, onFormDataChange }) {
     const asrModels = ['AWS', 'Google', 'Nova-2', 'Whisper'];
     const samplingRates = [8000, 16000, 24000, 44100, 48000];
     const channels = ['1', '2'];
-    const ttsVoices = ['Mark', 'Jessica', 'Kamlesh', 'Rekha', 'Priya', 'Suresh'];
 
 
     return (
@@ -72,7 +63,7 @@ function ModelSettings({ formData, onFormDataChange }) {
                             value={formData.modelsConfig.llmConfig.model || ''}
                             onChange={(e, val) => handleChange("llm", e)}
                         >
-                            {models.map((model, index) => (
+                            {llmModels.map((model, index) => (
                                 <MenuItem key={index} value={model}>{model}</MenuItem>
                             ))}
                         </Select>
@@ -127,12 +118,13 @@ function ModelSettings({ formData, onFormDataChange }) {
                     <FormControl sx={{ alignItems: "left", width: "60%", marginTop: '-1%' }}>
                         <Autocomplete
                             options={languages}
+                            name="language"
                             getOptionLabel={(option) => option}
                             value={formData.modelsConfig.asrConfig.language}
                             renderInput={(params) => (
                                 <TextField {...params} label="Language" margin="normal" />
                             )}
-                            onChange={e => handleChange("asr", e)}
+                            onChange={(event, newValue) => handleChange("asr", newValue)}
                         />
 
                     </FormControl>
@@ -183,16 +175,27 @@ function ModelSettings({ formData, onFormDataChange }) {
                 </Grid>
                 <Grid item xs={12} md={9}>
                     <FormControl sx={{ alignItems: "left", width: "60%" }}>
-                        <InputLabel>Voice</InputLabel>
-                        <Select
+
+                        <Autocomplete
+                            options={voices}
+                            defaultValue={selectedVoice}
                             name="voice"
-                            value={formData.modelsConfig.ttsConfig.voice || ''}
-                            onChange={e => handleChange("tts", e)}
-                        >
-                            {ttsVoices.map((voice, index) => (
-                                <MenuItem key={index} value={voice}>{voice}</MenuItem>
-                            ))}
-                        </Select>
+                            getOptionLabel={(option) => option.name}
+                            filterOptions={(options, { inputValue }) => {
+                                return options.filter(option =>
+                                    option.name.toLowerCase().includes(inputValue.toLowerCase()) ||
+                                    option.languageCode.toLowerCase().includes(inputValue.toLowerCase()) ||
+                                    option.model.toLowerCase().includes(inputValue.toLowerCase()) ||
+                                    option.provider.toLowerCase().includes(inputValue.toLowerCase()) ||
+                                    option.accent.toLowerCase().includes(inputValue.toLowerCase())
+                                );
+                            }}
+                            renderInput={(params) => <TextField {...params} label="Select Voice" />}
+                            onChange={(event, newValue) => handleChange("tts", newValue)}
+                            fullWidth
+                            margin="normal"
+                        />
+
                     </FormControl>
 
                     <FormControl sx={{ alignItems: "left", width: "60%", marginTop: "-1%" }}>

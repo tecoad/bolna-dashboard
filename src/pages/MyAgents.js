@@ -14,7 +14,7 @@ function MyAgents({ session }) {
             setIsLoading(true);
             try {
                 const response = await axios.get(`${process.env.REACT_APP_FAST_API_BACKEND_URL}/assistants?user_id=${session.user.id}`);
-                setAgents(response.data); // Assuming the response data is the array of agents
+                setAgents(response.data);
             } catch (error) {
                 console.error('Error fetching agents:', error);
                 setError(error);
@@ -47,7 +47,7 @@ function MyAgents({ session }) {
 
                 ) : (
                     <Box>
-                        <JsonTable sx={{ width: '70%' }} jsonData={agents} columnsToShow={["assistant_name", "assistant_type", "assistant_status"]} session={session} onClickPage={"agent-details"} />
+                        <JsonTable sx={{ width: '70%' }} jsonData={agents} columnsToShow={["assistant_name", "assistant_type", "assistant_status"]} session={session} onClickPage={"agent-details"} clickable={true} headersDisplayedAs={["Assistant Name", "Assistant Task", "Assistant Status"]} />
                     </Box>
                 )
             }

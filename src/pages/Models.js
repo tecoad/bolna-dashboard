@@ -10,14 +10,13 @@ import TTSModels from './models/TTSModels';
 import LLMModels from './models/LLMModels';
 import VoiceLab from './models/VoiceLab';
 
-function Models() {
+function Models({ session }) {
     const location = useLocation();
     const navigate = useNavigate();
-    const userId = location.state?.userId;
     const [loading, setLoading] = useState(false);
     const [openVoiceLabs, setOpenVoiceLabs] = useState(false);
     const [activeTab, setActiveTab] = useState(0)
-
+    const userId = ""
     const handleOpenVoiceLabs = () => {
         setOpenVoiceLabs(true);
     };
@@ -25,14 +24,13 @@ function Models() {
     const handleCloseVoiceLabs = () => {
         setOpenVoiceLabs(false);
     };
-    useEffect(() => {
-    }, [userId]);
+
 
 
     const tabsData = [
         { name: 'ASR', component: <ASRModels /> },
         { name: 'LLM', component: <LLMModels /> },
-        { name: 'TTS', component: <TTSModels /> },
+        { name: 'TTS', component: <TTSModels session={session} /> },
     ];
 
     return (
@@ -63,7 +61,7 @@ function Models() {
                     <CustomTabs tabsData={tabsData} orientation={"horizontal"} setActiveTabInParent={setActiveTab} />
 
                     {/* Dialog for Voice Lab     */}
-                    <Dialog open={openVoiceLabs} onClose={handleCloseVoiceLabs} fullWidth maxWidth="md">
+                    <Dialog open={openVoiceLabs} onClose={handleCloseVoiceLabs} userId={session?.user?.id} fullWidth maxWidth="md">
                         <VoiceLab />
                     </Dialog>
                 </>
