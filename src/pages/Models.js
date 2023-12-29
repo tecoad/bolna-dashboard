@@ -13,9 +13,14 @@ import VoiceLab from './models/VoiceLab';
 function Models({ session }) {
     const location = useLocation();
     const navigate = useNavigate();
-    const [loading, setLoading] = useState(false);
     const [openVoiceLabs, setOpenVoiceLabs] = useState(false);
     const [activeTab, setActiveTab] = useState(0)
+    const [voices, setVoices] = useState([]);
+    const [loading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [llmModels, setLLMModels] = useState(null)
+
+
     const userId = ""
     const handleOpenVoiceLabs = () => {
         setOpenVoiceLabs(true);
@@ -26,11 +31,32 @@ function Models({ session }) {
     };
 
 
+    useEffect(() => {
+        const fetchModels = async () => {
+            setIsLoading(true);
+            try {
+                const response = await axios.get(`${process.env.REACT_APP_FAST_API_BACKEND_URL}/user/models?user_id=${session.user.id}`);
+                setVoices(response.data.voices);
+                setLLMModels(response.data.llmModels);
+                console.log(`Voices ${JSON.stringify(response.data)}`)
+            } catch (error) {
+                console.error('Error fetching agents:', error);
+                setError(error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        if (session && session.user && session.user.id) {
+            fetchModels();
+        }
+
+    }, [session]);
 
     const tabsData = [
         { name: 'ASR', component: <ASRModels /> },
-        { name: 'LLM', component: <LLMModels /> },
-        { name: 'TTS', component: <TTSModels session={session} /> },
+        { name: 'LLM', component: <LLMModels llmModels={llmModels} /> },
+        { name: 'TTS', component: <TTSModels voices={voices} /> },
     ];
 
     return (
@@ -60,7 +86,7 @@ function Models({ session }) {
                     </Box>
                     <CustomTabs tabsData={tabsData} orientation={"horizontal"} setActiveTabInParent={setActiveTab} />
 
-                    {/* Dialog for Voice Lab     */}
+                    {/* Dialog for Voice Lab */}
                     <Dialog open={openVoiceLabs} onClose={handleCloseVoiceLabs} userId={session?.user?.id} fullWidth maxWidth="md">
                         <VoiceLab />
                     </Dialog>

@@ -7,9 +7,10 @@ export const CREATE_AGENT_FORM = {
     },
     modelsConfig: {
         llmConfig: {
-            model: 'GPT-3.5',
+            model: '',
             maxTokens: 100,
-            temperature: 0.2
+            temperature: 0.2,
+            family: ''
         },
         asrConfig: {
             model: 'Nova-2',
@@ -189,10 +190,10 @@ export const convertToCreateAgentPayload = (agentData) => {
                 "tools_config": {
                     "llm_agent": {
                         "max_tokens": agentData.modelsConfig.llmConfig.maxTokens,
-                        "family": "openai",
-                        "streaming_model": getModel(agentData.modelsConfig.llmConfig.model, "llm", agentData.basicConfig.assistantType),
+                        "family": agentData.modelsConfig.llmConfig.family,
+                        "streaming_model": agentData.modelsConfig.llmConfig.model,
                         "agent_flow_type": agentData.basicConfig.assistantType === "IVR" ? "preprocessed" : "streaming",
-                        "classification_model": getModel(agentData.modelsConfig.llmConfig.model, "llm", agentData.basicConfig.assistantType),
+                        "classification_model": agentData.modelsConfig.llmConfig.model,
                         "use_fallback": true,
                     },
                     "synthesizer": { ...getSynthesizerConfig(agentData) },
@@ -330,7 +331,7 @@ export const convertToCreateAgentForm = (payload) => {
         },
         modelsConfig: {
             llmConfig: {
-                model: getOriginalModel(llmAgent.streaming_model, "llm", llmAgent.agent_flow_type),
+                model: llmAgent.streaming_model,
                 maxTokens: llmAgent.max_tokens,
                 temperature: 0.2
             },

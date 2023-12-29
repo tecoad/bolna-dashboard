@@ -18,7 +18,7 @@ function AgentFormStepper({ initialData, userId, isUpdate, agentId }) {
     const [formData, setFormData] = useState(initialData);
     const [completed, setCompleted] = useState({})
     const [voices, setVoices] = useState([]);
-    const llmModels = ['GPT-3.5', 'GPT-4', 'Mixtral', 'Mistral-7B', 'Llama2-7B', 'Llama2-13B', 'Llama2-70B']; // Array of models
+    const [llmModels, setLLMModels] = useState([]);
     const defaultRootNode = {
         id: 'root-node',
         type: 'default',
@@ -32,8 +32,9 @@ function AgentFormStepper({ initialData, userId, isUpdate, agentId }) {
         const fetchModels = async () => {
             setLoading(true);
             try {
-                const response = await axios.get(`${process.env.REACT_APP_FAST_API_BACKEND_URL}/user/voices?user_id=${userId}`);
-                setVoices(response.data);
+                const response = await axios.get(`${process.env.REACT_APP_FAST_API_BACKEND_URL}/user/models?user_id=${userId}`);
+                setVoices(response.data.voices);
+                setLLMModels(response.data.llmModels);
                 console.log(`Voices ${JSON.stringify(response.data)}`)
             } catch (error) {
                 console.error('Error fetching agents:', error);
@@ -49,16 +50,19 @@ function AgentFormStepper({ initialData, userId, isUpdate, agentId }) {
     }, [userId]);
 
     var selectedVoice = null
-
+    var selectedLLMModel = null
     if (initialData.modelsConfig.ttsConfig.voice != '') {
-        console.log(`Initial Data ${JSON.stringify(initialData)}`)
         selectedVoice = voices.find(voice => voice.name === initialData.modelsConfig.ttsConfig.voice)
+        selectedLLMModel = llmModels.find(model => model.model == initialData.modelsConfig.llmConfig.model)
     }
 
     if (initialData.modelsConfig.ttsConfig.voice == '' && voices.length != 0) {
         selectedVoice = voices[0]
+        const initialModel = initialData.basicConfig.assistantType == "IVR" ? "gpt-3.5-turbo-1106" : "gpt-3.5-turbo-16k"
+        selectedLLMModel = llmModels.filter(model => model.model == initialModel)[0] // Make sure initially selected model is a gpt-3.5 one
         console.log(`Setting voice to ${voices[0].name}`)
         initialData.modelsConfig.ttsConfig.voice = voices[0].name;
+        initialData.modelsConfig.llmConfig.model = selectedLLMModel.model;
     }
 
 
@@ -231,7 +235,7 @@ function AgentFormStepper({ initialData, userId, isUpdate, agentId }) {
             case 0:
                 return <BasicConfiguration formData={formData} onFormDataChange={handleFormDataChange} />;
             case 1:
-                return <ModelSettings formData={formData} onFormDataChange={handleFormDataChange} llmModels={llmModels} voices={voices} initiallySelectedVoice={selectedVoice} />;
+                return <ModelSettings formData={formData} onFormDataChange={handleFormDataChange} llmModels={llmModels} voices={voices} initiallySelectedVoice={selectedVoice} initiallySelectedModel={selectedLLMModel} />;
             case 2:
                 return <EngagementSettings formData={formData} onFormDataChange={handleFormDataChange} />;
             case 3:

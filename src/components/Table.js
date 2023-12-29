@@ -44,9 +44,11 @@ function JsonTable({ jsonData, columnsToShow, session, onClickPage, clickable, h
                 <TableBody>
                     {jsonData.map((row, index) => (
                         <TableRow onClick={() => handleRowClick(row)} key={index} sx={{ '&:nth-of-type(odd)': { backgroundColor: '#f9f9f9' }, '&:nth-of-type(even)': { backgroundColor: '#fff' }, '&:last-child td, &:last-child th': { border: 0 }, '&:hover': { backgroundColor: '#e0e0e0' } }}>
-                            {columnsToShow.map((column) => (
-                                <TableCell key={column}>{row[column].toString()}</TableCell>
-                            ))}
+                            {columnsToShow.map((column) => {
+                                return (
+                                    <TableCell key={column}>{row[column].toString()}</TableCell>
+                                )
+                            })}
                         </TableRow>
                     ))}
                 </TableBody>

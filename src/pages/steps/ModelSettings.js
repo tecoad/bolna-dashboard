@@ -1,24 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextField, FormControl, InputLabel, Select, MenuItem, Slider, Typography, Grid, Box, Autocomplete } from '@mui/material';
 
 
-function ModelSettings({ formData, onFormDataChange, llmModels, voices, initiallySelectedVoice }) {
+function ModelSettings({ formData, onFormDataChange, llmModels, voices, initiallySelectedVoice, initiallySelectedModel }) {
     var val = null
     var key = null
     const [selectedVoice, setSelectedVoice] = useState(initiallySelectedVoice);
+    const [selectedModel, setSelectedModel] = useState(initiallySelectedModel);
+    const [availableLLMModels, setAvailableLLMModels] = useState(llmModels);
+
+    useEffect(() => {
+        if (formData.basicConfig.assistantType == "IVR") {
+            let filteredLLMModels = llmModels.filter(model => model.json_mode == "Yes");
+            console.log(`Filtered LLM Model = ${JSON.stringify(filteredLLMModels)}`)
+            setAvailableLLMModels([...filteredLLMModels]);
+        }
+    }, [formData])
     const handleChange = (type, event) => {
+        let toChangePair = {}
         if (event?.target?.name == undefined || event?.target?.name == null) {
             if (type == "asr") {
                 val = event
                 key = "language"
-            } else {
+                toChangePair = { [key]: val }
+            } else if (type == "tts") {
                 val = event.name
                 key = "voice"
                 setSelectedVoice(event)
+                toChangePair = { [key]: val }
+            } else {
+                val = event.model
+                key = "model"
+                setSelectedModel(event)
+                toChangePair = { [key]: val, family: event.family }
             }
 
         } else {
             val = event.target.value
+            toChangePair = { [key]: val }
         }
 
         console.log(`Name ${key} Value ${val}`)
@@ -30,7 +49,7 @@ function ModelSettings({ formData, onFormDataChange, llmModels, voices, initiall
                 ...formData.modelsConfig,
                 [conf]: {
                     ...formData.modelsConfig[conf],
-                    [key]: val
+                    ...toChangePair
                 }
             }
         });
@@ -57,16 +76,23 @@ function ModelSettings({ formData, onFormDataChange, llmModels, voices, initiall
                 </Grid>
                 <Grid item xs={12} md={9}>
                     <FormControl sx={{ alignItems: "left", width: "60%" }} >
-                        <InputLabel>Model</InputLabel>
-                        <Select
-                            name="model"
-                            value={formData.modelsConfig.llmConfig.model || ''}
-                            onChange={(e, val) => handleChange("llm", e)}
-                        >
-                            {llmModels.map((model, index) => (
-                                <MenuItem key={index} value={model}>{model}</MenuItem>
-                            ))}
-                        </Select>
+                        <Autocomplete
+                            options={availableLLMModels}
+                            defaultValue={selectedModel}
+                            name="Model"
+                            getOptionLabel={(option) => option.display_name}
+                            filterOptions={(options, { inputValue }) => {
+                                return options.filter(option =>
+                                    option.display_name.toLowerCase().includes(inputValue.toLowerCase()) ||
+                                    option.family.toLowerCase().includes(inputValue.toLowerCase())
+                                );
+                            }}
+                            renderInput={(params) => <TextField {...params} label="Select Model" />}
+                            onChange={(event, newValue) => handleChange("llm", newValue)}
+                            fullWidth
+                            margin="normal"
+                        />
+
                     </FormControl>
                     <FormControl sx={{ alignItems: "left", width: "60%" }} >
                         <TextField
