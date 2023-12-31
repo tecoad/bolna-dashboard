@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Typography, TextField, Button, Autocomplete, FormControl, CircularProgress } from '@mui/material';
-import voices from '../../data/voices.json';
+import defaultVoices from '../../data/voices.json';
 import axios from 'axios';
+import { getVoiceLabel } from '../../utils/utils';
 
-function VoiceLab({ userId }) {
+function VoiceLab({ setVoices, voices, userId }) {
     const [text, setText] = useState('');
     const [selectedVoice, setSelectedVoice] = useState({
         "name": "Kajal",
@@ -16,6 +17,12 @@ function VoiceLab({ userId }) {
     });
     const [audioSrc, setAudioSrc] = useState('');
     const [loading, setLoading] = useState(false);
+    const maxChars = 50;
+
+    const handleTextChange = (e) => {
+        const newText = e.target.value.slice(0, maxChars);
+        setText(newText);
+    };
 
     const handleSubmit = async () => {
         setLoading(true)
@@ -31,13 +38,24 @@ function VoiceLab({ userId }) {
                     voice: selectedVoice.name,
                     engine: selectedVoice.model
                 }
+            } else if (selectedVoice.provider == "elevenlabs") {
+                payload.provider_config = {
+                    model: selectedVoice.model,
+                    voice: selectedVoice.name,
+                    voice_id: selectedVoice.id
+                }
+            } else if (selectedVoice.provider == "xtts") {
+                payload.provider_config = {
+                    language: selectedVoice.languageCode,
+                    voice: selectedVoice.name,
+                }
             }
 
             console.log(`payload ${JSON.stringify(payload)} engine ${payload.provider_config.engine}`)
 
             const response = await axios.post(`${process.env.REACT_APP_FAST_API_BACKEND_URL}/tts`, payload);
             setLoading(false);
-            console.log(`Got Base64 string ${response.data}`)
+            console.log(`Got Base64 string ${JSON.stringify(response.data)}`)
             const audioUrl = `data:audio/mp3;base64,${response.data.data}`;
             setAudioSrc(audioUrl);
 
@@ -48,14 +66,21 @@ function VoiceLab({ userId }) {
 
     };
 
+
     const handleAddVoice = async () => {
-        const userId = "e0bdd41c-17e1-4ae0-b7e6-f84f876ab41e";
         try {
+
+            let addedMyVoice = voices.some(voice => voice.id === selectedVoice.id)
+            if (addedMyVoice) {
+                alert("You already have this voice")
+                return;
+            }
             setLoading(true)
             const response = await axios.post(`${process.env.REACT_APP_FAST_API_BACKEND_URL}/user/voice`, {
                 user_id: userId,
                 voice: selectedVoice
             });
+            setVoices([...voices, selectedVoice])
             setLoading(false)
             console.log('Voice added:', response.data);
         } catch (error) {
@@ -75,9 +100,9 @@ function VoiceLab({ userId }) {
                         Voice Lab
                     </Typography>
                     <Autocomplete
-                        options={voices}
+                        options={defaultVoices}
                         defaultValue={selectedVoice}
-                        getOptionLabel={(option) => option.name}
+                        getOptionLabel={getVoiceLabel}
                         filterOptions={(options, { inputValue }) => {
                             return options.filter(option =>
                                 option.name.toLowerCase().includes(inputValue.toLowerCase()) ||
@@ -100,7 +125,11 @@ function VoiceLab({ userId }) {
                             multiline
                             rows={4}
                             value={text}
-                            onChange={(e) => setText(e.target.value)}
+                            onChange={handleTextChange}
+                            inputProps={{ maxLength: maxChars }}
+                            helperText={`${text.length}/${maxChars}`}
+                            FormHelperTextProps={{ sx: { textAlign: 'right' } }}
+
                         />
                     </FormControl>
 

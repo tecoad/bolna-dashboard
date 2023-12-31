@@ -54,9 +54,9 @@ function Models({ session }) {
     }, [session]);
 
     const tabsData = [
-        { name: 'ASR', component: <ASRModels /> },
-        { name: 'LLM', component: <LLMModels llmModels={llmModels} /> },
         { name: 'TTS', component: <TTSModels voices={voices} /> },
+        { name: 'LLM', component: <LLMModels llmModels={llmModels} /> },
+        { name: 'ASR', component: <ASRModels /> },
     ];
 
     return (
@@ -87,8 +87,8 @@ function Models({ session }) {
                     <CustomTabs tabsData={tabsData} orientation={"horizontal"} setActiveTabInParent={setActiveTab} />
 
                     {/* Dialog for Voice Lab */}
-                    <Dialog open={openVoiceLabs} onClose={handleCloseVoiceLabs} userId={session?.user?.id} fullWidth maxWidth="md">
-                        <VoiceLab />
+                    <Dialog open={openVoiceLabs} onClose={handleCloseVoiceLabs} fullWidth maxWidth="md">
+                        <VoiceLab userId={session?.user?.id} />
                     </Dialog>
                 </>
             )}

@@ -1,13 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { TextField, FormControl, InputLabel, Select, MenuItem, Slider, Typography, Grid, Box, Autocomplete } from '@mui/material';
+import { TextField, FormControl, InputLabel, Select, MenuItem, Slider, Typography, Grid, Box, Autocomplete, Button, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
+import VoiceLab from '../models/VoiceLab';
+import { getVoiceLabel } from '../../utils/utils';
 
 
-function ModelSettings({ formData, onFormDataChange, llmModels, voices, initiallySelectedVoice, initiallySelectedModel }) {
+function ModelSettings({ formData, onFormDataChange, llmModels, voices, setVoices, initiallySelectedVoice, initiallySelectedModel, userId }) {
     var val = null
     var key = null
     const [selectedVoice, setSelectedVoice] = useState(initiallySelectedVoice);
     const [selectedModel, setSelectedModel] = useState(initiallySelectedModel);
     const [availableLLMModels, setAvailableLLMModels] = useState(llmModels);
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+    const handleDialogOpen = () => {
+        setIsDialogOpen(true);
+    };
+
+    const handleDialogClose = () => {
+        setIsDialogOpen(false);
+    };
+
 
     useEffect(() => {
         if (formData.basicConfig.assistantType == "IVR") {
@@ -16,8 +28,12 @@ function ModelSettings({ formData, onFormDataChange, llmModels, voices, initiall
             setAvailableLLMModels([...filteredLLMModels]);
         }
     }, [formData])
+
     const handleChange = (type, event) => {
+
         let toChangePair = {}
+        let conf = type + "Config"
+
         if (event?.target?.name == undefined || event?.target?.name == null) {
             if (type == "asr") {
                 val = event
@@ -36,13 +52,14 @@ function ModelSettings({ formData, onFormDataChange, llmModels, voices, initiall
             }
 
         } else {
+            console.log(`event.target.name = ${event.target.name}, val ${event.target.value} type ${type}`)
             val = event.target.value
+            key = event.target.name
             toChangePair = { [key]: val }
         }
 
         console.log(`Name ${key} Value ${val}`)
 
-        let conf = type + "Config"
         onFormDataChange({
             ...formData,
             modelsConfig: {
@@ -72,7 +89,7 @@ function ModelSettings({ formData, onFormDataChange, llmModels, voices, initiall
             <Grid container spacing={2}>
                 {/* LLM Settings */}
                 <Grid item xs={2} alignContent={"left"}>
-                    <Typography variant="h6">LLM Settings</Typography>
+                    <Typography variant="h6"> Basic Settings</Typography>
                 </Grid>
                 <Grid item xs={12} md={9}>
                     <FormControl sx={{ alignItems: "left", width: "60%" }} >
@@ -87,13 +104,67 @@ function ModelSettings({ formData, onFormDataChange, llmModels, voices, initiall
                                     option.family.toLowerCase().includes(inputValue.toLowerCase())
                                 );
                             }}
-                            renderInput={(params) => <TextField {...params} label="Select Model" />}
+                            renderInput={(params) => <TextField {...params} label="Select Model" variant='standard' />}
                             onChange={(event, newValue) => handleChange("llm", newValue)}
                             fullWidth
                             margin="normal"
                         />
+                    </FormControl>
+
+                    <FormControl sx={{ alignItems: "left", width: "60%", marginTop: '-1%' }}>
+                        <Autocomplete
+                            options={languages}
+                            name="language"
+                            getOptionLabel={(option) => option}
+                            value={formData.modelsConfig.asrConfig.language}
+                            renderInput={(params) => (
+                                <TextField {...params} label="Language" margin="normal" variant='standard' />
+                            )}
+                            onChange={(event, newValue) => handleChange("asr", newValue)}
+                        />
 
                     </FormControl>
+
+                    <Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
+                        <FormControl sx={{ left: '20%', width: "50%" }}>
+
+                            <Autocomplete
+                                options={voices}
+                                defaultValue={selectedVoice}
+                                name="voice"
+                                getOptionLabel={getVoiceLabel}
+                                filterOptions={(options, { inputValue }) => {
+                                    return options.filter(option =>
+                                        option.name.toLowerCase().includes(inputValue.toLowerCase()) ||
+                                        option.languageCode.toLowerCase().includes(inputValue.toLowerCase()) ||
+                                        option.model.toLowerCase().includes(inputValue.toLowerCase()) ||
+                                        option.provider.toLowerCase().includes(inputValue.toLowerCase()) ||
+                                        option.accent.toLowerCase().includes(inputValue.toLowerCase())
+                                    );
+                                }}
+                                renderInput={(params) => <TextField {...params} label="Select Voice" variant='standard' />}
+                                onChange={(event, newValue) => handleChange("tts", newValue)}
+                                fullWidth
+                                margin="normal"
+                            />
+
+                        </FormControl>
+                        <Button size="small" variant="contained" sx={{ position: 'relative', marginLeft: "22%" }} onClick={handleDialogOpen}>Try Out</Button>
+                    </Box>
+
+
+                </Grid>
+
+                {/* Advanced Settings */}
+                <Grid item xs={12} alignContent={"left"}>
+                    <Typography variant="h4">Advanced Settings </Typography>
+                </Grid>
+
+                <Grid item xs={2} alignContent={"left"}>
+                    <Typography variant="h6">LLM Settings </Typography>
+                </Grid>
+
+                <Grid item xs={12} md={9}>
                     <FormControl sx={{ alignItems: "left", width: "60%" }} >
                         <TextField
                             label="Max Tokens"
@@ -103,6 +174,7 @@ function ModelSettings({ formData, onFormDataChange, llmModels, voices, initiall
                             onChange={e => handleChange("llm", e)}
                             fullWidth
                             margin="normal"
+                            variant='standard'
                         />
                     </FormControl>
                     <FormControl sx={{ alignItems: "left", width: "60%" }} >
@@ -117,23 +189,22 @@ function ModelSettings({ formData, onFormDataChange, llmModels, voices, initiall
                             max={1}
                         />
                     </FormControl>
-
                 </Grid>
 
-                {/* ASR Settings */}
                 <Grid item xs={2} alignContent={"left"}>
-                    <Typography variant="h6">ASR Settings</Typography>
+                    <Typography variant="h6">ASR Settings </Typography>
                 </Grid>
 
                 <Grid item xs={12} md={9}>
 
 
-                    <FormControl sx={{ alignItems: "left", width: "60%" }}>
+                    <FormControl sx={{ alignItems: "left", width: "60%", marginTop: '10px' }} gutterBottom>
                         <InputLabel>Model Name</InputLabel>
                         <Select
                             name="model"
                             value={formData.modelsConfig.asrConfig.model || ''}
                             onChange={e => handleChange("asr", e)}
+                            variant='standard'
                         >
                             {asrModels.map((model, index) => (
                                 <MenuItem key={index} value={model}>{model}</MenuItem>
@@ -141,26 +212,16 @@ function ModelSettings({ formData, onFormDataChange, llmModels, voices, initiall
                         </Select>
                     </FormControl>
 
-                    <FormControl sx={{ alignItems: "left", width: "60%", marginTop: '-1%' }}>
-                        <Autocomplete
-                            options={languages}
-                            name="language"
-                            getOptionLabel={(option) => option}
-                            value={formData.modelsConfig.asrConfig.language}
-                            renderInput={(params) => (
-                                <TextField {...params} label="Language" margin="normal" />
-                            )}
-                            onChange={(event, newValue) => handleChange("asr", newValue)}
-                        />
 
-                    </FormControl>
 
-                    <FormControl sx={{ alignItems: "left", width: "60%" }}>
+
+                    <FormControl sx={{ alignItems: "left", width: "60%", marginTop: '10px' }} gutterBottom>
                         <InputLabel>Sampling Rate</InputLabel>
                         <Select
                             name="samplingRate"
                             value={formData.modelsConfig.asrConfig.samplingRate || ''}
                             onChange={e => handleChange("asr", e)}
+                            variant='standard'
                         >
                             {samplingRates.map((rate, index) => (
                                 <MenuItem key={index} value={rate}>{rate}</MenuItem>
@@ -168,12 +229,13 @@ function ModelSettings({ formData, onFormDataChange, llmModels, voices, initiall
                         </Select>
                     </FormControl>
 
-                    <FormControl sx={{ alignItems: "left", width: "60%", marginTop: '1%' }}>
+                    <FormControl sx={{ alignItems: "left", width: "60%", marginTop: '10px' }}>
                         <InputLabel>Streaming</InputLabel>
                         <Select
                             name="streaming"
                             value={formData.modelsConfig.asrConfig.streaming}
                             onChange={e => handleChange("asr", e)}
+                            variant='standard'
                         >
                             <MenuItem value={true}>True</MenuItem>
                             <MenuItem value={false}>False</MenuItem>
@@ -181,18 +243,21 @@ function ModelSettings({ formData, onFormDataChange, llmModels, voices, initiall
                     </FormControl>
 
                     <br />
-                    <FormControl sx={{ alignItems: "left", width: "60%", marginTop: '1%' }}>
-                        <InputLabel>Channels</InputLabel>
-                        <Select
-                            name="channels"
-                            value={formData.modelsConfig.asrConfig.channels || ''}
+
+
+                    <FormControl sx={{ alignItems: "left", width: "60%", marginTop: '10px' }} >
+                        <Typography gutterBottom>Endpointing (Silence length in ms)</Typography>
+                        <Slider
+                            name="endpointing"
+                            value={formData.modelsConfig.asrConfig.endpointing || 400}
                             onChange={e => handleChange("asr", e)}
-                        >
-                            {channels.map((channel, index) => (
-                                <MenuItem key={index} value={channel}>{channel}</MenuItem>
-                            ))}
-                        </Select>
+                            step={100}
+                            marks={marks}
+                            min={100}
+                            max={1500}
+                        />
                     </FormControl>
+
                 </Grid>
 
                 {/* TTS Settings */}
@@ -200,29 +265,7 @@ function ModelSettings({ formData, onFormDataChange, llmModels, voices, initiall
                     <Typography variant="h6">TTS Settings</Typography>
                 </Grid>
                 <Grid item xs={12} md={9}>
-                    <FormControl sx={{ alignItems: "left", width: "60%" }}>
 
-                        <Autocomplete
-                            options={voices}
-                            defaultValue={selectedVoice}
-                            name="voice"
-                            getOptionLabel={(option) => option.name}
-                            filterOptions={(options, { inputValue }) => {
-                                return options.filter(option =>
-                                    option.name.toLowerCase().includes(inputValue.toLowerCase()) ||
-                                    option.languageCode.toLowerCase().includes(inputValue.toLowerCase()) ||
-                                    option.model.toLowerCase().includes(inputValue.toLowerCase()) ||
-                                    option.provider.toLowerCase().includes(inputValue.toLowerCase()) ||
-                                    option.accent.toLowerCase().includes(inputValue.toLowerCase())
-                                );
-                            }}
-                            renderInput={(params) => <TextField {...params} label="Select Voice" />}
-                            onChange={(event, newValue) => handleChange("tts", newValue)}
-                            fullWidth
-                            margin="normal"
-                        />
-
-                    </FormControl>
 
                     <FormControl sx={{ alignItems: "left", width: "60%", marginTop: "-1%" }}>
                         <TextField
@@ -233,6 +276,7 @@ function ModelSettings({ formData, onFormDataChange, llmModels, voices, initiall
                             onChange={e => handleChange("tts", e)}
                             fullWidth
                             margin="normal"
+                            variant='standard'
                         />
                     </FormControl>
 
@@ -242,12 +286,18 @@ function ModelSettings({ formData, onFormDataChange, llmModels, voices, initiall
                             name="streaming"
                             value={formData.modelsConfig.ttsConfig.streaming}
                             onChange={e => handleChange("tts", e)}
+                            variant='standard'
                         >
                             <MenuItem value={true}>True</MenuItem>
                             <MenuItem value={false}>False</MenuItem>
                         </Select>
                     </FormControl>
                 </Grid>
+
+                <Dialog open={isDialogOpen} onClose={handleDialogClose} userId={userId} fullWidth maxWidth="md">
+                    <VoiceLab setVoices={setVoices} voices={voices} userId={userId} />
+                </Dialog>
+
             </Grid>
         </form>
     );

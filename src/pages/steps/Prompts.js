@@ -68,7 +68,7 @@ function Prompts({ formData, onFormDataChange }) {
 
     return (
         <form>
-            <Typography variant="h4" gutterBottom>Prompt Settings</Typography>
+            <Typography variant="h4" gutterBottom>Prompt Builder</Typography>
             <CustomTabs orientation={"vertical"} tabsData={tabsData} />
 
 

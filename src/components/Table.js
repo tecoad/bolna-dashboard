@@ -26,7 +26,6 @@ function JsonTable({ jsonData, columnsToShow, session, onClickPage, clickable, h
                 navigate("/dashboard/agent/run-details", { state: { runDetails: row } });
             }
         }
-
     };
 
     return (

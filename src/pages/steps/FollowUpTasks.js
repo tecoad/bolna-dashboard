@@ -122,13 +122,13 @@ function FollowUpTasks({ formData, onFormDataChange }) {
 
             {isExtractionSelected && (
                 <Box margin="normal">
-                    <Typography variant="subtitle1">Details to be extracted (JSON format)</Typography>
+                    <Typography variant="subtitle1">Details to be extracted</Typography>
                     <TextField
                         fullWidth
                         multiline
                         rows={4}
                         margin="normal"
-                        placeholder="Enter details in JSON format about the information you'd exactly like to extract"
+                        placeholder="What information would you like to extract. Name that data point and explalain it. user intent - Is user interested or not"
                         name="extractionDetails"
                         onChange={handleTasksChange}
                     />

@@ -1,7 +1,7 @@
 import React from 'react';
-import { TextField, FormControl, FormLabel, Select, MenuItem, InputLabel, Box, Tooltip, IconButton } from '@mui/material';
+import { TextField, FormControl, FormLabel, Select, MenuItem, InputLabel, Box, Tooltip, IconButton, Radio, RadioGroup, FormControlLabel, FormGroup } from '@mui/material';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
-
+import { renderTooltip } from '../../components/CustomTooltip';
 function BasicConfiguration({ formData, onFormDataChange }) {
     const handleChange = (event) => {
         console.log(`NAME ${event.target.name}`);
@@ -10,13 +10,25 @@ function BasicConfiguration({ formData, onFormDataChange }) {
         });
     };
 
-    const renderTooltip = (title) => (
-        <Tooltip title={title}>
-            <IconButton aria-label="info">
-                <HelpOutlineIcon />
-            </IconButton>
-        </Tooltip>
-    );
+    const handleRadioChange = (event) => {
+        let engagementConfig = {}
+        if (event.target.value === 'Websocket') {
+            engagementConfig = {
+                "channel": "Websocket",
+                "format": "wav"
+            }
+        } else {
+            engagementConfig = {
+                "channel": "Telephone",
+                "format": "pcm"
+            }
+        }
+
+        onFormDataChange({
+            ...formData, engagementConfig: { ...engagementConfig }
+
+        });
+    };
 
     return (
         <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -74,7 +86,25 @@ function BasicConfiguration({ formData, onFormDataChange }) {
                 {renderTooltip("Explanation of Task for Assistant")}
             </Box>
 
-            {/* Add more form controls and tooltips as needed */}
+            <Box sx={{ display: 'flex', alignItems: 'center', width: '50%', marginY: 1 }}>
+                <FormControl component="fieldset" fullWidth margin="normal">
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <FormLabel component="legend" sx={{ fontWeight: 'bold', marginRight: 2 }}>
+                            Assistant Invocation
+                        </FormLabel>
+                        <RadioGroup
+                            row
+                            name="assistantInvocation"
+                            value={formData.engagementConfig.channel}
+                            onChange={handleRadioChange}
+                        >
+                            <FormControlLabel value="Websocket" control={<Radio />} label="Websocket" />
+                            <FormControlLabel value="Telephone" control={<Radio />} label="Telephone" />
+                        </RadioGroup>
+                        {renderTooltip("Choose the method of Assistant invocation")}
+                    </Box>
+                </FormControl>
+            </Box>
 
         </Box>
     );

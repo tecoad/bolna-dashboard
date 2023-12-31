@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Stepper, Step, StepLabel, Button, Typography, Box, StepButton } from '@mui/material';
 import BasicConfiguration from '../pages/steps/BasicConfiguration'; // Import your step components
-import EngagementSettings from '../pages/steps/EngagementSettings';
 import RulesSettings from '../pages/steps/RulesSettings';
 import FollowUpTasks from '../pages/steps/FollowUpTasks';
-import Prompts from '../pages/steps/Prompts';
 import ModelSettings from '../pages/steps/ModelSettings';
 import { useNodesState, useEdgesState } from 'react-flow-renderer';
 import { convertToCreateAgentPayload, convertToText } from '../utils/utils';
@@ -72,7 +70,7 @@ function AgentFormStepper({ initialData, userId, isUpdate, agentId }) {
 
     const navigate = useNavigate();
 
-    const steps = ['Agent Details', 'Settings', 'Engagement', 'Rules', 'Follow-up Tasks'];
+    const steps = ['Agent Details', 'Rules', 'Follow-up Tasks', 'Advanced Settings'];
 
     const activeStepLabelStyle = {
         color: 'primary.main',
@@ -127,9 +125,6 @@ function AgentFormStepper({ initialData, userId, isUpdate, agentId }) {
                 classification_labels: classificationLabels
             };
         });
-
-        // Download result as JSON file
-
         return result;
     };
 
@@ -235,10 +230,6 @@ function AgentFormStepper({ initialData, userId, isUpdate, agentId }) {
             case 0:
                 return <BasicConfiguration formData={formData} onFormDataChange={handleFormDataChange} />;
             case 1:
-                return <ModelSettings formData={formData} onFormDataChange={handleFormDataChange} llmModels={llmModels} voices={voices} initiallySelectedVoice={selectedVoice} initiallySelectedModel={selectedLLMModel} />;
-            case 2:
-                return <EngagementSettings formData={formData} onFormDataChange={handleFormDataChange} />;
-            case 3:
                 return <RulesSettings
                     formData={formData}
                     onFormDataChange={handleFormDataChange}
@@ -249,8 +240,10 @@ function AgentFormStepper({ initialData, userId, isUpdate, agentId }) {
                     onNodesChange={onNodesChange}
                     onEdgesChange={onEdgesChange}
                 />
-            case 4:
+            case 2:
                 return <FollowUpTasks formData={formData} onFormDataChange={handleFormDataChange} />;
+            case 3:
+                return <ModelSettings formData={formData} onFormDataChange={handleFormDataChange} llmModels={llmModels} voices={voices} setVoices={setVoices} initiallySelectedVoice={selectedVoice} initiallySelectedModel={selectedLLMModel} userId={userId} />;
             default:
                 return 'Unknown step';
         }

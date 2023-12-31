@@ -17,7 +17,8 @@ export const CREATE_AGENT_FORM = {
             language: 'en',
             samplingRate: 8000,
             streaming: true,
-            channels: 1
+            channels: 1,
+            endpointing: 400
         },
         ttsConfig: {
             voice: '',
@@ -195,12 +196,14 @@ export const convertToCreateAgentPayload = (agentData) => {
                         "agent_flow_type": agentData.basicConfig.assistantType === "IVR" ? "preprocessed" : "streaming",
                         "classification_model": agentData.modelsConfig.llmConfig.model,
                         "use_fallback": true,
+                        "temperature": agentData.modelsConfig.llmConfig.temperature
                     },
                     "synthesizer": { ...getSynthesizerConfig(agentData) },
                     "transcriber": {
                         "model": getModel(agentData.modelsConfig.asrConfig.model, "asr"),
                         "stream": agentData.modelsConfig.asrConfig.streaming,
-                        "language": agentData.modelsConfig.asrConfig.language
+                        "language": agentData.modelsConfig.asrConfig.language,
+                        "endpointing": agentData.modelsConfig.asrConfig.endpointing
                     },
                     "input": {
                         "provider": agentData.engagementConfig.channel == "Websocket" ? "default" : "twilio",
@@ -393,3 +396,18 @@ export const getDefaultSampleRate = () => {
     audioContext.close();
     return sampleRate;
 }
+
+export const getVoiceLabel = (option) => {
+    let label = option.name;
+    if (option.accent) {
+        // Replace parentheses format with a dash format
+        const formattedAccent = option.accent.replace(/\(([^)]+)\)/, '- $1');
+
+        label += ` (${formattedAccent}`;
+        if (option.provider === 'xtts' || option.provider === 'elevenlabs') {
+            label += `, emotive`;
+        }
+        label += `)`;
+    }
+    return label;
+};
