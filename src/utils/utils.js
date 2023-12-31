@@ -252,7 +252,7 @@ const serialize = (nodes) => {
         } else {
             return serializeNode(n);
         }
-    }).join('');
+    }).join('\n');
 };
 
 export const convertToText = (editorValue) => {
