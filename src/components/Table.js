@@ -1,6 +1,6 @@
 import React from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 
 function capitalizeFirstLetter(string) {
@@ -14,7 +14,7 @@ function formatHeader(header, row) {
     return header
 }
 
-function JsonTable({ jsonData, columnsToShow, session, onClickPage, clickable, headersDisplayedAs }) {
+function JsonTable({ jsonData, columnsToShow, session, onClickPage, clickable, headersDisplayedAs, agent }) {
     const navigate = useNavigate();
 
     const handleRowClick = (row) => {
