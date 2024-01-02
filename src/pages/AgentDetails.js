@@ -6,6 +6,7 @@ import Analytics from './assistant-details/Analytics';
 import RunsTable from './assistant-details/RunsTable';
 import RequestLogs from './assistant-details/RequestLogs';
 import ChatComponent from '../components/ChatComponent'; // Import your ChatComponent
+import CallComponent from '../components/CallComponent'; // Import your CallComponent
 import AgentFormStepper from '../components/AgentFormStepper';
 import { convertToCreateAgentForm, convertToText } from '../utils/utils';
 import axios from 'axios';
@@ -18,9 +19,11 @@ function AgentDetails({ session }) {
     console.log(`Agent details ${JSON.stringify(agent)}`)
     const userId = location.state?.userId;
     const [openPlayground, setOpenPlayground] = useState(false);
-    const agentId = agent?.range.split("#")[1]
+    const agentId = agent?.range.split("#")[1];
     const [loading, setLoading] = useState(false);
     const [prompt, setPrompt] = useState(null);
+    const { handleClick } = CallComponent({agentId, userId});
+
 
 
     // ...
@@ -90,6 +93,12 @@ function AgentDetails({ session }) {
                                 sx={{ marginRight: 2, backgroundColor: '#f5f5f5', color: 'black', '&:hover': { backgroundColor: '#e0e0e0' } }}
                             >
                                 Back to My Agents
+                            </Button>
+                            <Button
+                                onClick={handleClick}
+                                sx={{ backgroundColor: '#50C878', color: 'white', '&:hover': { backgroundColor: '#369456' } }}
+                            >
+                                Call me
                             </Button>
                             <Button
                                 onClick={handlePlaygroundOpen}

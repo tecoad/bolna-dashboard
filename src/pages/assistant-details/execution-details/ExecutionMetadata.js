@@ -39,13 +39,20 @@ function ExecutionMetadata({ executionDetails }) {
             {/* Left Side */}
             <Box flex={1}>
                 {renderSection("Metadata", {
-                    "Run ID": executionDetails.run_id,
-                    "Run Duration": `${executionDetails.run_duration} seconds`,
+                    "Run ID": executionDetails.range,
+                    "Run Duration": `${executionDetails.conversation_time} seconds`,
                     "Run Date": executionDetails.run_date,
-                    "Total Cost": `$${executionDetails.total_cost}`
+                    "Total Cost": `${executionDetails.transcriber_characters}`
                 })}
-                {renderSection("Usage Breakdown", executionDetails.usageBreakdown)}
-                {renderSection("Follow-Up Task Details", executionDetails['followup-task details'])}
+                {renderSection("Usage Breakdown", {
+                    "Transcriber Model": 0,
+                    "Transcriber Duration": 0,
+                    "LLM Model": 0,
+                    "LLM Tokens": 0,
+                    "Synthesizer Model": 0,
+                    "Synthesizer Characters": executionDetails.synthesizer_characters
+                })}
+                
             </Box>
 
             <Divider orientation="vertical" flexItem />
