@@ -6,7 +6,7 @@ const CallComponent = ({agentId, userId}) => {
     // Check if the user entered a phone number
     if (phoneNumber !== null && phoneNumber !== '') {
       try {
-        const response = await fetch('http://localhost:8001/make_call', {
+        const response = await fetch('http://174.129.129.87:8001/make_call', {
           method: 'POST', // or 'GET' or any other HTTP method
           headers: {
             'Content-Type': 'application/json',
