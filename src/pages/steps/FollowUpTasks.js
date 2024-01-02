@@ -142,7 +142,7 @@ function FollowUpTasks({ formData, onFormDataChange }) {
                             <Typography variant='h5'> Helpful Tips </Typography>
                             <Typography variant="body1" sx={{ mt: 2, textAlign: 'left' }}>
                                 Kindly mention the details you'd like to extract from the transcript of conversation in a list and give examples for AI to understand.
-                                For example if you'd like to extract user intent the mention
+                                For example if you'd like to extract user intent then mention
                                 <ol>
                                     <li>
                                         user intent - intent for the user to come back on app.

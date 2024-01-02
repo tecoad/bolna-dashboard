@@ -99,7 +99,7 @@ function BasicConfiguration({ formData, onFormDataChange }) {
                         <MenuItem value="FreeFlowing">Free Flowing</MenuItem>
                     </Select>
                 </FormControl>
-                {renderTooltip('"Free flowing" mimics a natural conversation while "Template" sticks to a pre-defined script.')}
+                {renderTooltip('"Free flowing" mimics a natural conversation while "IVR" sticks to a pre-defined script.')}
             </Box>
 
             <Box sx={{ display: 'flex', alignItems: 'center', width: '50%', marginY: 1 }}>
