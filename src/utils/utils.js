@@ -192,6 +192,7 @@ const getSynthesizerConfig = (agentData) => {
         provider_config: getProviderConfig(voiceDetails.provider, voiceDetails, agentData),
         buffer_size: parseInt(agentData.modelsConfig.ttsConfig.bufferSize),
         audio_format: agentData.engagementConfig.format,
+        sampling_rate: agentData.modelsConfig.asrConfig.samplingRate,
         stream: agentData.modelsConfig.ttsConfig.streaming
     }
     return synthesizerConfig

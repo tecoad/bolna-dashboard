@@ -1258,5 +1258,23 @@
         "provider": "xtts",
         "lowLatency": false,
         "accent": "english-indian"
+    },
+    {
+        "name": "Priya",
+        "id": "8NKMgvCBNI0jN8dVStjg",
+        "languageCode": "all",
+        "model": "eleven_multilingual_v1",
+        "provider": "elevenlabs",
+        "lowLatency": false,
+        "accent": "indian"
+    },
+    {
+        "name": "Divya",
+        "id": "UILUg8NhwCW0lZXkTJ6M",
+        "languageCode": "all",
+        "model": "eleven_multilingual_v1",
+        "provider": "elevenlabs",
+        "lowLatency": false,
+        "accent": "indian"
     }
 ]
