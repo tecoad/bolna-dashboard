@@ -10,14 +10,18 @@ import TTSModels from './models/TTSModels';
 import LLMModels from './models/LLMModels';
 import VoiceLab from './models/VoiceLab';
 
-function Models() {
+function Models({ session }) {
     const location = useLocation();
     const navigate = useNavigate();
-    const userId = location.state?.userId;
-    const [loading, setLoading] = useState(false);
     const [openVoiceLabs, setOpenVoiceLabs] = useState(false);
     const [activeTab, setActiveTab] = useState(0)
+    const [voices, setVoices] = useState([]);
+    const [loading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [llmModels, setLLMModels] = useState(null)
 
+
+    const userId = ""
     const handleOpenVoiceLabs = () => {
         setOpenVoiceLabs(true);
     };
@@ -25,14 +29,34 @@ function Models() {
     const handleCloseVoiceLabs = () => {
         setOpenVoiceLabs(false);
     };
-    useEffect(() => {
-    }, [userId]);
 
+
+    useEffect(() => {
+        const fetchModels = async () => {
+            setIsLoading(true);
+            try {
+                const response = await axios.get(`${process.env.REACT_APP_FAST_API_BACKEND_URL}/user/models?user_id=${session.user.id}`);
+                setVoices(response.data.voices);
+                setLLMModels(response.data.llmModels);
+                console.log(`Voices ${JSON.stringify(response.data)}`)
+            } catch (error) {
+                console.error('Error fetching agents:', error);
+                setError(error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        if (session && session.user && session.user.id) {
+            fetchModels();
+        }
+
+    }, [session]);
 
     const tabsData = [
+        { name: 'TTS', component: <TTSModels voices={voices} /> },
+        { name: 'LLM', component: <LLMModels llmModels={llmModels} /> },
         { name: 'ASR', component: <ASRModels /> },
-        { name: 'LLM', component: <LLMModels /> },
-        { name: 'TTS', component: <TTSModels /> },
     ];
 
     return (
@@ -47,7 +71,7 @@ function Models() {
                     <Box display="flex" justifyContent="space-between" alignItems="center">
                         <Typography variant="h4">Model Details</Typography>
                         {
-                            activeTab == 2 ? (
+                            activeTab == 0 ? (
                                 <Box>
                                     <Button
                                         onClick={handleOpenVoiceLabs}
@@ -62,9 +86,9 @@ function Models() {
                     </Box>
                     <CustomTabs tabsData={tabsData} orientation={"horizontal"} setActiveTabInParent={setActiveTab} />
 
-                    {/* Dialog for Voice Lab     */}
+                    {/* Dialog for Voice Lab */}
                     <Dialog open={openVoiceLabs} onClose={handleCloseVoiceLabs} fullWidth maxWidth="md">
-                        <VoiceLab />
+                        <VoiceLab userId={session?.user?.id} />
                     </Dialog>
                 </>
             )}

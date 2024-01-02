@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Stepper, Step, StepLabel, Button, Typography, Box, StepButton } from '@mui/material';
 import BasicConfiguration from '../pages/steps/BasicConfiguration'; // Import your step components
-import EngagementSettings from '../pages/steps/EngagementSettings';
 import RulesSettings from '../pages/steps/RulesSettings';
 import FollowUpTasks from '../pages/steps/FollowUpTasks';
-import Prompts from '../pages/steps/Prompts';
 import ModelSettings from '../pages/steps/ModelSettings';
 import { useNodesState, useEdgesState } from 'react-flow-renderer';
 import { convertToCreateAgentPayload, convertToText } from '../utils/utils';
@@ -17,6 +15,8 @@ function AgentFormStepper({ initialData, userId, isUpdate, agentId }) {
     const [activeStep, setActiveStep] = useState(0);
     const [formData, setFormData] = useState(initialData);
     const [completed, setCompleted] = useState({})
+    const [voices, setVoices] = useState([]);
+    const [llmModels, setLLMModels] = useState([]);
     const defaultRootNode = {
         id: 'root-node',
         type: 'default',
@@ -24,13 +24,54 @@ function AgentFormStepper({ initialData, userId, isUpdate, agentId }) {
         position: { x: 250, y: 5 },
     };
 
+
+
+    useEffect(() => {
+        const fetchModels = async () => {
+            setLoading(true);
+            try {
+                const response = await axios.get(`${process.env.REACT_APP_FAST_API_BACKEND_URL}/user/models?user_id=${userId}`);
+                setVoices(response.data.voices);
+                setLLMModels(response.data.llmModels);
+                console.log(`Voices ${JSON.stringify(response.data)}`)
+            } catch (error) {
+                console.error('Error fetching agents Msking loading false:', error);
+                setLoading(false);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        if (userId) {
+            fetchModels();
+        }
+
+    }, [userId]);
+
+    var selectedVoice = null
+    var selectedLLMModel = null
+    if (initialData.modelsConfig.ttsConfig.voice != '') {
+        selectedVoice = voices.find(voice => voice.name === initialData.modelsConfig.ttsConfig.voice)
+        selectedLLMModel = llmModels.find(model => model.model == initialData.modelsConfig.llmConfig.model)
+    }
+
+    if (initialData.modelsConfig.ttsConfig.voice == '' && voices.length != 0) {
+        selectedVoice = voices[0]
+        const initialModel = initialData.basicConfig.assistantType == "IVR" ? "gpt-3.5-turbo-1106" : "gpt-3.5-turbo-16k"
+        selectedLLMModel = llmModels.filter(model => model.model == initialModel)[0] // Make sure initially selected model is a gpt-3.5 one
+        console.log(`Setting voice to ${voices[0].name}`)
+        initialData.modelsConfig.ttsConfig.voice = voices[0].name;
+        initialData.modelsConfig.llmConfig.model = selectedLLMModel.model;
+    }
+
+
     const [nodes, setNodes, onNodesChange] = useNodesState(initialData.basicConfig.assistantType == "IVR" ? initialData.rulesConfig?.graph?.nodes : [defaultRootNode]);
     const [edges, setEdges, onEdgesChange] = useEdgesState(initialData.basicConfig.assistantType == "IVR" ? initialData.rulesConfig?.graph?.edges : []);
     const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
 
-    const steps = ['Agent Details', 'Settings', 'Engagement', 'Rules', 'Follow-up Tasks'];
+    const steps = ['Agent Details', 'Rules', 'Follow-up Tasks', 'Advanced Settings'];
 
     const activeStepLabelStyle = {
         color: 'primary.main',
@@ -85,9 +126,6 @@ function AgentFormStepper({ initialData, userId, isUpdate, agentId }) {
                 classification_labels: classificationLabels
             };
         });
-
-        // Download result as JSON file
-
         return result;
     };
 
@@ -161,16 +199,15 @@ function AgentFormStepper({ initialData, userId, isUpdate, agentId }) {
             }
         }
 
-        console.log(`Sending backkend reques to ${process.env.REACT_APP_FAST_API_BACKEND_URL}, agentID ${agentId} json ${JSON.stringify(payload)}`)
+        console.log(`Sending backkend request to ${process.env.REACT_APP_FAST_API_BACKEND_URL}, agentID ${agentId} json ${JSON.stringify(payload)}`)
         try {
             if (isUpdate) {
                 const response = await axios.put(`${process.env.REACT_APP_FAST_API_BACKEND_URL}/assistant/${agentId}`, payload);
-                console.log(response.data); // handle response
+                console.log(response.data);
 
             } else {
                 const response = await axios.post(`${process.env.REACT_APP_FAST_API_BACKEND_URL}/assistant`, payload);
-                console.log(response.data); // handle response
-
+                console.log(response.data);
             }
             navigate('/dashboard/my-agents');
         } catch (error) {
@@ -180,7 +217,7 @@ function AgentFormStepper({ initialData, userId, isUpdate, agentId }) {
                 console.error('Error during API call', error);
             }
         } finally {
-            setLoading(false); // Stop loading regardless of the outcome
+            setLoading(false);
         }
     };
 
@@ -194,10 +231,6 @@ function AgentFormStepper({ initialData, userId, isUpdate, agentId }) {
             case 0:
                 return <BasicConfiguration formData={formData} onFormDataChange={handleFormDataChange} />;
             case 1:
-                return <ModelSettings formData={formData} onFormDataChange={handleFormDataChange} />;
-            case 2:
-                return <EngagementSettings formData={formData} onFormDataChange={handleFormDataChange} />;
-            case 3:
                 return <RulesSettings
                     formData={formData}
                     onFormDataChange={handleFormDataChange}
@@ -208,8 +241,10 @@ function AgentFormStepper({ initialData, userId, isUpdate, agentId }) {
                     onNodesChange={onNodesChange}
                     onEdgesChange={onEdgesChange}
                 />
-            case 4:
+            case 2:
                 return <FollowUpTasks formData={formData} onFormDataChange={handleFormDataChange} />;
+            case 3:
+                return <ModelSettings formData={formData} onFormDataChange={handleFormDataChange} llmModels={llmModels} voices={voices} setVoices={setVoices} initiallySelectedVoice={selectedVoice} initiallySelectedModel={selectedLLMModel} userId={userId} />;
             default:
                 return 'Unknown step';
         }

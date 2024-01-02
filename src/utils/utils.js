@@ -1,4 +1,4 @@
-
+import voices from '../data/voices.json'
 export const CREATE_AGENT_FORM = {
     basicConfig: {
         assistantType: "FreeFlowing",
@@ -7,26 +7,28 @@ export const CREATE_AGENT_FORM = {
     },
     modelsConfig: {
         llmConfig: {
-            model: 'GPT-3.5',
+            model: '',
             maxTokens: 100,
-            temperature: 0.2
+            temperature: 0.2,
+            family: ''
         },
         asrConfig: {
             model: 'Nova-2',
             language: 'en',
             samplingRate: 8000,
             streaming: true,
-            channels: 1
+            channels: 1,
+            endpointing: 400
         },
         ttsConfig: {
-            voice: 'Mark',
+            voice: '',
             bufferSize: '40',
             streaming: true
         }
     },
     engagementConfig: {
-        channel: 'websocket',
-        format: 'mp3'
+        channel: 'Websocket',
+        format: 'wav'
     },
     rulesConfig: {
         prompts: {
@@ -50,8 +52,10 @@ export const CREATE_AGENT_FORM = {
     }
 }
 
-function getModelFromVoice(voice) {
-    return "polly"
+function getVoiceDetails(voice) {
+    let selectedVoice = voices.filter(v => v.name == voice)[0]
+    console.log(`voices ${JSON.stringify(voices)}, voice = ${JSON.stringify(voice)}`)
+    return selectedVoice
 }
 function getModel(model, modelType, assistantType) {
     if (modelType === "llm") {
@@ -62,8 +66,6 @@ function getModel(model, modelType, assistantType) {
         }
         console.log(`Model ${model}`)
         return model
-    } else if (modelType === "tts") {
-        return getModelFromVoice(model)
     } else {
         model = model == "Nova-2" ? "deepgram" : model;
         return model
@@ -136,6 +138,49 @@ const getJsonForTaskType = (taskType, extraConfig) => {
     return taskStructure
 }
 
+const getPollyConfig = (voiceDetails, agentData) => {
+    return {
+        voice: voiceDetails.name,
+        engine: voiceDetails.model,
+        language: voiceDetails.languageCode, // Need to make it better by converting it to respective language code as per model
+        sampling_rate: agentData.modelsConfig.asrConfig.samplingRate.toString()
+
+    }
+}
+
+const getProviderConfig = (provider, voiceDetails, agentData) => {
+    switch (provider) {
+        case "polly":
+            return getPollyConfig(voiceDetails, agentData)
+        case "tortoise":
+            console.log("Tortoise not implemented yet")
+        //return getTortoiseConfig(voiceDetails)
+        case "matcha":
+            console.log("matcha not implemented yet")
+        //return getMatchaConfig(voiceDetails)
+        case "xtts":
+            console.log("xtts not implemented yet")
+        //return getXTTSConfig(voiceDetails)
+        case "elevenlabs":
+            console.log("elevenlabs not implemented yet")
+        //return getElevenLabsConfig(voiceDetails)
+        default:
+            console.log("Invalid provider")
+    }
+}
+const getSynthesizerConfig = (agentData) => {
+    let voiceDetails = getVoiceDetails(agentData.modelsConfig.ttsConfig.voice)
+    console.log(`Voide details ${JSON.stringify(voiceDetails)}`)
+    let synthesizerConfig = {
+        provider: voiceDetails.provider,
+        provider_config: getProviderConfig(voiceDetails.provider, voiceDetails, agentData),
+        buffer_size: parseInt(agentData.modelsConfig.ttsConfig.bufferSize),
+        audio_format: agentData.engagementConfig.format,
+        stream: agentData.modelsConfig.ttsConfig.streaming
+    }
+    return synthesizerConfig
+}
+
 export const convertToCreateAgentPayload = (agentData) => {
     let payload = {
         "assistant_name": agentData.basicConfig.assistantName,
@@ -146,25 +191,19 @@ export const convertToCreateAgentPayload = (agentData) => {
                 "tools_config": {
                     "llm_agent": {
                         "max_tokens": agentData.modelsConfig.llmConfig.maxTokens,
-                        "family": "openai",
-                        "streaming_model": getModel(agentData.modelsConfig.llmConfig.model, "llm", agentData.basicConfig.assistantType),
+                        "family": agentData.modelsConfig.llmConfig.family,
+                        "streaming_model": agentData.modelsConfig.llmConfig.model,
                         "agent_flow_type": agentData.basicConfig.assistantType === "IVR" ? "preprocessed" : "streaming",
-                        "classification_model": getModel(agentData.modelsConfig.llmConfig.model, "llm", agentData.basicConfig.assistantType),
+                        "classification_model": agentData.modelsConfig.llmConfig.model,
                         "use_fallback": true,
+                        "temperature": agentData.modelsConfig.llmConfig.temperature
                     },
-                    "synthesizer": {
-                        "model": getModel(agentData.modelsConfig.ttsConfig.voice, "tts"),
-                        "stream": agentData.modelsConfig.ttsConfig.streaming,
-                        "voice": agentData.modelsConfig.ttsConfig.voice,
-                        "language": agentData.modelsConfig.asrConfig.language,
-                        "buffer_size": parseInt(agentData.modelsConfig.ttsConfig.bufferSize),
-                        "audio_format": agentData.engagementConfig.format,
-                        "sampling_rate": agentData.modelsConfig.asrConfig.samplingRate.toString()
-                    },
+                    "synthesizer": { ...getSynthesizerConfig(agentData) },
                     "transcriber": {
                         "model": getModel(agentData.modelsConfig.asrConfig.model, "asr"),
                         "stream": agentData.modelsConfig.asrConfig.streaming,
-                        "language": agentData.modelsConfig.asrConfig.language
+                        "language": agentData.modelsConfig.asrConfig.language,
+                        "endpointing": agentData.modelsConfig.asrConfig.endpointing
                     },
                     "input": {
                         "provider": agentData.engagementConfig.channel == "Websocket" ? "default" : "twilio",
@@ -213,7 +252,7 @@ const serialize = (nodes) => {
         } else {
             return serializeNode(n);
         }
-    }).join('');
+    }).join('\n');
 };
 
 export const convertToText = (editorValue) => {
@@ -286,7 +325,7 @@ export const convertToCreateAgentForm = (payload) => {
     const input = agentData.tools_config?.input;
     let followupTaskConfig = getFollowupTasks(followupTasks)
     console.log(`followupTaskConfig ${JSON.stringify(followupTaskConfig)}`)
-
+    console.log(`Synthesizer provider config ${JSON.stringify(synthesizer.provider_config)}`)
     var formData = {
         basicConfig: {
             assistantType: llmAgent.agent_flow_type === "preprocessed" ? "IVR" : "FreeFlowing",
@@ -295,19 +334,19 @@ export const convertToCreateAgentForm = (payload) => {
         },
         modelsConfig: {
             llmConfig: {
-                model: getOriginalModel(llmAgent.streaming_model, "llm", llmAgent.agent_flow_type),
+                model: llmAgent.streaming_model,
                 maxTokens: llmAgent.max_tokens,
                 temperature: 0.2
             },
             asrConfig: {
                 model: getOriginalModel(transcriber.model, "asr"),
                 language: transcriber.language,
-                samplingRate: parseInt(synthesizer.sampling_rate),
+                samplingRate: parseInt(synthesizer.provider_config.sampling_rate),
                 streaming: transcriber.stream,
                 channels: 1
             },
             ttsConfig: {
-                voice: synthesizer.voice,
+                voice: synthesizer.provider_config.voice,
                 bufferSize: synthesizer.buffer_size.toString(),
                 streaming: synthesizer.stream
             }
@@ -328,7 +367,7 @@ export const convertToCreateAgentForm = (payload) => {
         },
         followUpTaskConfig: followupTaskConfig
     };
-
+    console.log(`Form data ${JSON.stringify(formData)}`)
     return formData
 }
 
@@ -357,3 +396,18 @@ export const getDefaultSampleRate = () => {
     audioContext.close();
     return sampleRate;
 }
+
+export const getVoiceLabel = (option) => {
+    let label = option.name;
+    if (option.accent) {
+        // Replace parentheses format with a dash format
+        const formattedAccent = option.accent.replace(/\(([^)]+)\)/, '- $1');
+
+        label += ` (${formattedAccent}`;
+        if (option.provider === 'xtts' || option.provider === 'elevenlabs') {
+            label += `, emotive`;
+        }
+        label += `)`;
+    }
+    return label;
+};

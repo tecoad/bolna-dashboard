@@ -10,7 +10,7 @@ import AgentFormStepper from '../components/AgentFormStepper';
 import { convertToCreateAgentForm, convertToText } from '../utils/utils';
 import axios from 'axios';
 
-function AgentDetails() {
+function AgentDetails({ session }) {
     const location = useLocation();
     const navigate = useNavigate();
     const agent = location.state?.agent;

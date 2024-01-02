@@ -10,8 +10,6 @@ function RulesSettings({ formData, onFormDataChange, nodes, setNodes, onNodesCha
 
     return (
         <Box>
-            <Typography variant='h1'> Rules Settings go here </Typography>
-
             {formData.basicConfig.assistantType == "FreeFlowing" ? (
                 <Prompts formData={formData} onFormDataChange={onFormDataChange} />
             ) : (

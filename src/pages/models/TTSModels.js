@@ -1,15 +1,17 @@
-import React from 'react';
-import { Box, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Box, Typography, CircularProgress } from '@mui/material';
+import JsonTable from '../../components/Table';
+import axios from 'axios';
 
-function TTSModels() {
+function TTSModels({ voices }) {
+
     return (
         <Box sx={{ p: 2 }}>
             <Typography variant='h4' gutterBottom>
-                TTS Models
+                My Voices
             </Typography>
-            <Typography variant='body1'>
-                This will basically include a list of voices user has included in their voices
-            </Typography>
+            <JsonTable jsonData={voices} columnsToShow={["name", "provider", "model", "accent", "lowLatency"]} onClickPage={null} headersDisplayedAs={["Voice", "Provider", "Model", "Accent", "Low Latency"]} clickable={false} />
+
         </Box>
     );
 }
