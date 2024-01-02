@@ -62,6 +62,7 @@ function AgentFormStepper({ initialData, userId, isUpdate, agentId }) {
         console.log(`Setting voice to ${voices[0].name}`)
         initialData.modelsConfig.ttsConfig.voice = voices[0].name;
         initialData.modelsConfig.llmConfig.model = selectedLLMModel.model;
+        initialData.modelsConfig.llmConfig.family = selectedLLMModel.family;
     }
 
 
