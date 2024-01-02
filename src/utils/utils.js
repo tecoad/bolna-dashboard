@@ -148,6 +148,24 @@ const getPollyConfig = (voiceDetails, agentData) => {
     }
 }
 
+const getElevenLabsConfig = (voiceDetails, agentData) => {
+    return {
+        voice: voiceDetails.name,
+        voice_id: voiceDetails.id,
+        model: voiceDetails.model
+
+    }
+}
+
+
+const getXTTSConfig = (voiceDetails, agentData) => {
+    console.log(`VOICE ${JSON.stringify(voiceDetails)} Agent Details ${JSON.stringify(agentData)}`)
+    return {
+        voice: voiceDetails.name,
+        language: agentData.modelsConfig.asrConfig.language
+    }
+}
+
 const getProviderConfig = (provider, voiceDetails, agentData) => {
     switch (provider) {
         case "polly":
@@ -159,11 +177,9 @@ const getProviderConfig = (provider, voiceDetails, agentData) => {
             console.log("matcha not implemented yet")
         //return getMatchaConfig(voiceDetails)
         case "xtts":
-            console.log("xtts not implemented yet")
-        //return getXTTSConfig(voiceDetails)
+            return getXTTSConfig(voiceDetails, agentData)
         case "elevenlabs":
-            console.log("elevenlabs not implemented yet")
-        //return getElevenLabsConfig(voiceDetails)
+            return getElevenLabsConfig(voiceDetails, agentData)
         default:
             console.log("Invalid provider")
     }

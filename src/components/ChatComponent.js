@@ -46,7 +46,7 @@ function ChatComponent({ agentId, isOpen, userId }) {
         } else if (receivedMessage.type == "audio") {
             console.log(`Got audio message`)
             const base64Audio = receivedMessage.data;
-            const audioBlob = base64ToBlob(base64Audio, 'audio/mpeg');
+            const audioBlob = base64ToBlob(base64Audio, 'data:audio/mp3');
             const audioUrl = URL.createObjectURL(audioBlob);
 
             const audioMessage = {
