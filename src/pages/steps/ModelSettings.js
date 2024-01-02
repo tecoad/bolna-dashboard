@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { TextField, FormControl, InputLabel, Select, MenuItem, Slider, Typography, Grid, Box, Autocomplete, Button, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 import VoiceLab from '../models/VoiceLab';
 import { getVoiceLabel } from '../../utils/utils';
+import { renderTooltip } from '../../components/CustomTooltip';
 
 
 function ModelSettings({ formData, onFormDataChange, llmModels, voices, setVoices, initiallySelectedVoice, initiallySelectedModel, userId }) {
@@ -92,26 +93,27 @@ function ModelSettings({ formData, onFormDataChange, llmModels, voices, setVoice
                     <Typography variant="h6"> Basic Settings</Typography>
                 </Grid>
                 <Grid item xs={12} md={9}>
-                    <FormControl sx={{ alignItems: "left", width: "60%" }} >
-                        <Autocomplete
-                            options={availableLLMModels}
-                            defaultValue={selectedModel}
-                            name="Model"
-                            getOptionLabel={(option) => option.display_name}
+                    <FormControl sx={{ alignItems: "left", flexDirection: 'row', width: "60%" }}>
+                        <Autocomplete options={availableLLMModels} defaultValue={selectedModel} name="Model" getOptionLabel={(option) =>
+                            option.display_name}
                             filterOptions={(options, { inputValue }) => {
                                 return options.filter(option =>
                                     option.display_name.toLowerCase().includes(inputValue.toLowerCase()) ||
                                     option.family.toLowerCase().includes(inputValue.toLowerCase())
                                 );
                             }}
-                            renderInput={(params) => <TextField {...params} label="Select Model" variant='standard' />}
+                            renderInput={(params) =>
+                                <TextField {...params} label="Select Model" variant='standard' />}
                             onChange={(event, newValue) => handleChange("llm", newValue)}
                             fullWidth
                             margin="normal"
                         />
+
+                        {renderTooltip("This is the LLM Model your user will chat with. gpt models are by OpenAI other are open source. GPT models are more expensive.")}
+
                     </FormControl>
 
-                    <FormControl sx={{ alignItems: "left", width: "60%", marginTop: '-1%' }}>
+                    <FormControl sx={{ alignItems: "left", flexDirection: 'row', width: "60%" }}>
                         <Autocomplete
                             options={languages}
                             name="language"
@@ -121,7 +123,11 @@ function ModelSettings({ formData, onFormDataChange, llmModels, voices, setVoice
                                 <TextField {...params} label="Language" margin="normal" variant='standard' />
                             )}
                             onChange={(event, newValue) => handleChange("asr", newValue)}
+                            fullWidth
                         />
+
+
+                        {renderTooltip("This is the primary language of your agent. Only GPT models have Multilingual capabilities.")}
 
                     </FormControl>
 
@@ -165,7 +171,7 @@ function ModelSettings({ formData, onFormDataChange, llmModels, voices, setVoice
                 </Grid>
 
                 <Grid item xs={12} md={9}>
-                    <FormControl sx={{ alignItems: "left", width: "60%" }} >
+                    <FormControl sx={{ alignItems: "left", width: "60%", flexDirection: 'row' }} >
                         <TextField
                             label="Max Tokens"
                             type="number"
@@ -176,9 +182,10 @@ function ModelSettings({ formData, onFormDataChange, llmModels, voices, setVoice
                             margin="normal"
                             variant='standard'
                         />
+                        {renderTooltip("Max tokens to consider for ouput. More tokens would mean answer will be 1. Verbose and 2. Expensive ")}
                     </FormControl>
                     <FormControl sx={{ alignItems: "left", width: "60%" }} >
-                        <Typography gutterBottom>Temperature</Typography>
+                        <Typography gutterBottom>Temperature {renderTooltip("Temperature allows you to experiment with creative liberties ")}</Typography>
                         <Slider
                             name="temperature"
                             value={formData.modelsConfig.llmConfig.temperature || 0.3}
@@ -198,55 +205,61 @@ function ModelSettings({ formData, onFormDataChange, llmModels, voices, setVoice
                 <Grid item xs={12} md={9}>
 
 
-                    <FormControl sx={{ alignItems: "left", width: "60%", marginTop: '10px' }} gutterBottom>
-                        <InputLabel>Model Name</InputLabel>
+                    <FormControl sx={{ alignItems: "left", width: "60%", marginTop: '10px', flexDirection: 'row' }} gutterBottom>
+                        <InputLabel>Model Name </InputLabel>
                         <Select
                             name="model"
                             value={formData.modelsConfig.asrConfig.model || ''}
                             onChange={e => handleChange("asr", e)}
                             variant='standard'
+                            fullWidth
                         >
                             {asrModels.map((model, index) => (
                                 <MenuItem key={index} value={model}>{model}</MenuItem>
                             ))}
                         </Select>
+                        {renderTooltip("These models will convert speech to text. Whisper is an open source model and hence cheapest but others might be better for your usecase.")}
                     </FormControl>
 
 
 
-
-                    <FormControl sx={{ alignItems: "left", width: "60%", marginTop: '10px' }} gutterBottom>
+                    <FormControl sx={{ alignItems: "left", width: "60%", marginTop: '10px', flexDirection: 'row' }} gutterBottom>
                         <InputLabel>Sampling Rate</InputLabel>
                         <Select
+                            disabled={formData.engagementConfig.channel == "Telephone"}
                             name="samplingRate"
                             value={formData.modelsConfig.asrConfig.samplingRate || ''}
                             onChange={e => handleChange("asr", e)}
                             variant='standard'
+                            fullWidth
                         >
                             {samplingRates.map((rate, index) => (
                                 <MenuItem key={index} value={rate}>{rate}</MenuItem>
                             ))}
                         </Select>
+                        {renderTooltip("If your chosen engagement setting is websocket, kindly let us know the sample rate at which we will receive the audio")}
                     </FormControl>
 
-                    <FormControl sx={{ alignItems: "left", width: "60%", marginTop: '10px' }}>
+                    <FormControl sx={{ alignItems: "left", width: "60%", marginTop: '10px', flexDirection: 'row' }}>
                         <InputLabel>Streaming</InputLabel>
                         <Select
                             name="streaming"
                             value={formData.modelsConfig.asrConfig.streaming}
                             onChange={e => handleChange("asr", e)}
                             variant='standard'
+                            fullWidth
                         >
                             <MenuItem value={true}>True</MenuItem>
                             <MenuItem value={false}>False</MenuItem>
                         </Select>
+                        {renderTooltip("This will enable truly human like conversation")}
                     </FormControl>
 
                     <br />
 
 
                     <FormControl sx={{ alignItems: "left", width: "60%", marginTop: '10px' }} >
-                        <Typography gutterBottom>Endpointing (Silence length in ms)</Typography>
+                        <Typography gutterBottom>Endpointing (Silence length in ms) {renderTooltip("This setting allows agent to understand if the human has stopped speaking. For example with 400ms agent will start speaking only after there's a silence of 400ms from human's end. ")} </Typography>
                         <Slider
                             name="endpointing"
                             value={formData.modelsConfig.asrConfig.endpointing || 400}
@@ -267,7 +280,7 @@ function ModelSettings({ formData, onFormDataChange, llmModels, voices, setVoice
                 <Grid item xs={12} md={9}>
 
 
-                    <FormControl sx={{ alignItems: "left", width: "60%", marginTop: "-1%" }}>
+                    <FormControl sx={{ alignItems: "left", width: "60%", marginTop: "-1%", flexDirection: 'row' }}>
                         <TextField
                             label="Buffer Size"
                             type="number"
@@ -278,19 +291,7 @@ function ModelSettings({ formData, onFormDataChange, llmModels, voices, setVoice
                             margin="normal"
                             variant='standard'
                         />
-                    </FormControl>
-
-                    <FormControl sx={{ alignItems: "left", width: "60%" }}>
-                        <InputLabel>Streaming</InputLabel>
-                        <Select
-                            name="streaming"
-                            value={formData.modelsConfig.ttsConfig.streaming}
-                            onChange={e => handleChange("tts", e)}
-                            variant='standard'
-                        >
-                            <MenuItem value={true}>True</MenuItem>
-                            <MenuItem value={false}>False</MenuItem>
-                        </Select>
+                        {renderTooltip("LLM will generally output token and we will buffer those tokens before generating audio. Play with these settings to bring the best human like qualities for your assistant.")}
                     </FormControl>
                 </Grid>
 

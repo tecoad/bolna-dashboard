@@ -35,7 +35,8 @@ function AgentFormStepper({ initialData, userId, isUpdate, agentId }) {
                 setLLMModels(response.data.llmModels);
                 console.log(`Voices ${JSON.stringify(response.data)}`)
             } catch (error) {
-                console.error('Error fetching agents:', error);
+                console.error('Error fetching agents Msking loading false:', error);
+                setLoading(false);
             } finally {
                 setLoading(false);
             }

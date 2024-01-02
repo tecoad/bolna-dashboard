@@ -16,7 +16,8 @@ function MyAgents({ session }) {
                 const response = await axios.get(`${process.env.REACT_APP_FAST_API_BACKEND_URL}/assistants?user_id=${session.user.id}`);
                 setAgents(response.data);
             } catch (error) {
-                console.error('Error fetching agents:', error);
+                console.error('Error fetching agents: Making loading false', error);
+                setIsLoading(false)
                 setError(error);
             } finally {
                 setIsLoading(false);

@@ -71,7 +71,7 @@ function Models({ session }) {
                     <Box display="flex" justifyContent="space-between" alignItems="center">
                         <Typography variant="h4">Model Details</Typography>
                         {
-                            activeTab == 2 ? (
+                            activeTab == 0 ? (
                                 <Box>
                                     <Button
                                         onClick={handleOpenVoiceLabs}

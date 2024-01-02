@@ -2,9 +2,6 @@ import React, { useState } from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography, Box } from '@mui/material';
 import CustomTabs from '../../components/CustomTabs';
 import PromptEditor from '../../components/PromptEditor';
-import RunsTable from '../assistant-details/RunsTable';
-import RequestLogs from '../assistant-details/RequestLogs';
-import Analytics from '../assistant-details/Analytics';
 
 function Prompts({ formData, onFormDataChange }) {
 
@@ -19,7 +16,7 @@ function Prompts({ formData, onFormDataChange }) {
     };
 
     var lines = [
-        { content: 'AI: Hello, am I speakking with {prospect_name}', editable: true },
+        { content: 'AI: Hello, am I speaking with {prospect_name}', editable: true },
         { content: 'User: Yes, who\'s this.', editable: false },
         { content: 'AI: I\'m Chaula from design your practice. Can I have a moment of your time? I\'m trying to understand problems that smaller architecture firms face in scaling', editable: true },
         { content: 'User: Yes sure.', editable: false },

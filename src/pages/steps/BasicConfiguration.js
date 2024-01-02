@@ -2,12 +2,50 @@ import React from 'react';
 import { TextField, FormControl, FormLabel, Select, MenuItem, InputLabel, Box, Tooltip, IconButton, Radio, RadioGroup, FormControlLabel, FormGroup } from '@mui/material';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { renderTooltip } from '../../components/CustomTooltip';
+import leadQualificationJson from '../../data/templates/leadQualification.json';
+import coachingJson from '../../data/templates/coaching.json';
+import surveyJson from '../../data/templates/survey.json';
+import recruitingJson from '../../data/templates/recruiting.json';
+import salesAndMarketingJson from '../../data/templates/salesAndMarketing.json';
+import customerServiceJson from '../../data/templates/customerService.json';
+import virtualRMJson from '../../data/templates/virtualRM.json';
+import otherJson from '../../data/templates/others.json';
+
+function getPrefilledTemplate(option) {
+    switch (option) {
+        case "Lead Qualification":
+            return leadQualificationJson['task_1']
+        case "Customer Service":
+            return customerServiceJson['task_1']
+        case "Sales And Marketing":
+            return salesAndMarketingJson['task_1']
+        case "Recruiting":
+            return recruitingJson['task_1']
+        case "Survey/Feedback":
+            return surveyJson['task_1']
+        case "VirtualRM":
+            return virtualRMJson['task_1']
+        case "Coaching":
+            return coachingJson['task_1']
+        case "Other":
+            return otherJson['task_1']
+
+    }
+}
 function BasicConfiguration({ formData, onFormDataChange }) {
     const handleChange = (event) => {
         console.log(`NAME ${event.target.name}`);
-        onFormDataChange({
-            ...formData, basicConfig: { ...formData.basicConfig, [event.target.name]: event.target.value }
-        });
+
+
+        if (event.target.name === 'assistantTask') {
+            onFormDataChange({
+                ...formData, basicConfig: { ...formData.basicConfig, [event.target.name]: event.target.value }, rulesConfig: { ...formData.rulesConfig, prompts: { ...getPrefilledTemplate(event.target.value) } }
+            });
+        } else {
+            onFormDataChange({
+                ...formData, basicConfig: { ...formData.basicConfig, [event.target.name]: event.target.value }
+            });
+        }
     };
 
     const handleRadioChange = (event) => {
@@ -43,12 +81,12 @@ function BasicConfiguration({ formData, onFormDataChange }) {
                         onChange={handleChange}
                     />
                 </FormControl>
-                {renderTooltip("Information about Assistant Name")}
+                {renderTooltip("Agents will refer to themselves with this name")}
             </Box>
 
             <Box sx={{ display: 'flex', alignItems: 'center', width: '50%', marginY: 1 }}>
                 <FormControl fullWidth margin="normal">
-                    <InputLabel id="assistant-type-label">Type of Assistant</InputLabel>
+                    <InputLabel id="assistant-type-label">Agent style</InputLabel>
                     <Select
                         labelId="assistant-type-label"
                         id="assistant-type-select"
@@ -61,12 +99,12 @@ function BasicConfiguration({ formData, onFormDataChange }) {
                         <MenuItem value="FreeFlowing">Free Flowing</MenuItem>
                     </Select>
                 </FormControl>
-                {renderTooltip("Details about Type of Assistant")}
+                {renderTooltip('"Free flowing" mimics a natural conversation while "Template" sticks to a pre-defined script.')}
             </Box>
 
             <Box sx={{ display: 'flex', alignItems: 'center', width: '50%', marginY: 1 }}>
                 <FormControl fullWidth margin="normal">
-                    <InputLabel id="task-label">Task for Assistant</InputLabel>
+                    <InputLabel id="task-label">Primary Task</InputLabel>
                     <Select
                         labelId="task-label"
                         id="task-select"
@@ -80,10 +118,12 @@ function BasicConfiguration({ formData, onFormDataChange }) {
                         <MenuItem value="Sales And Marketing">Sales and Marketing</MenuItem>
                         <MenuItem value="Recruiting">Recruiting</MenuItem>
                         <MenuItem value="Survey/Feedback">Survey/ Feedback </MenuItem>
+                        <MenuItem value="Coaching"> Coaching </MenuItem>
+                        <MenuItem value="VirtualRM"> Virtual Relationship Manager </MenuItem>
                         <MenuItem value="Other">Other</MenuItem>
                     </Select>
                 </FormControl>
-                {renderTooltip("Explanation of Task for Assistant")}
+                {renderTooltip("Your prompt template will be built according to the agent’s primary task. You do not need to stick to this task")}
             </Box>
 
             <Box sx={{ display: 'flex', alignItems: 'center', width: '50%', marginY: 1 }}>
@@ -101,7 +141,7 @@ function BasicConfiguration({ formData, onFormDataChange }) {
                             <FormControlLabel value="Websocket" control={<Radio />} label="Websocket" />
                             <FormControlLabel value="Telephone" control={<Radio />} label="Telephone" />
                         </RadioGroup>
-                        {renderTooltip("Choose the method of Assistant invocation")}
+                        {renderTooltip("How will the agent be invoked - through an outgoing phone call or via your system connecting using a websocket")}
                     </Box>
                 </FormControl>
             </Box>
