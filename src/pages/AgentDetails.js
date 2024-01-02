@@ -96,7 +96,7 @@ function AgentDetails({ session }) {
                             </Button>
                             <Button
                                 onClick={handleClick}
-                                sx={{ backgroundColor: '#50C878', color: 'white', '&:hover': { backgroundColor: '#369456' } }}
+                                sx={{ marginRight: 2, backgroundColor: '#50C878', color: 'white', '&:hover': { backgroundColor: '#369456' } }}
                             >
                                 Call me
                             </Button>
