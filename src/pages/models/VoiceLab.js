@@ -4,17 +4,9 @@ import defaultVoices from '../../data/voices.json';
 import axios from 'axios';
 import { getVoiceLabel } from '../../utils/utils';
 
-function VoiceLab({ setVoices, voices, userId }) {
+function VoiceLab({ setVoices, voices, userId, defaultValue }) {
     const [text, setText] = useState('');
-    const [selectedVoice, setSelectedVoice] = useState({
-        "name": "Kajal",
-        "id": "Kajal",
-        "languageCode": "en-IN",
-        "model": "neural",
-        "provider": "polly",
-        "lowLatency": true,
-        "accent": "Indian"
-    });
+    const [selectedVoice, setSelectedVoice] = useState({ ...defaultValue });
     const [audioSrc, setAudioSrc] = useState('');
     const [loading, setLoading] = useState(false);
     const maxChars = 50;

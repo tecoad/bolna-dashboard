@@ -87,7 +87,7 @@ function Models({ userId }) {
 
                     {/* Dialog for Voice Lab */}
                     <Dialog open={openVoiceLabs} onClose={handleCloseVoiceLabs} fullWidth maxWidth="md">
-                        <VoiceLab userId={userId} />
+                        <VoiceLab userId={userId} defaultValue={voices[0]} />
                     </Dialog>
                 </>
             )}

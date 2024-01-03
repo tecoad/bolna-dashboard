@@ -296,7 +296,7 @@ function ModelSettings({ formData, onFormDataChange, llmModels, voices, setVoice
                 </Grid>
 
                 <Dialog open={isDialogOpen} onClose={handleDialogClose} userId={userId} fullWidth maxWidth="md">
-                    <VoiceLab setVoices={setVoices} voices={voices} userId={userId} />
+                    <VoiceLab setVoices={setVoices} voices={voices} userId={userId} defaultValue={selectedVoice} />
                 </Dialog>
 
             </Grid>

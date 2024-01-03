@@ -41,6 +41,16 @@ function BasicConfiguration({ formData, onFormDataChange }) {
             onFormDataChange({
                 ...formData, basicConfig: { ...formData.basicConfig, [event.target.name]: event.target.value }, rulesConfig: { ...formData.rulesConfig, prompts: { ...getPrefilledTemplate(event.target.value) } }
             });
+
+        } else if (event.target.name === 'assistantType') {
+            if (event.target.value == "IVR") {
+                var newFormData = { ...formData }
+                newFormData.modelsConfig.llmConfig.model = "gpt-3.5-turbo-1106"
+                onFormDataChange({
+                    ...newFormData, basicConfig: { ...newFormData.basicConfig, [event.target.name]: event.target.value }
+                });
+            }
+
         } else {
             onFormDataChange({
                 ...formData, basicConfig: { ...formData.basicConfig, [event.target.name]: event.target.value }
