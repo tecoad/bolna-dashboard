@@ -1260,8 +1260,26 @@
         "accent": "english-indian"
     },
     {
-        "name": "Priya",
-        "id": "8NKMgvCBNI0jN8dVStjg",
+        "name": "deepika",
+        "id": "deepika",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": false,
+        "accent": "english-indian"
+    },
+    {
+        "name": "anish",
+        "id": "anish",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": false,
+        "accent": "english-indian"
+    },
+    {
+        "name": "Anika",
+        "id": "QOQGV0NwUO8sk3CJ0VON",
         "languageCode": "all",
         "model": "eleven_multilingual_v1",
         "provider": "elevenlabs",
@@ -1269,8 +1287,8 @@
         "accent": "indian"
     },
     {
-        "name": "Divya",
-        "id": "UILUg8NhwCW0lZXkTJ6M",
+        "name": "Meera",
+        "id": "TTa58Hl9lmhnQEvhp1WM",
         "languageCode": "all",
         "model": "eleven_multilingual_v1",
         "provider": "elevenlabs",
