@@ -4,7 +4,7 @@ import AgentFormStepper from '../components/AgentFormStepper';
 import { CREATE_AGENT_FORM } from '../utils/utils';
 import axios from 'axios';
 
-function CreateAgents({ session }) {
+function CreateAgents({ userId }) {
 
     const [voices, setVoices] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -13,7 +13,7 @@ function CreateAgents({ session }) {
         const fetchModels = async () => {
             setIsLoading(true);
             try {
-                const response = await axios.get(`${process.env.REACT_APP_FAST_API_BACKEND_URL}/user/voices?user_id=${session.user.id}`);
+                const response = await axios.get(`${process.env.REACT_APP_FAST_API_BACKEND_URL}/user/voices?user_id=${userId}`);
                 setVoices(response.data);
                 console.log(`Voices ${JSON.stringify(response.data)}`)
             } catch (error) {
@@ -23,11 +23,11 @@ function CreateAgents({ session }) {
             }
         };
 
-        if (session && session.user && session.user.id) {
+        if (userId) {
             fetchModels();
         }
 
-    }, [session]);
+    }, [userId]);
 
     return (
 
@@ -41,7 +41,7 @@ function CreateAgents({ session }) {
                 ) : (
                     <>
                         <Box>
-                            <AgentFormStepper initialData={{ ...CREATE_AGENT_FORM }} userId={session?.user?.id} isUpdate={false} />
+                            <AgentFormStepper initialData={{ ...CREATE_AGENT_FORM }} userId={userId} isUpdate={false} />
                         </Box>
                     </>
                 )

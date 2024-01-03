@@ -5,7 +5,7 @@ import { Box } from '@mui/material';
 import JsonTable from '../../components/Table';
 //import runData from '../../data/fake_run_details.json';
 
-function RunTable({ session }) {
+function RunTable({ }) {
     const location = useLocation();
     const [runData, setRunData] = useState(null);
     const agent = location.state?.agent;

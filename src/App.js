@@ -109,9 +109,9 @@ function App() {
             </Route>
 
             <Route path="/dashboard" element={<Dashboard supabase={supabase} />}>
-              <Route path="my-agents" element={<MyAgents session={session} />} />
-              <Route path="create-agents" element={<CreateAgents session={session} />} />
-              <Route path="models" element={<Models session={session} />} />
+              <Route path="my-agents" element={<MyAgents userId={session?.user?.id} />} />
+              <Route path="create-agents" element={<CreateAgents userId={session?.user?.id} />} />
+              <Route path="models" element={<Models userId={session?.user?.id} />} />
               <Route path="datasets" element={<Datasets session={session} />} />
               <Route path="integrations" element={<Integrations session={session} />} />
               <Route path="account" element={<Account session={session} />} />

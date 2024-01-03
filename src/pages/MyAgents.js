@@ -4,7 +4,7 @@ import { Box, Typography, CircularProgress } from '@mui/material';
 import JsonTable from '../components/Table'; // Adjust the import path as necessary
 import Backdrop from '@mui/material/Backdrop';
 
-function MyAgents({ session }) {
+function MyAgents({ userId }) {
     const [agents, setAgents] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -13,7 +13,7 @@ function MyAgents({ session }) {
         const fetchAgents = async () => {
             setIsLoading(true);
             try {
-                const response = await axios.get(`${process.env.REACT_APP_FAST_API_BACKEND_URL}/assistants?user_id=${session.user.id}`);
+                const response = await axios.get(`${process.env.REACT_APP_FAST_API_BACKEND_URL}/assistants?user_id=${userId}`);
                 setAgents(response.data);
             } catch (error) {
                 console.error('Error fetching agents: Making loading false', error);
@@ -24,10 +24,10 @@ function MyAgents({ session }) {
             }
         };
 
-        if (session && session.user && session.user.id) {
+        if (userId) {
             fetchAgents();
         }
-    }, [session]);
+    }, [userId]);
 
 
     if (error) {
@@ -48,7 +48,7 @@ function MyAgents({ session }) {
 
                 ) : (
                     <Box>
-                        <JsonTable sx={{ width: '70%' }} jsonData={agents} columnsToShow={["assistant_name", "assistant_type", "assistant_status"]} session={session} onClickPage={"agent-details"} clickable={true} headersDisplayedAs={["Assistant Name", "Assistant Task", "Assistant Status"]} />
+                        <JsonTable sx={{ width: '70%' }} jsonData={agents} columnsToShow={["assistant_name", "assistant_type", "assistant_status"]} userId={userId} onClickPage={"agent-details"} clickable={true} headersDisplayedAs={["Assistant Name", "Assistant Task", "Assistant Status"]} />
                     </Box>
                 )
             }

@@ -14,13 +14,12 @@ function formatHeader(header, row) {
     return header
 }
 
-function JsonTable({ jsonData, columnsToShow, session, onClickPage, clickable, headersDisplayedAs, agent }) {
+function JsonTable({ jsonData, columnsToShow, userId, onClickPage, clickable, headersDisplayedAs, agent }) {
     const navigate = useNavigate();
-
     const handleRowClick = (row) => {
         if (clickable) {
             if (onClickPage == "agent-details") {
-                navigate("/dashboard/agent-details", { state: { agent: row, userId: session.user.id } });
+                navigate("/dashboard/agent-details", { state: { agent: row, userId: userId } });
             } else {
                 console.log(`Row ${JSON.stringify(row)}`)
                 navigate("/dashboard/agent/run-details", { state: { runDetails: row } });

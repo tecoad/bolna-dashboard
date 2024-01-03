@@ -10,7 +10,7 @@ import TTSModels from './models/TTSModels';
 import LLMModels from './models/LLMModels';
 import VoiceLab from './models/VoiceLab';
 
-function Models({ session }) {
+function Models({ userId }) {
     const location = useLocation();
     const navigate = useNavigate();
     const [openVoiceLabs, setOpenVoiceLabs] = useState(false);
@@ -21,7 +21,6 @@ function Models({ session }) {
     const [llmModels, setLLMModels] = useState(null)
 
 
-    const userId = ""
     const handleOpenVoiceLabs = () => {
         setOpenVoiceLabs(true);
     };
@@ -35,7 +34,7 @@ function Models({ session }) {
         const fetchModels = async () => {
             setIsLoading(true);
             try {
-                const response = await axios.get(`${process.env.REACT_APP_FAST_API_BACKEND_URL}/user/models?user_id=${session.user.id}`);
+                const response = await axios.get(`${process.env.REACT_APP_FAST_API_BACKEND_URL}/user/models?user_id=${userId}`);
                 setVoices(response.data.voices);
                 setLLMModels(response.data.llmModels);
                 console.log(`Voices ${JSON.stringify(response.data)}`)
@@ -47,11 +46,11 @@ function Models({ session }) {
             }
         };
 
-        if (session && session.user && session.user.id) {
+        if (userId) {
             fetchModels();
         }
 
-    }, [session]);
+    }, [userId]);
 
     const tabsData = [
         { name: 'TTS', component: <TTSModels voices={voices} /> },
@@ -88,7 +87,7 @@ function Models({ session }) {
 
                     {/* Dialog for Voice Lab */}
                     <Dialog open={openVoiceLabs} onClose={handleCloseVoiceLabs} fullWidth maxWidth="md">
-                        <VoiceLab userId={session?.user?.id} />
+                        <VoiceLab userId={userId} />
                     </Dialog>
                 </>
             )}
