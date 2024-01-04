@@ -82,7 +82,7 @@ function App() {
                     <Auth
                       redirectTo={redirectUrl}
                       supabaseClient={supabase}
-                      providers={["github"]}
+                      providers={["github", "google"]}
                       appearance={{
                         theme: ThemeSupa,
                         variables: {
