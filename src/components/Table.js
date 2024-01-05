@@ -43,7 +43,6 @@ function JsonTable({ jsonData, columnsToShow, userId, onClickPage, clickable, he
                     {jsonData.map((row, index) => (
                         <TableRow onClick={() => handleRowClick(row)} key={index} sx={{ '&:nth-of-type(odd)': { backgroundColor: '#f9f9f9' }, '&:nth-of-type(even)': { backgroundColor: '#fff' }, '&:last-child td, &:last-child th': { border: 0 }, '&:hover': { backgroundColor: '#e0e0e0' } }}>
                             {columnsToShow.map((column) => {
-                                console.log(`column ${column} row[column] ${row[column]} `)
                                 var name = row[column] == undefined ? "" : row[column]
                                 return (
                                     <TableCell key={column}>{name.toString()}</TableCell>

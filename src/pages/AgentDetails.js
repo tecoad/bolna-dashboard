@@ -22,7 +22,7 @@ function AgentDetails({ session }) {
     const agentId = agent?.range.split("#")[1];
     const [loading, setLoading] = useState(false);
     const [prompt, setPrompt] = useState(null);
-    const { handleClick } = CallComponent({agentId, userId});
+    const { handleClick } = CallComponent({ agentId, userId });
 
 
 
@@ -47,7 +47,6 @@ function AgentDetails({ session }) {
                     setFormData({ ...formData, rulesConfig: { ...formData.rulesConfig, graph: { ...response.data.data['task_1'] } } });
                     newFormData = { ...formData, rulesConfig: { ...formData.rulesConfig, graph: { ...response.data.data['task_1'] } } }
                     console.log(`ivr based ${JSON.stringify(newFormData)}`)
-
                 }
 
                 // Log the updated formData

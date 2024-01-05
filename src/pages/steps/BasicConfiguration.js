@@ -35,12 +35,11 @@ function getPrefilledTemplate(option) {
 function BasicConfiguration({ formData, onFormDataChange }) {
     const handleChange = (event) => {
         console.log(`NAME ${event.target.name}`);
-
-
         if (event.target.name === 'assistantTask') {
             onFormDataChange({
                 ...formData, basicConfig: { ...formData.basicConfig, [event.target.name]: event.target.value }, rulesConfig: { ...formData.rulesConfig, prompts: { ...getPrefilledTemplate(event.target.value) } }
             });
+            return
 
         } else if (event.target.name === 'assistantType') {
             if (event.target.value == "IVR") {
@@ -49,13 +48,14 @@ function BasicConfiguration({ formData, onFormDataChange }) {
                 onFormDataChange({
                     ...newFormData, basicConfig: { ...newFormData.basicConfig, [event.target.name]: event.target.value }
                 });
+                return
             }
-
-        } else {
-            onFormDataChange({
-                ...formData, basicConfig: { ...formData.basicConfig, [event.target.name]: event.target.value }
-            });
         }
+
+        onFormDataChange({
+            ...formData, basicConfig: { ...formData.basicConfig, [event.target.name]: event.target.value }
+        });
+
     };
 
     const handleRadioChange = (event) => {

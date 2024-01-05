@@ -331,10 +331,8 @@ const getFollowupTasks = (followUpTasks) => {
 export const convertToCreateAgentForm = (payload) => {
     console.log(`Agent payload ${JSON.stringify(payload)}`)
     let agentTasks = [...payload.tasks]
-    console.log(`Agent tasks ${JSON.stringify(agentTasks)}`)
     const agentData = agentTasks.shift()
     const followupTasks = [...agentTasks]
-    console.log(`Agent data ${JSON.stringify(agentData)} followpTasks ${JSON.stringify(followupTasks)} payload ${JSON.stringify(payload)}`)
     const llmAgent = agentData.tools_config?.llm_agent;
     const synthesizer = agentData.tools_config?.synthesizer;
     const transcriber = agentData.tools_config?.transcriber;
@@ -368,7 +366,7 @@ export const convertToCreateAgentForm = (payload) => {
             }
         },
         engagementConfig: {
-            channel: input.provider === "default" ? "Websocket" : input.provider,
+            channel: input.provider === "default" ? "Websocket" : "Telephone",
             format: input.format
         },
         rulesConfig: {

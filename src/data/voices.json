@@ -1278,6 +1278,15 @@
         "accent": "english-indian"
     },
     {
+        "name": "virat",
+        "id": "virat",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": false,
+        "accent": "english-indian"
+    },
+    {
         "name": "Anika",
         "id": "QOQGV0NwUO8sk3CJ0VON",
         "languageCode": "all",
@@ -1294,5 +1303,545 @@
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "indian"
+    },
+    {
+        "name": "Jitendra",
+        "id": "LibICWVR19ig6BZk257C",
+        "languageCode": "all",
+        "model": "eleven_multilingual_v1",
+        "provider": "elevenlabs",
+        "lowLatency": false,
+        "accent": "indian"
+    },
+    {
+        "name": "Sanjay",
+        "id": "E5k6oDZaruAl0DpYuvja",
+        "languageCode": "all",
+        "model": "eleven_multilingual_v1",
+        "provider": "elevenlabs",
+        "lowLatency": false,
+        "accent": "indian"
+    },
+    {
+        "name": "Alice",
+        "id": "Claribel Dervla",
+        "accent": "Irish",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Bethany",
+        "id": "Daisy Studious",
+        "accent": "British",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Catherine",
+        "id": "Gracie Wise",
+        "accent": "British",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Diana",
+        "id": "Tammie Ema",
+        "accent": "American",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Evelyn",
+        "id": "Alison Dietlinde",
+        "accent": "German",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Fiona",
+        "id": "Ana Florence",
+        "accent": "Italian",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Georgia",
+        "id": "Annmarie Nele",
+        "accent": "Dutch",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Hannah",
+        "id": "Asya Anara",
+        "accent": "Turkish",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Isabel",
+        "id": "Brenda Stern",
+        "accent": "American",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Jessica",
+        "id": "Gitta Nikolina",
+        "accent": "Scandinavian",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Katherine",
+        "id": "Henriette Usha",
+        "accent": "French",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Laura",
+        "id": "Sofia Hellen",
+        "accent": "Greek",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Megan",
+        "id": "Tammy Grit",
+        "accent": "American",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Natalie",
+        "id": "Tanja Adelina",
+        "accent": "Slavic",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Olivia",
+        "id": "Vjollca Johnnie",
+        "accent": "Albanian",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Peter",
+        "id": "Andrew Chipper",
+        "accent": "American",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Quentin",
+        "id": "Badr Odhiambo",
+        "accent": "African",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Robert",
+        "id": "Dionisio Schuyler",
+        "accent": "Spanish",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Steven",
+        "id": "Royston Min",
+        "accent": "British",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Thomas",
+        "id": "Viktor Eka",
+        "accent": "Eastern European",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Ulysses",
+        "id": "Abrahan Mack",
+        "accent": "American",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Vincent",
+        "id": "Adde Michal",
+        "accent": "Scandinavian",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "William",
+        "id": "Baldur Sanjin",
+        "accent": "Nordic",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Xander",
+        "id": "Craig Gutsy",
+        "accent": "American",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Yusuf",
+        "id": "Damien Black",
+        "accent": "British",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Zachary",
+        "id": "Gilberto Mathias",
+        "accent": "Latin American",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Aaron",
+        "id": "Ilkin Urbano",
+        "accent": "Turkish",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Brian",
+        "id": "Kazuhiko Atallah",
+        "accent": "Japanese",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Charles",
+        "id": "Ludvig Milivoj",
+        "accent": "Eastern European",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "David",
+        "id": "Suad Qasim",
+        "accent": "Arabic",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Edward",
+        "id": "Torcull Diarmuid",
+        "accent": "Scottish",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Frank",
+        "id": "Viktor Menelaos",
+        "accent": "Eastern European",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "George",
+        "id": "Zacharie Aimilios",
+        "accent": "French",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Ivy",
+        "id": "Nova Hogarth",
+        "accent": "American",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Julia",
+        "id": "Maja Ruoho",
+        "accent": "Finnish",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Karen",
+        "id": "Uta Obando",
+        "accent": "Spanish",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Lynn",
+        "id": "Lidiya Szekeres",
+        "accent": "Eastern European",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Monica",
+        "id": "Chandra MacFarland",
+        "accent": "Indian",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Nora",
+        "id": "Szofi Granger",
+        "accent": "Hungarian",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Opal",
+        "id": "Camilla Holmström",
+        "accent": "Scandinavian",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Pamela",
+        "id": "Lilya Stainthorpe",
+        "accent": "Russian",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Quincy",
+        "id": "Zofija Kendrick",
+        "accent": "Slavic",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Rachel",
+        "id": "Narelle Moon",
+        "accent": "Australian",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Sarah",
+        "id": "Barbora MacLean",
+        "accent": "Czech",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Tina",
+        "id": "Alexandra Hisakawa",
+        "accent": "Japanese",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Ursula",
+        "id": "Alma María",
+        "accent": "Spanish",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Veronica",
+        "id": "Rosemary Okafor",
+        "accent": "African",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Wendy",
+        "id": "Ige Behringer",
+        "accent": "German",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Ian",
+        "id": "Filip Traverse",
+        "accent": "Slavic",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Jack",
+        "id": "Damjan Chapman",
+        "accent": "Slavic",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Kyle",
+        "id": "Wulf Carlevaro",
+        "accent": "German",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Leon",
+        "id": "Aaron Dreschner",
+        "accent": "German",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Maitreya",
+        "id": "Kumar Dahl",
+        "accent": "Indian",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Nolan",
+        "id": "Eugenio Mataracı",
+        "accent": "Italian",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Oscar",
+        "id": "Ferran Simen",
+        "accent": "Spanish",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Pablo",
+        "id": "Xavier Hayasaka",
+        "accent": "Japanese",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Quincy",
+        "id": "Luis Moray",
+        "accent": "Spanish",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "Ryan",
+        "id": "Marcos Rudaski",
+        "accent": "Spanish",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
     }
 ]
