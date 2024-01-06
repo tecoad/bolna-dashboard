@@ -113,7 +113,7 @@ const getToolsConfig = (taskType, extraConfig) => {
         return { api_tools: apiTools }
     } else if (taskType === "extraction") {
         llmTaskConfig.llm_agent.streaming_model = "gpt-4-1106-preview"
-        llmTaskConfig.llm_agent.extraction_json = extraConfig
+        llmTaskConfig.llm_agent.extraction_details = extraConfig
     } else {
         console.log("SUmmarization task")
         llmTaskConfig.llm_agent.streaming_model = "gpt-4-1106-preview"
@@ -315,7 +315,7 @@ const getFollowupTasks = (followUpTasks) => {
     followUpTasks.forEach(task => {
         if (task.task_type == "extraction") {
             followupTaskConfig.tasks.push("extraction")
-            followupTaskConfig.extractionDetails = task.tools_config?.llm_agent?.extraction_json
+            followupTaskConfig.extractionDetails = task.tools_config?.llm_agent?.extraction_details
         } else if (task.task_type == "summarization") {
             followupTaskConfig.tasks.push("summarization")
         } else {
@@ -325,6 +325,7 @@ const getFollowupTasks = (followUpTasks) => {
             })
         }
     })
+    console.log(`Follow up tasks ${JSON.stringify(followUpTasks)}`)
     return followupTaskConfig
 }
 

@@ -5,7 +5,7 @@ import { renderTooltip } from '../../components/CustomTooltip';
 function FollowUpTasks({ formData, onFormDataChange }) {
     const [selectedTasks, setSelectedTasks] = useState(formData.followUpTaskConfig.tasks);
     const [selectedNotificationMethods, setSelectedNotificationMethods] = useState(formData.followUpTaskConfig.notificationDetails.notificationMethods);
-
+    console.log(`Form data follow up tasks ${JSON.stringify(formData)}`)
     const handleTasksChange = (event) => {
         const { name, value } = event.target;
         console.log(`Got task Chagne event ${name}, ${value}`)
@@ -132,6 +132,7 @@ function FollowUpTasks({ formData, onFormDataChange }) {
                                 label="Extraction Details"
                                 multiline
                                 rows={4}
+                                defaultValue={formData?.followUpTaskConfig?.extractionDetails}
                                 margin="normal"
                                 placeholder="What information would you like to extract. Name that data point and explalain it. user intent - Is user interested or not"
                                 name="extractionDetails"
