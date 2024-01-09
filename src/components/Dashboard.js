@@ -8,6 +8,7 @@ import InsightsIcon from '@mui/icons-material/Insights'; // Icon for "Models"
 import StorageIcon from '@mui/icons-material/Storage'; // Icon for "Datasets"
 import SettingsInputComponentIcon from '@mui/icons-material/SettingsInputComponent'; // Icon for "Integrations"
 import AccountBoxIcon from '@mui/icons-material/AccountBox'; // Icon for "Account"
+import VpnKeyIcon from '@mui/icons-material/VpnKey';
 
 const drawerWidth = 240;
 
@@ -58,6 +59,13 @@ function Dashboard({ supabase }) {
             </List>
             <Divider />
             <List>
+                <ListItem button component={NavLink} to="my-keys">
+                    <ListItemIcon><VpnKeyIcon /></ListItemIcon>
+                    <ListItemText primary="API Keys" />
+                </ListItem>
+            </List>
+            <Divider />
+            <List>
                 <ListItem button key="Logout">
                     <ListItemIcon><ExitToApp /></ListItemIcon>
                     <ListItemText primary="Logout" />
@@ -81,6 +89,8 @@ function Dashboard({ supabase }) {
                 return 'Integrations';
             case 'account':
                 return 'Account';
+            case 'my-keys':
+                return 'APIKeys';
             default:
                 return 'Dashboard';
         }

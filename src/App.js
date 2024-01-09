@@ -12,6 +12,7 @@ import Models from './pages/Models';
 import Datasets from './pages/Datasets';
 import Integrations from './pages/Integrations';
 import Account from './pages/Account';
+import APIKeys from './pages/APIKeys';
 import Dashboard from './components/Dashboard';
 import AgentDetails from './pages/AgentDetails';
 import RunDetails from './pages/assistant-details/RunDetails';
@@ -115,6 +116,7 @@ function App() {
               <Route path="datasets" element={<Datasets session={session} />} />
               <Route path="integrations" element={<Integrations session={session} />} />
               <Route path="account" element={<Account session={session} />} />
+              <Route path="my-keys" element={<APIKeys userId={session?.user?.id} />} />
               <Route path="agent-details" element={<AgentDetails session={session} />} />
 
               <Route path="agent/run-details" element={<RunDetails session={session} />} />
