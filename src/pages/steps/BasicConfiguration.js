@@ -60,16 +60,9 @@ function BasicConfiguration({ formData, onFormDataChange }) {
 
     const handleRadioChange = (event) => {
         let engagementConfig = {}
-        if (event.target.value === 'Websocket') {
-            engagementConfig = {
-                "channel": "Websocket",
-                "format": "wav"
-            }
-        } else {
-            engagementConfig = {
-                "channel": "Telephone",
-                "format": "pcm"
-            }
+        engagementConfig = {
+            "channel": event.target.value,
+            "format": "pcm"
         }
 
         onFormDataChange({

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography, Divider, Grid, Paper, AudioPlayer } from '@mui/material';
+import { Box, Typography, Divider, Grid, Paper, AudioPlayer, List, ListItem, ListItemText } from '@mui/material';
 
 function ExecutionMetadata({ executionDetails }) {
     console.log(`${JSON.stringify(executionDetails)}`)
@@ -52,19 +52,61 @@ function ExecutionMetadata({ executionDetails }) {
                     "Synthesizer Model": 0,
                     "Synthesizer Characters": executionDetails.synthesizer_characters
                 })}
-                
+
             </Box>
 
             <Divider orientation="vertical" flexItem />
 
             {/* Right Side */}
             <Box flex={2} sx={{ pl: 2 }}>
-                <Typography variant='h6'>Transcript & Recording</Typography>
-                <audio controls src={executionDetails.recording} style={{ width: '100%' }}>
-                    Your browser does not support the audio element.
-                </audio>
+                <Typography variant='h5'>Qualitative Details</Typography>
+                {
+                    executionDetails?.recording ? (
+                        <>
+                            <audio controls src={executionDetails.recording} style={{ width: '100%' }}>
+                                Your browser does not support the audio element.
+                            </audio>
+                            <Divider sx={{ my: 2 }} />
+
+                        </>
+                    ) : null
+                }
+
+
+                {
+                    executionDetails?.extracted_data ? (
+                        <>
+                            <Typography variant='h6'>Extraction</Typography>
+                            <List>
+                                {Object.entries(executionDetails.extracted_data).map(([key, value]) => (
+                                    <ListItem key={key}>
+                                        <ListItemText
+                                            primary={key}
+                                            secondary={typeof value === 'object' ? JSON.stringify(value, null, 2) : value}
+                                        />
+                                    </ListItem>
+                                ))}
+                            </List>
+                            <Divider sx={{ my: 2 }} />
+                        </>
+                    ) : (null)
+                }
+
+                {
+                    executionDetails?.summary ? (
+                        <>
+                            <Typography variant='h6'>Summary</Typography>
+
+                            {executionDetails.summary}
+                            <Divider sx={{ my: 2 }} />
+                        </>
+                    ) : (null)
+                }
+
+                <Typography variant='h6' gutterBottom>Transcript</Typography>
+
                 <Paper elevation={2} sx={{ mt: 2, p: 2, maxHeight: '300px', overflow: 'auto' }}>
-                    <Typography variant="body1">
+                    <Typography variant="body1" sx={{ whiteSpace: 'pre-line' }}>
                         {executionDetails.transcript}
                     </Typography>
                 </Paper>
