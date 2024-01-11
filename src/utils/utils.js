@@ -152,7 +152,8 @@ const getElevenLabsConfig = (voiceDetails, agentData) => {
     return {
         voice: voiceDetails.name,
         voice_id: voiceDetails.id,
-        model: voiceDetails.model
+        model: voiceDetails.model,
+        sampling_rate: agentData.modelsConfig.asrConfig.samplingRate.toString()
 
     }
 }
@@ -162,7 +163,8 @@ const getXTTSConfig = (voiceDetails, agentData) => {
     console.log(`VOICE ${JSON.stringify(voiceDetails)} Agent Details ${JSON.stringify(agentData)}`)
     return {
         voice: voiceDetails.name,
-        language: agentData.modelsConfig.asrConfig.language
+        language: agentData.modelsConfig.asrConfig.language,
+        sampling_rate: agentData.modelsConfig.asrConfig.samplingRate
     }
 }
 
