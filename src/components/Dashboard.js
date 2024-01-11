@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Drawer, List, ListItem, ListItemIcon, ListItemText, Divider, IconButton, Typography, Box, Toolbar, AppBar } from '@mui/material';
 import { Menu as MenuIcon, AccountBox, GroupAdd, Dashboard as DashboardIcon, ExitToApp } from '@mui/icons-material';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
@@ -14,16 +15,18 @@ const drawerWidth = 240;
 function Dashboard({ supabase }) {
     const [mobileOpen, setMobileOpen] = useState(false);
     const location = useLocation();
+    const navigate = useNavigate();
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
 
     const logoutUser = () => {
-
         supabase.auth.signOut().then(() => {
             alert("Logged out")
+            navigate("/");
         })
+
     }
 
     const drawer = (
@@ -58,7 +61,7 @@ function Dashboard({ supabase }) {
             </List>
             <Divider />
             <List>
-                <ListItem button key="Logout">
+                <ListItem button key="Logout" onClick={logoutUser}>
                     <ListItemIcon><ExitToApp /></ListItemIcon>
                     <ListItemText primary="Logout" />
                 </ListItem>
