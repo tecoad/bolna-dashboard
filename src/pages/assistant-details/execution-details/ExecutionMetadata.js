@@ -41,16 +41,15 @@ function ExecutionMetadata({ executionDetails }) {
                 {renderSection("Metadata", {
                     "Run ID": executionDetails.range,
                     "Run Duration": `${executionDetails.conversation_time} seconds`,
-                    "Run Date": executionDetails.run_date,
-                    "Total Cost": `${executionDetails.transcriber_characters}`
+                    "Run Date": new Date(executionDetails.createdAt).toLocaleDateString(),
+                    "Total Cost": `$${executionDetails.total_cost}`
                 })}
                 {renderSection("Usage Breakdown", {
-                    "Transcriber Model": 0,
-                    "Transcriber Duration": 0,
-                    "LLM Model": 0,
-                    "LLM Tokens": 0,
-                    "Synthesizer Model": 0,
-                    "Synthesizer Characters": executionDetails.synthesizer_characters
+                    "Transcriber Model": executionDetails?.usage_breakdown?.transcriberModel,
+                    "Transcriber Duration": executionDetails?.usage_breakdown?.transcriberDuration,
+                    "Synthesizer Model": executionDetails?.usage_breakdown?.synthesizerModel,
+                    "Synthesizer Characters": executionDetails?.usage_breakdown?.synthesizerCharacters,
+                    "LLM Details": executionDetails?.usage_breakdown?.llmModel
                 })}
 
             </Box>
@@ -71,7 +70,6 @@ function ExecutionMetadata({ executionDetails }) {
                         </>
                     ) : null
                 }
-
 
                 {
                     executionDetails?.extracted_data ? (
