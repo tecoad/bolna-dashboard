@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography, Divider, Grid, Paper, AudioPlayer } from '@mui/material';
+import { Box, Typography, Divider, Grid, Paper, AudioPlayer, List, ListItem, ListItemText } from '@mui/material';
 
 function ExecutionMetadata({ executionDetails }) {
     console.log(`${JSON.stringify(executionDetails)}`)
@@ -41,30 +41,70 @@ function ExecutionMetadata({ executionDetails }) {
                 {renderSection("Metadata", {
                     "Run ID": executionDetails.range,
                     "Run Duration": `${executionDetails.conversation_time} seconds`,
-                    "Run Date": executionDetails.run_date,
-                    "Total Cost": `${executionDetails.transcriber_characters}`
+                    "Run Date": new Date(executionDetails.createdAt).toLocaleDateString(),
+                    "Total Cost": `$${executionDetails.total_cost}`
                 })}
                 {renderSection("Usage Breakdown", {
-                    "Transcriber Model": 0,
-                    "Transcriber Duration": 0,
-                    "LLM Model": 0,
-                    "LLM Tokens": 0,
-                    "Synthesizer Model": 0,
-                    "Synthesizer Characters": executionDetails.synthesizer_characters
+                    "Transcriber Model": executionDetails?.usage_breakdown?.transcriberModel,
+                    "Transcriber Duration": executionDetails?.usage_breakdown?.transcriberDuration,
+                    "Synthesizer Model": executionDetails?.usage_breakdown?.synthesizerModel,
+                    "Synthesizer Characters": executionDetails?.usage_breakdown?.synthesizerCharacters,
+                    "LLM Details": executionDetails?.usage_breakdown?.llmModel
                 })}
-                
+
             </Box>
 
             <Divider orientation="vertical" flexItem />
 
             {/* Right Side */}
             <Box flex={2} sx={{ pl: 2 }}>
-                <Typography variant='h6'>Transcript & Recording</Typography>
-                <audio controls src={executionDetails.recording} style={{ width: '100%' }}>
-                    Your browser does not support the audio element.
-                </audio>
+                <Typography variant='h5'>Qualitative Details</Typography>
+                {
+                    executionDetails?.recording ? (
+                        <>
+                            <audio controls src={executionDetails.recording} style={{ width: '100%' }}>
+                                Your browser does not support the audio element.
+                            </audio>
+                            <Divider sx={{ my: 2 }} />
+
+                        </>
+                    ) : null
+                }
+
+                {
+                    executionDetails?.extracted_data ? (
+                        <>
+                            <Typography variant='h6'>Extraction</Typography>
+                            <List>
+                                {Object.entries(executionDetails.extracted_data).map(([key, value]) => (
+                                    <ListItem key={key}>
+                                        <ListItemText
+                                            primary={key}
+                                            secondary={typeof value === 'object' ? JSON.stringify(value, null, 2) : value}
+                                        />
+                                    </ListItem>
+                                ))}
+                            </List>
+                            <Divider sx={{ my: 2 }} />
+                        </>
+                    ) : (null)
+                }
+
+                {
+                    executionDetails?.summary ? (
+                        <>
+                            <Typography variant='h6'>Summary</Typography>
+
+                            {executionDetails.summary}
+                            <Divider sx={{ my: 2 }} />
+                        </>
+                    ) : (null)
+                }
+
+                <Typography variant='h6' gutterBottom>Transcript</Typography>
+
                 <Paper elevation={2} sx={{ mt: 2, p: 2, maxHeight: '300px', overflow: 'auto' }}>
-                    <Typography variant="body1">
+                    <Typography variant="body1" sx={{ whiteSpace: 'pre-line' }}>
                         {executionDetails.transcript}
                     </Typography>
                 </Paper>

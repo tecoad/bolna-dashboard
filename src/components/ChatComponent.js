@@ -54,7 +54,7 @@ function ChatComponent({ agentId, isOpen, userId }) {
                 position: "left",
                 title: "AI",
                 data: {
-                    audioURL: audioUrl,
+                    audioURL: audioUrl
                 },
             };
             setMessages(prev => [...prev, audioMessage]);

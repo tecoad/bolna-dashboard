@@ -1,7 +1,7 @@
 [
     {
-        "run_id": "081822c7-11dd-4d9c-86db-8d43ca88b9a1",
-        "run_duration": 68,
+        "range": "081822c7-11dd-4d9c-86db-8d43ca88b9a1",
+        "conversation_time": 68,
         "run_date": "2023-12-21",
         "total_cost": 2.91,
         "cost_breakdown": {
@@ -30,8 +30,8 @@
         }
     },
     {
-        "run_id": "802d3179-8c3d-427d-9962-fc6ef18494a6",
-        "run_duration": 21,
+        "range": "802d3179-8c3d-427d-9962-fc6ef18494a6",
+        "conversation_time": 21,
         "run_date": "2023-12-22",
         "total_cost": 2.89,
         "cost_breakdown": {
@@ -60,8 +60,8 @@
         }
     },
     {
-        "run_id": "1cca36cf-d66b-4138-ad9f-74f3556d4363",
-        "run_duration": 38,
+        "range": "1cca36cf-d66b-4138-ad9f-74f3556d4363",
+        "conversation_time": 38,
         "run_date": "2023-12-21",
         "total_cost": 2.66,
         "cost_breakdown": {
@@ -90,8 +90,8 @@
         }
     },
     {
-        "run_id": "68d17d2f-c48a-430f-be6c-695c395c037a",
-        "run_duration": 127,
+        "range": "68d17d2f-c48a-430f-be6c-695c395c037a",
+        "conversation_time": 127,
         "run_date": "2023-12-21",
         "total_cost": 2.16,
         "cost_breakdown": {
@@ -120,8 +120,8 @@
         }
     },
     {
-        "run_id": "85330a1a-0600-461f-a8fe-03e696a9a4f1",
-        "run_duration": 7,
+        "range": "85330a1a-0600-461f-a8fe-03e696a9a4f1",
+        "conversation_time": 7,
         "run_date": "2023-12-21",
         "total_cost": 1.87,
         "cost_breakdown": {
