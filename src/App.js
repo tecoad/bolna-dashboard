@@ -116,7 +116,7 @@ function App() {
               <Route path="datasets" element={<Datasets session={session} />} />
               <Route path="integrations" element={<Integrations session={session} />} />
               <Route path="account" element={<Account session={session} />} />
-              <Route path="my-keys" element={<APIKeys userId={session?.user?.id} />} />
+              <Route path="my-keys" element={<APIKeys accessToken={session?.access_token} />} />
               <Route path="agent-details" element={<AgentDetails session={session} />} />
 
               <Route path="agent/run-details" element={<RunDetails session={session} />} />

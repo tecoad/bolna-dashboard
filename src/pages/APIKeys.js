@@ -1,25 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { Box, Typography, CircularProgress, Divider, Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, TextField } from '@mui/material';
 import JsonTable from '../components/Table'; // Adjust the import path as necessary
 import Backdrop from '@mui/material/Backdrop';
 import IconButton from '@mui/material/IconButton';
 import FileCopyIcon from '@mui/icons-material/FileCopy';
+import Tooltip from '@mui/material/Tooltip';
+import createApiInstance from '../utils/api';
 
 
-function APIKeys({ userId }) {
+
+function APIKeys({ accessToken }) {
     const [keys, setKeys] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
     const [openCreateKey, setOpenCreateKey] = useState(false);
     const [disabledText, setDisabledText] = useState('');
+    const api = createApiInstance(accessToken);
 
     const handleOpenCreateKey = async () => {
         try {
-          // Replace 'your-api-endpoint' with the actual endpoint of your API
-          const response = await axios.post(`${process.env.REACT_APP_FAST_API_BACKEND_URL}/create_api_key`, {
-                user_id: userId
-            });
+            const response = await api.post('/create_api_key');
           
           setDisabledText(response.data.api_key);
 
@@ -35,9 +35,7 @@ function APIKeys({ userId }) {
         window.location.reload();
     };
 
-
     const handleCopyClick = () => {
-        // Logic to copy the text to the clipboard
         navigator.clipboard.writeText(disabledText).then(() => {
             console.log('Text copied to clipboard');
         }).catch((err) => {
@@ -49,7 +47,7 @@ function APIKeys({ userId }) {
         const fetchKeys = async () => {
             setIsLoading(true);
             try {
-                const response = await axios.get(`${process.env.REACT_APP_FAST_API_BACKEND_URL}/api_keys?user_id=${userId}`);
+                const response = await api.get('/api_keys');
                 setKeys(response.data);
             } catch (error) {
                 console.error('Error fetching agents: Making loading false', error);
@@ -60,10 +58,10 @@ function APIKeys({ userId }) {
             }
         };
 
-        if (userId) {
+        if (accessToken) {
             fetchKeys();
         }
-    }, [userId]);
+    }, [accessToken]);
 
 
     if (error) {
@@ -100,9 +98,11 @@ function APIKeys({ userId }) {
                         sx={{ width: '70%' }}
                         jsonData={keys}
                         columnsToShow={["key_name", "humanized_accessed_at", "humanized_created_at"]}
-                        userId={userId}
+                        tooltipMap={{"humanized_accessed_at": "accessed_at", "humanized_created_at": "created_at"}}
+                        accessToken={accessToken}
                         clickable={false}
-                        headersDisplayedAs={["Key Name", "Last Accessed", "Created At"]}
+                        actionsToShow={{"Delete": "key_uuid"}}
+                        headersDisplayedAs={["Key Identifier", "Last Accessed", "Created At"]}
                         />
                     </Box>
 
