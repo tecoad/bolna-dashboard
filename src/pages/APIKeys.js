@@ -96,7 +96,14 @@ function APIKeys({ userId }) {
 
                     </Box>
                     <Box>
-                        <JsonTable sx={{ width: '70%' }} jsonData={keys} columnsToShow={["key_name", "accessed_at", "created_at"]} userId={userId} clickable={false} headersDisplayedAs={["Key Name", "Last Accessed", "Created At"]} />
+                        <JsonTable
+                        sx={{ width: '70%' }}
+                        jsonData={keys}
+                        columnsToShow={["key_name", "humanized_accessed_at", "humanized_created_at"]}
+                        userId={userId}
+                        clickable={false}
+                        headersDisplayedAs={["Key Name", "Last Accessed", "Created At"]}
+                        />
                     </Box>
 
 
