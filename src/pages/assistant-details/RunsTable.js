@@ -3,11 +3,12 @@ import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { Box } from '@mui/material';
 import JsonTable from '../../components/Table';
-//import runData from '../../data/fake_run_details.json';
+import fakeData from '../../data/fake_run_details.json';
 
 function RunTable({ }) {
     const location = useLocation();
-    const [runData, setRunData] = useState(null);
+    const [runData, setRunData] = useState([]);
+    const [loading, setLoading] = useState(false);
     const agent = location.state?.agent;
     const userId = location.state?.userId;
     const agentId = agent?.range.split("#")[1];
@@ -15,31 +16,36 @@ function RunTable({ }) {
     useEffect(() => {
         const fetchData = async () => {
             try {
+                setLoading(true);
                 const response = await axios.get(`${process.env.REACT_APP_FAST_API_BACKEND_URL}/assistant/executions?user_id=${userId}&assistant_id=${agentId}`);
-                setRunData(response.data.runs);
+                var runs = [...response.data.data]
+                setRunData(runs);
+                setLoading(false);
+                console.log(`Got all executions and this is run data ${JSON.stringify(runData)}`)
+
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
-        };
 
+        };
         fetchData();
     }, [agentId, userId]); // Empty dependency array ensures this effect runs once on component mount
 
 
     return (
         <Box>
-            {runData ? (
+            {loading ? (
+                <p>Loading...</p>
+            ) : (
                 <JsonTable
                     sx={{ width: '70%' }}
-                    jsonData={runData}
-                    columnsToShow={["range", "conversation_time", "run_date", "transcriber_characters"]}
+                    jsonData={runData || []}
+                    columnsToShow={["range", "conversation_time", "createdAt", "total_cost"]}
                     onClickPage="run-details"
                     clickable={true}
                     headersDisplayedAs={["Run ID", "Run Duration", "Run Date", "Total Cost"]}
                     agent={agent}
                 />
-            ) : (
-                <p>Loading...</p>
             )}
         </Box>
     );
