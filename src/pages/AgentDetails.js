@@ -30,7 +30,6 @@ function AgentDetails({ accessToken }) {
         const fetchPromptData = async () => {
             setLoading(true);
             try {
-                //const response = await axios.get(`${process.env.REACT_APP_FAST_API_BACKEND_URL}/agent/prompts?user_id=${userId}&assistant_id=${agentId}`);
                 const response = await api.get(`/agent/prompts?agent_id=${agentId}`);
                 console.log(`GOT Deserialized prompt ${JSON.stringify(response.data)}`)
 
