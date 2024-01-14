@@ -18,7 +18,10 @@ function RunTable({ }) {
             try {
                 setLoading(true);
                 const response = await axios.get(`${process.env.REACT_APP_FAST_API_BACKEND_URL}/assistant/executions?user_id=${userId}&assistant_id=${agentId}`);
-                var runs = [...response.data.data]
+                var runs = []
+                if (response.data.runs.length > 0) {
+                    runs = [...response.data.runs];
+                }
                 setRunData(runs);
                 setLoading(false);
                 console.log(`Got all executions and this is run data ${JSON.stringify(runData)}`)

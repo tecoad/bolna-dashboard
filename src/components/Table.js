@@ -6,7 +6,13 @@ import Tooltip from '@mui/material/Tooltip';
 import { IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import createApiInstance from '../utils/api';
+import TextField from '@mui/material/TextField';
+import EventIcon from '@mui/icons-material/Event';
 
+import dayjs, { Dayjs } from 'dayjs';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
@@ -19,11 +25,55 @@ function formatHeader(header, row) {
     return header
 }
 
-function JsonTable({ jsonData, columnsToShow, tooltipMap, actionsToShow={}, userId, accessToken, onClickPage, clickable, headersDisplayedAs, agent }) {
+function JsonTable({
+    jsonData,
+    columnsToShow,
+    tooltipMap,
+    actionsToShow = {},
+    userId,
+    accessToken,
+    onClickPage,
+    clickable,
+    headersDisplayedAs,
+    agent
+}) {
     const navigate = useNavigate();
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
     const [deleteTarget, setDeleteTarget] = useState(null);
+    const [selectedDateTime, setSelectedDateTime] = React.useState(dayjs());
+
     const api = createApiInstance(accessToken);
+
+
+    const handleDateTimeChange = (newDateTime) => {
+        // Handle the date-time change if needed
+        setSelectedDateTime(newDateTime);
+    };
+
+    const handleDateTimeSubmit = async (callersListId, selectedDateTime, agentId) => {
+        try {
+            const formData = new FormData();
+            formData.append('agent_id', agentId);
+            formData.append('callers_list_id', callersListId);
+            formData.append('scheduled_at', new Date(selectedDateTime).getTime() / 1000);
+
+            const response = await api.post('/create_callers_list_batch', formData);
+
+            if (response.status === 200) {
+                console.log('Date & Time updated successfully');
+                // You can add additional logic or feedback here
+            } else {
+                console.error('Failed to update Date & Time');
+                // Handle the error or provide feedback to the user
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        } finally {
+            // Close the upload dialog
+            window.location.reload();
+        }
+    };
+
 
     const handleDelete = async (accessToken, keyUuid) => {
         try {
@@ -58,10 +108,19 @@ function JsonTable({ jsonData, columnsToShow, tooltipMap, actionsToShow={}, user
     const handleRowClick = (row) => {
         if (clickable) {
             if (onClickPage == "agent-details") {
-                navigate("/dashboard/agent-details", { state: { agent: row, userId: userId } });
+                navigate("/dashboard/agent-details", {
+                    state: {
+                        agent: row,
+                        userId: userId
+                    }
+                });
             } else {
                 console.log(`Row ${JSON.stringify(row)}`)
-                navigate("/dashboard/agent/run-details", { state: { runDetails: row } });
+                navigate("/dashboard/agent/run-details", {
+                    state: {
+                        runDetails: row
+                    }
+                });
             }
         }
     };
@@ -96,15 +155,61 @@ function JsonTable({ jsonData, columnsToShow, tooltipMap, actionsToShow={}, user
                                 }
                             })}
 
-                            {Object.entries(actionsToShow).map(([key, value]) => (
+                            {Object.entries(actionsToShow).map(([key, value]) => {
+                                if (key === 'Delete') {
+                                    return (
+                                        <TableCell key={row[value]}>
+                                            {/* Render content for "earth" */}
+                                            <IconButton onClick={() => handleDeleteClick(row[value])} aria-label={`${key} ${row[value]}`}>
+                                                <DeleteIcon />
+                                            </IconButton>
+                                        </TableCell>
+                                    );
+                                } else if (key === 'Schedule') {
+                                    return (
 
-                                <TableCell key={row[value]}>
-                                    {/* Replace {key} with IconButton and DeleteIcon */}
-                                    <IconButton onClick={() => handleDeleteClick(row[value])} aria-label={`Delete ${key}`}>
-                                        <DeleteIcon />
-                                    </IconButton>
-                                </TableCell>
-                            ))}
+                                        <TableCell>
+                                          {/* DateTimePicker */}
+
+                                            <LocalizationProvider
+                                                dateAdapter={AdapterDayjs}
+                                                localeText={{ okButtonLabel: 'Schedule' }}
+                                            >
+
+                                                {row[value.scheduled_at] !== '' ? (
+                                                    <DateTimePicker
+                                                        label="Schedule"
+                                                        defaultValue={dayjs(row[value.scheduled_at])}
+                                                        onChange={handleDateTimeChange}
+                                                        onAccept={() => handleDateTimeSubmit(row[value.id], selectedDateTime, agent)}
+                                                        disablePast={true}
+                                                        slotProps={{
+                                                            actionBar: {
+                                                                actions: ["cancel", "accept"]
+                                                            }
+                                                        }}
+                                                    />
+                                                ) : (
+                                                    <DateTimePicker
+                                                        label="Schedule"
+                                                        onChange={handleDateTimeChange}
+                                                        onAccept={() => handleDateTimeSubmit(row[value.id], selectedDateTime, agent)}
+                                                        disablePast={true}
+                                                        slotProps={{
+                                                            actionBar: {
+                                                                actions: ["cancel", "accept"]
+                                                            }
+                                                        }}
+                                                    />
+                                                )}
+
+                                            </LocalizationProvider>
+                                        </TableCell>
+                                    );
+                                }
+
+                                return null; // or any other default content
+                            })}
 
                             {/* Delete confirmation dialog */}
                             <Dialog open={deleteDialogOpen} onClose={handleDeleteDialogClose}>

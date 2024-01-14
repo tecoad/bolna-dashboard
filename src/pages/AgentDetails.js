@@ -5,13 +5,14 @@ import CustomTabs from '../components/CustomTabs';
 import Analytics from './assistant-details/Analytics';
 import RunsTable from './assistant-details/RunsTable';
 import RequestLogs from './assistant-details/RequestLogs';
+import BatchCall from './assistant-details/BatchCall';
 import ChatComponent from '../components/ChatComponent'; // Import your ChatComponent
 import CallComponent from '../components/CallComponent'; // Import your CallComponent
 import AgentFormStepper from '../components/AgentFormStepper';
 import { convertToCreateAgentForm, convertToText } from '../utils/utils';
 import axios from 'axios';
 
-function AgentDetails({ session }) {
+function AgentDetails({ accessToken }) {
     const location = useLocation();
     const navigate = useNavigate();
     const agent = location.state?.agent;
@@ -73,7 +74,8 @@ function AgentDetails({ session }) {
     const tabsData = [
         { name: 'Analytics', component: <Analytics /> },
         { name: 'Agent Execution', component: <RunsTable /> },
-        { name: 'Edit agent details', component: <AgentFormStepper initialData={formData} userId={userId} isUpdate={true} agentId={agentId} /> },
+        { name: 'Edit agent details', component: <AgentFormStepper initialData={formData} userId={userId} isUpdate={true} agentId={agentId} accessToken={accessToken} /> },
+        { name: 'Batch call', component: <BatchCall agentId={agentId} accessToken={accessToken} /> },
     ];
 
     return (

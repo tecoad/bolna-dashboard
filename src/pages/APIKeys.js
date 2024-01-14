@@ -65,7 +65,7 @@ function APIKeys({ accessToken }) {
 
 
     if (error) {
-        return <Typography>Error loading agents.</Typography>;
+        return <Typography>Error loading keys.</Typography>;
     }
 
     return (

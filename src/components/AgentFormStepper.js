@@ -10,13 +10,16 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { CircularProgress } from '@mui/material';
 import Backdrop from '@mui/material/Backdrop';
+import createApiInstance from '../utils/api';
 
-function AgentFormStepper({ initialData, userId, isUpdate, agentId }) {
+function AgentFormStepper({ initialData, userId, isUpdate, agentId, accessToken }) {
     const [activeStep, setActiveStep] = useState(0);
     const [formData, setFormData] = useState(initialData);
     const [completed, setCompleted] = useState({})
     const [voices, setVoices] = useState([]);
     const [llmModels, setLLMModels] = useState([]);
+    const api = createApiInstance(accessToken);
+
     const defaultRootNode = {
         id: 'root-node',
         type: 'default',
@@ -203,11 +206,13 @@ function AgentFormStepper({ initialData, userId, isUpdate, agentId }) {
         console.log(`Sending backkend request to ${process.env.REACT_APP_FAST_API_BACKEND_URL}, agentID ${agentId} json ${JSON.stringify(payload)}`)
         try {
             if (isUpdate) {
-                const response = await axios.put(`${process.env.REACT_APP_FAST_API_BACKEND_URL}/assistant/${agentId}`, payload);
+                //const response = await axios.put(`${process.env.REACT_APP_FAST_API_BACKEND_URL}/assistant/${agentId}`, payload);
+                const response = await api.put(`assistant/${agentId}`, payload);
                 console.log(response.data);
 
             } else {
-                const response = await axios.post(`${process.env.REACT_APP_FAST_API_BACKEND_URL}/assistant`, payload);
+                //const response = await axios.post(`${process.env.REACT_APP_FAST_API_BACKEND_URL}/assistant`, payload);
+                const response = await api.post('/assistant', payload);
                 console.log(response.data);
             }
             navigate('/dashboard/my-agents');

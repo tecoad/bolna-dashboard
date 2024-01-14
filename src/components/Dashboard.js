@@ -11,6 +11,7 @@ import SettingsInputComponentIcon from '@mui/icons-material/SettingsInputCompone
 import AccountBoxIcon from '@mui/icons-material/AccountBox'; // Icon for "Account"
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 
+
 const drawerWidth = 240;
 
 function Dashboard({ supabase }) {
