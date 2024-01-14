@@ -48,7 +48,7 @@ function MyAgents({ userId }) {
 
                 ) : (
                     <Box>
-                        <JsonTable sx={{ width: '70%' }} jsonData={agents} columnsToShow={["assistant_name", "assistant_type", "assistant_status"]} userId={userId} onClickPage={"agent-details"} clickable={true} headersDisplayedAs={["Assistant Name", "Assistant Task", "Assistant Status"]} />
+                        <JsonTable sx={{ width: '70%' }} jsonData={agents} columnsToShow={["assistant_name", "assistant_type", "assistant_status", "updated_at", "created_at"]} userId={userId} onClickPage={"agent-details"} clickable={true} headersDisplayedAs={["Assistant Name", "Assistant Task", "Assistant Status", "Last Updated", "Created On"]} />
                     </Box>
                 )
             }
