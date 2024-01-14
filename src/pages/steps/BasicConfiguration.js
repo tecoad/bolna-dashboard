@@ -77,7 +77,7 @@ function BasicConfiguration({ formData, onFormDataChange }) {
             <Box sx={{ display: 'flex', alignItems: 'center', width: '50%', marginY: 1 }}>
                 <FormControl fullWidth margin="normal">
                     <TextField
-                        label="Assistant Name"
+                        label="Agent Name"
                         variant="outlined"
                         name="assistantName"
                         value={formData.basicConfig.assistantName || ''}
@@ -133,7 +133,7 @@ function BasicConfiguration({ formData, onFormDataChange }) {
                 <FormControl component="fieldset" fullWidth margin="normal">
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                         <FormLabel component="legend" sx={{ fontWeight: 'bold', marginRight: 2 }}>
-                            Assistant Invocation
+                            Agent Invocation
                         </FormLabel>
                         <RadioGroup
                             row

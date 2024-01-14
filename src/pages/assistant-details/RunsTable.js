@@ -17,9 +17,9 @@ function RunTable({ }) {
         const fetchData = async () => {
             try {
                 setLoading(true);
-                const response = await axios.get(`${process.env.REACT_APP_FAST_API_BACKEND_URL}/assistant/executions?user_id=${userId}&assistant_id=${agentId}`);
+                const response = await axios.get(`${process.env.REACT_APP_FAST_API_BACKEND_URL}/agent/executions?user_id=${userId}&assistant_id=${agentId}`);
                 var runs = []
-                if (response.data.runs.length > 0) {
+                if (response.data && response.data.runs && response.data.runs.length > 0) {
                     runs = [...response.data.runs];
                 }
                 setRunData(runs);

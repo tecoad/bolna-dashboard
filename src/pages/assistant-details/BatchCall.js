@@ -6,7 +6,6 @@ import IconButton from '@mui/material/IconButton';
 import FileCopyIcon from '@mui/icons-material/FileCopy';
 import Tooltip from '@mui/material/Tooltip';
 import createApiInstance from '../../utils/api';
-import axios from 'axios';
 import { CloudUpload } from '@mui/icons-material';
 
 
