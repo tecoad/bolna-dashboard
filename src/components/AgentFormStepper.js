@@ -207,12 +207,12 @@ function AgentFormStepper({ initialData, userId, isUpdate, agentId, accessToken 
         try {
             if (isUpdate) {
                 //const response = await axios.put(`${process.env.REACT_APP_FAST_API_BACKEND_URL}/assistant/${agentId}`, payload);
-                const response = await api.put(`assistant/${agentId}`, payload);
+                const response = await api.put(`update_agent/${agentId}`, payload);
                 console.log(response.data);
 
             } else {
                 //const response = await axios.post(`${process.env.REACT_APP_FAST_API_BACKEND_URL}/assistant`, payload);
-                const response = await api.post('/assistant', payload);
+                const response = await api.post('/create_agent', payload);
                 console.log(response.data);
             }
             navigate('/dashboard/my-agents');

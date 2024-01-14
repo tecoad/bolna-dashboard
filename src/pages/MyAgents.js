@@ -3,17 +3,20 @@ import axios from 'axios';
 import { Box, Typography, CircularProgress } from '@mui/material';
 import JsonTable from '../components/Table'; // Adjust the import path as necessary
 import Backdrop from '@mui/material/Backdrop';
+import createApiInstance from '../utils/api';
 
-function MyAgents({ userId }) {
+
+function MyAgents({ accessToken }) {
     const [agents, setAgents] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+    const api = createApiInstance(accessToken);
 
     useEffect(() => {
         const fetchAgents = async () => {
             setIsLoading(true);
             try {
-                const response = await axios.get(`${process.env.REACT_APP_FAST_API_BACKEND_URL}/assistants?user_id=${userId}`);
+                const response = await api.get(`/get_all_agents`);
                 setAgents(response.data);
             } catch (error) {
                 console.error('Error fetching agents: Making loading false', error);
@@ -24,10 +27,10 @@ function MyAgents({ userId }) {
             }
         };
 
-        if (userId) {
+        if (accessToken) {
             fetchAgents();
         }
-    }, [userId]);
+    }, [accessToken]);
 
 
     if (error) {
@@ -48,7 +51,7 @@ function MyAgents({ userId }) {
 
                 ) : (
                     <Box>
-                        <JsonTable sx={{ width: '70%' }} jsonData={agents} columnsToShow={["assistant_name", "assistant_type", "assistant_status", "updated_at", "created_at"]} userId={userId} onClickPage={"agent-details"} clickable={true} headersDisplayedAs={["Assistant Name", "Assistant Task", "Assistant Status", "Last Updated", "Created On"]} />
+                        <JsonTable sx={{ width: '70%' }} jsonData={agents} columnsToShow={["assistant_name", "assistant_type", "assistant_status", "updated_at", "created_at"]} onClickPage={"agent-details"} clickable={true} headersDisplayedAs={["Agent Name", "Agent Task", "Agent Status", "Last Updated", "Created On"]} />
                     </Box>
                 )
             }

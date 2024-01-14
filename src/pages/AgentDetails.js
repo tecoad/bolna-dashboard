@@ -10,7 +10,7 @@ import ChatComponent from '../components/ChatComponent'; // Import your ChatComp
 import CallComponent from '../components/CallComponent'; // Import your CallComponent
 import AgentFormStepper from '../components/AgentFormStepper';
 import { convertToCreateAgentForm, convertToText } from '../utils/utils';
-import axios from 'axios';
+import createApiInstance from '../utils/api';
 
 function AgentDetails({ accessToken }) {
     const location = useLocation();
@@ -24,16 +24,14 @@ function AgentDetails({ accessToken }) {
     const [loading, setLoading] = useState(false);
     const [prompt, setPrompt] = useState(null);
     const { handleClick } = CallComponent({ agentId, userId });
-
-
-
-    // ...
+    const api = createApiInstance(accessToken);
 
     useEffect(() => {
         const fetchPromptData = async () => {
             setLoading(true);
             try {
-                const response = await axios.get(`${process.env.REACT_APP_FAST_API_BACKEND_URL}/assistant/prompts?user_id=${userId}&assistant_id=${agentId}`);
+                //const response = await axios.get(`${process.env.REACT_APP_FAST_API_BACKEND_URL}/agent/prompts?user_id=${userId}&assistant_id=${agentId}`);
+                const response = await api.get(`/agent/prompts?agent_id=${agentId}`);
                 console.log(`GOT Deserialized prompt ${JSON.stringify(response.data)}`)
 
                 // Create a new object for formData
