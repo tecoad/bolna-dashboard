@@ -1,4 +1,4 @@
-const CallComponent = ({agentId, userId}) => {
+const CallComponent = ({ agentId, userId }) => {
   const handleClick = async () => {
     // Prompt the user to enter a phone number
     const phoneNumber = window.prompt('Enter your phone number:');

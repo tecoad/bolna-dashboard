@@ -9,8 +9,9 @@ import ASRModels from './models/ASRModels';
 import TTSModels from './models/TTSModels';
 import LLMModels from './models/LLMModels';
 import VoiceLab from './models/VoiceLab';
+import createApiInstance from '../utils/api';
 
-function Models({ userId }) {
+function Models({ accessToken }) {
     const location = useLocation();
     const navigate = useNavigate();
     const [openVoiceLabs, setOpenVoiceLabs] = useState(false);
@@ -18,8 +19,8 @@ function Models({ userId }) {
     const [voices, setVoices] = useState([]);
     const [loading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [llmModels, setLLMModels] = useState(null)
-
+    const [llmModels, setLLMModels] = useState(null);
+    const api = createApiInstance(accessToken);
 
     const handleOpenVoiceLabs = () => {
         setOpenVoiceLabs(true);
@@ -29,12 +30,12 @@ function Models({ userId }) {
         setOpenVoiceLabs(false);
     };
 
-
     useEffect(() => {
         const fetchModels = async () => {
             setIsLoading(true);
             try {
-                const response = await axios.get(`${process.env.REACT_APP_FAST_API_BACKEND_URL}/user/models?user_id=${userId}`);
+                //const response = await axios.get(`${process.env.REACT_APP_FAST_API_BACKEND_URL}/get_voices?user_id=${userId}`);
+                const response = await api.get('/get_voices');
                 setVoices(response.data.voices);
                 setLLMModels(response.data.llmModels);
                 console.log(`Voices ${JSON.stringify(response.data)}`)
@@ -46,11 +47,11 @@ function Models({ userId }) {
             }
         };
 
-        if (userId) {
+        if (accessToken) {
             fetchModels();
         }
 
-    }, [userId]);
+    }, [accessToken]);
 
     const tabsData = [
         { name: 'TTS', component: <TTSModels voices={voices} /> },
@@ -87,7 +88,7 @@ function Models({ userId }) {
 
                     {/* Dialog for Voice Lab */}
                     <Dialog open={openVoiceLabs} onClose={handleCloseVoiceLabs} fullWidth maxWidth="md">
-                        <VoiceLab userId={userId} defaultValue={voices[0]} />
+                        <VoiceLab voices={voices} accessToken={accessToken} defaultValue={voices[0]} />
                     </Dialog>
                 </>
             )}

@@ -9,7 +9,7 @@ import { base64ToBlob, getDefaultSampleRate } from '../utils/utils';
 
 const sampleRate = getDefaultSampleRate()
 
-function ChatComponent({ agentId, isOpen, userId }) {
+function ChatComponent({ agentId, isOpen, userId, accessToken }) {
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
     const [recording, setRecording] = useState(false);
@@ -24,8 +24,6 @@ function ChatComponent({ agentId, isOpen, userId }) {
 
     function handleIncomingMessage(receivedMessage) {
         console.log(`Data ${receivedMessage} JSON Sata ${JSON.stringify(receivedMessage)}`)
-
-
 
         if (receivedMessage.type == "text") {
             if (receivedMessage.data == '<beginning_of_stream>') {
@@ -74,6 +72,7 @@ function ChatComponent({ agentId, isOpen, userId }) {
 
         if (!ws.current) {
             console.log("Starting websocket connection")
+            // to add auth
             ws.current = new WebSocket(`${process.env.REACT_APP_WEBSOCKET_ENDPOINT}/${userId}/${agentId}?user_agent=dashboard`);
 
             ws.current.addEventListener("open", () => {

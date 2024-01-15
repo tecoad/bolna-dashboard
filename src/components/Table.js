@@ -110,8 +110,8 @@ function JsonTable({
             if (onClickPage == "agent-details") {
                 navigate("/dashboard/agent-details", {
                     state: {
-                        agent: row,
-                        userId: userId
+                        userId: userId,
+                        agent: row
                     }
                 });
             } else {

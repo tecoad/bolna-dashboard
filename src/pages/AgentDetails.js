@@ -18,7 +18,7 @@ function AgentDetails({ accessToken }) {
     const agent = location.state?.agent;
     var [formData, setFormData] = useState(convertToCreateAgentForm(agent))
     console.log(`Agent details ${JSON.stringify(agent)}`)
-    const userId = location.state?.userId || agent?.user_id;
+    const userId = location.state?.userId;
     const [openPlayground, setOpenPlayground] = useState(false);
     const agentId = agent?.range.split("#")[1];
     const [loading, setLoading] = useState(false);
@@ -27,7 +27,7 @@ function AgentDetails({ accessToken }) {
     const api = createApiInstance(accessToken);
 
     useEffect(() => {
-        const fetchPromptData = async (accessToken) => {
+        const fetchPromptData = async () => {
             setLoading(true);
             try {
                 const response = await api.get(`/agent/prompts?agent_id=${agentId}`);
@@ -55,8 +55,8 @@ function AgentDetails({ accessToken }) {
             }
             setLoading(false);
         };
-        fetchPromptData(accessToken);
-    }, [accessToken, agentId, userId]);
+        fetchPromptData();
+    }, [agentId, userId]);
 
 
     const handlePlaygroundOpen = () => {
@@ -70,7 +70,7 @@ function AgentDetails({ accessToken }) {
     const tabsData = [
         { name: 'Analytics', component: <Analytics /> },
         { name: 'Agent Execution', component: <RunsTable accessToken={accessToken} /> },
-        { name: 'Edit agent details', component: <AgentFormStepper initialData={formData} userId={userId} isUpdate={true} agentId={agentId} accessToken={accessToken} /> },
+        { name: 'Edit agent details', component: <AgentFormStepper initialData={formData} isUpdate={true} agentId={agentId} accessToken={accessToken} /> },
         { name: 'Batch call', component: <BatchCall agentId={agentId} accessToken={accessToken} /> },
     ];
 
@@ -109,7 +109,7 @@ function AgentDetails({ accessToken }) {
 
                     {/* Dialog for Playground */}
                     <Dialog open={openPlayground} onClose={handlePlaygroundClose} fullWidth maxWidth="md">
-                        <ChatComponent agentId={agentId} userId={userId} isOpen={openPlayground} />
+                        <ChatComponent agentId={agentId} isOpen={openPlayground} accessToken={accessToken} userId={userId} />
                     </Dialog>
                 </>
             )}

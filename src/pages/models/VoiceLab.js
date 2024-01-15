@@ -3,13 +3,15 @@ import { Box, Typography, TextField, Button, Autocomplete, FormControl, Circular
 import defaultVoices from '../../data/voices.json';
 import axios from 'axios';
 import { getVoiceLabel } from '../../utils/utils';
+import createApiInstance from '../../utils/api';
 
-function VoiceLab({ setVoices, voices, userId, defaultValue }) {
+function VoiceLab({ setVoices, voices, defaultValue, accessToken }) {
     const [text, setText] = useState('');
     const [selectedVoice, setSelectedVoice] = useState({ ...defaultValue });
     const [audioSrc, setAudioSrc] = useState('');
     const [loading, setLoading] = useState(false);
     const maxChars = 50;
+    const api = createApiInstance(accessToken);
 
     const handleTextChange = (e) => {
         const newText = e.target.value.slice(0, maxChars);
@@ -58,18 +60,15 @@ function VoiceLab({ setVoices, voices, userId, defaultValue }) {
 
     };
 
-
     const handleAddVoice = async () => {
         try {
-
             let addedMyVoice = voices.some(voice => voice.id === selectedVoice.id)
             if (addedMyVoice) {
                 alert("You already have this voice")
                 return;
             }
             setLoading(true)
-            const response = await axios.post(`${process.env.REACT_APP_FAST_API_BACKEND_URL}/user/voice`, {
-                user_id: userId,
+            const response = await api.post(`/add_voice`, {
                 voice: selectedVoice
             });
             setVoices([...voices, selectedVoice])
