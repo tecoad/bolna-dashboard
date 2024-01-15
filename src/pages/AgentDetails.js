@@ -23,7 +23,7 @@ function AgentDetails({ accessToken }) {
     const agentId = agent?.range.split("#")[1];
     const [loading, setLoading] = useState(false);
     const [prompt, setPrompt] = useState(null);
-    const { handleClick } = CallComponent({ agentId, userId });
+    const { handleClick } = CallComponent({ agentId, accessToken });
     const api = createApiInstance(accessToken);
 
     useEffect(() => {
