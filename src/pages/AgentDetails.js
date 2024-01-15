@@ -19,7 +19,7 @@ function AgentDetails({ session }) {
     const agent = location.state?.agent;
     var [formData, setFormData] = useState(convertToCreateAgentForm(agent))
     console.log(`Agent details ${JSON.stringify(agent)}`)
-    const userId = agent?.user_id;
+    const userId = "5f3bcfa2-f233-46b0-b141-0c35f1d7e8da";
     const [openPlayground, setOpenPlayground] = useState(false);
     const agentId = agent?.range.split("#")[1];
     const [loading, setLoading] = useState(false);
