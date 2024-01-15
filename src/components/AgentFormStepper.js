@@ -32,7 +32,7 @@ function AgentFormStepper({ initialData, isUpdate, agentId, accessToken }) {
             setLoading(true);
             try {
                 //const response = await axios.get(`${process.env.REACT_APP_FAST_API_BACKEND_URL}/user/models?user_id=${userId}`);
-                const response = await api.get('/get_voices');
+                const response = await api.get('/get_all_voices');
                 setVoices(response.data.voices);
                 setLLMModels(response.data.llmModels);
                 console.log(`Voices ${JSON.stringify(response.data)}`)
