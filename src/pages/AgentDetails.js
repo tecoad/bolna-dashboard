@@ -12,13 +12,14 @@ import AgentFormStepper from '../components/AgentFormStepper';
 import { convertToCreateAgentForm, convertToText } from '../utils/utils';
 import createApiInstance from '../utils/api';
 
-function AgentDetails({ accessToken }) {
+function AgentDetails({ session }) {
     const location = useLocation();
     const navigate = useNavigate();
+    const accessToken = session?.access_token;
     const agent = location.state?.agent;
     var [formData, setFormData] = useState(convertToCreateAgentForm(agent))
     console.log(`Agent details ${JSON.stringify(agent)}`)
-    const userId = location.state?.userId;
+    const userId = agent?.user_id;
     const [openPlayground, setOpenPlayground] = useState(false);
     const agentId = agent?.range.split("#")[1];
     const [loading, setLoading] = useState(false);
