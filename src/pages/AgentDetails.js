@@ -12,14 +12,13 @@ import AgentFormStepper from '../components/AgentFormStepper';
 import { convertToCreateAgentForm, convertToText } from '../utils/utils';
 import createApiInstance from '../utils/api';
 
-function AgentDetails({ session }) {
+function AgentDetails({ accessToken }) {
     const location = useLocation();
     const navigate = useNavigate();
-    const accessToken = session?.access_token;
     const agent = location.state?.agent;
     var [formData, setFormData] = useState(convertToCreateAgentForm(agent))
     console.log(`Agent details ${JSON.stringify(agent)}`)
-    const userId = "5f3bcfa2-f233-46b0-b141-0c35f1d7e8da";
+    const userId = location.state?.userId || agent?.user_id;
     const [openPlayground, setOpenPlayground] = useState(false);
     const agentId = agent?.range.split("#")[1];
     const [loading, setLoading] = useState(false);
@@ -28,7 +27,7 @@ function AgentDetails({ session }) {
     const api = createApiInstance(accessToken);
 
     useEffect(() => {
-        const fetchPromptData = async () => {
+        const fetchPromptData = async (accessToken) => {
             setLoading(true);
             try {
                 const response = await api.get(`/agent/prompts?agent_id=${agentId}`);
@@ -56,9 +55,8 @@ function AgentDetails({ session }) {
             }
             setLoading(false);
         };
-
-        fetchPromptData();
-    }, [agentId, userId]);
+        fetchPromptData(accessToken);
+    }, [accessToken, agentId, userId]);
 
 
     const handlePlaygroundOpen = () => {
