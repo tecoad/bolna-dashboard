@@ -168,6 +168,13 @@ const getXTTSConfig = (voiceDetails, agentData) => {
     }
 }
 
+const getOpenAIConfig = (voiceDetails, agentData) => {
+    return {
+        voice: voiceDetails.name,
+        model: voiceDetails.model,
+    }
+}
+
 const getProviderConfig = (provider, voiceDetails, agentData) => {
     switch (provider) {
         case "polly":
@@ -182,6 +189,8 @@ const getProviderConfig = (provider, voiceDetails, agentData) => {
             return getXTTSConfig(voiceDetails, agentData)
         case "elevenlabs":
             return getElevenLabsConfig(voiceDetails, agentData)
+        case "openai":
+            return getOpenAIConfig(voiceDetails, agentData)
         default:
             console.log("Invalid provider")
     }

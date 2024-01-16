@@ -9,7 +9,7 @@ import { base64ToBlob, getDefaultSampleRate } from '../utils/utils';
 
 const sampleRate = getDefaultSampleRate()
 
-function ChatComponent({ agentId, isOpen, userId }) {
+function ChatComponent({ agentId, isOpen, userId, accessToken }) {
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
     const [recording, setRecording] = useState(false);
@@ -74,7 +74,7 @@ function ChatComponent({ agentId, isOpen, userId }) {
 
         if (!ws.current) {
             console.log("Starting websocket connection")
-            ws.current = new WebSocket(`${process.env.REACT_APP_WEBSOCKET_ENDPOINT}/${userId}/${agentId}?user_agent=dashboard`);
+            ws.current = new WebSocket(`${process.env.REACT_APP_WEBSOCKET_ENDPOINT}/${agentId}?user_agent=dashboard&auth_token=${accessToken}`);
 
             ws.current.addEventListener("open", () => {
                 console.log('WebSocket Connected');
