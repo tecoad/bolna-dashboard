@@ -43,8 +43,12 @@ function ChatComponent({ agentId, isOpen, userId, accessToken }) {
             }
         } else if (receivedMessage.type == "audio") {
             console.log(`Got audio message`)
+
             const base64Audio = receivedMessage.data;
-            const audioBlob = base64ToBlob(base64Audio, 'data:audio/mp3');
+            console.log(`Base64 audio ${base64Audio}`)
+            //const base64AudioData = base64Audio //`data:audio/wav;base64,${base64Audio}`;
+            const base64AudioData = `${base64Audio}`;
+            const audioBlob = base64ToBlob(base64AudioData, 'audio/wav');
             const audioUrl = URL.createObjectURL(audioBlob);
 
             const audioMessage = {
@@ -52,7 +56,8 @@ function ChatComponent({ agentId, isOpen, userId, accessToken }) {
                 position: "left",
                 title: "AI",
                 data: {
-                    audioURL: audioUrl
+                    audioURL: audioUrl,
+                    audioType: 'audio/wav'
                 },
             };
             setMessages(prev => [...prev, audioMessage]);

@@ -55,7 +55,7 @@ function VoiceLab({ setVoices, voices, defaultValue, accessToken }) {
             const response = await axios.post(`${process.env.REACT_APP_FAST_API_BACKEND_URL}/tts`, payload);
             setLoading(false);
             console.log(`Got Base64 string ${JSON.stringify(response.data)}`)
-            const audioUrl = `data:audio/mp3;base64,${response.data.data}`;
+            const audioUrl = `data:audio/wav;base64,${response.data.data}`;
             setAudioSrc(audioUrl);
 
         } catch (error) {

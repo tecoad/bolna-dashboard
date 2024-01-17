@@ -60,9 +60,10 @@ function BasicConfiguration({ formData, onFormDataChange }) {
 
     const handleRadioChange = (event) => {
         let engagementConfig = {}
+
         engagementConfig = {
             "channel": event.target.value,
-            "format": "pcm"
+            "format": "wav"
         }
 
         onFormDataChange({

@@ -171,7 +171,7 @@ function AgentFormStepper({ initialData, isUpdate, agentId, accessToken }) {
 
         let payload = {
             //"user_id": userId.toString(),
-            "assistant_config": transformedJson,
+            "agent_config": transformedJson,
         }
         console.log(`formData.basicConfig.agentType ${formData.basicConfig.assistantType} `)
         if (formData.basicConfig.assistantType == "IVR") {
@@ -181,7 +181,7 @@ function AgentFormStepper({ initialData, isUpdate, agentId, accessToken }) {
             // a hacky way to serialize and deserialize on the frontend to save development time
             payload = {
                 ...payload,
-                "assistant_prompts": {
+                "agent_prompts": {
                     "serialized_prompts": JSON.stringify({ "task_1": promptJson }),
                     "deserialized_prompts": JSON.stringify({
                         "task_1": {
@@ -195,7 +195,7 @@ function AgentFormStepper({ initialData, isUpdate, agentId, accessToken }) {
             promptJson["system_prompt"] = getPromptJsonFromRulesConfig(formData.rulesConfig.prompts)
             console.log(`Prompts JSON ${JSON.stringify(promptJson)} `)
             payload = {
-                ...payload, "assistant_prompts": {
+                ...payload, "agent_prompts": {
                     "serialized_prompts": JSON.stringify({ "task_1": promptJson }),
                     "deserialized_prompts": JSON.stringify({ "task_1": formData.rulesConfig.prompts })
                 }
