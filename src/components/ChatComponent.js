@@ -72,8 +72,7 @@ function ChatComponent({ agentId, isOpen, userId, accessToken }) {
 
         if (!ws.current) {
             console.log("Starting websocket connection")
-            // to add auth
-            ws.current = new WebSocket(`${process.env.REACT_APP_WEBSOCKET_ENDPOINT}/${userId}/${agentId}?user_agent=dashboard`);
+            ws.current = new WebSocket(`${process.env.REACT_APP_WEBSOCKET_ENDPOINT}/${agentId}?user_agent=dashboard&auth_token=${accessToken}`);
 
             ws.current.addEventListener("open", () => {
                 console.log('WebSocket Connected');

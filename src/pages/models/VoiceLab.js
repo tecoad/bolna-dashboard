@@ -43,6 +43,11 @@ function VoiceLab({ setVoices, voices, defaultValue, accessToken }) {
                     language: selectedVoice.languageCode,
                     voice: selectedVoice.name,
                 }
+            } else if (selectedVoice.provider == "openai") {
+                payload.provider_config = {
+                    model: selectedVoice.model,
+                    voice: selectedVoice.name,
+                }
             }
 
             console.log(`payload ${JSON.stringify(payload)} engine ${payload.provider_config.engine}`)

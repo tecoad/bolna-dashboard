@@ -109,7 +109,7 @@ function AgentDetails({ accessToken }) {
 
                     {/* Dialog for Playground */}
                     <Dialog open={openPlayground} onClose={handlePlaygroundClose} fullWidth maxWidth="md">
-                        <ChatComponent agentId={agentId} isOpen={openPlayground} accessToken={accessToken} userId={userId} />
+                        <ChatComponent agentId={agentId} userId={userId} isOpen={openPlayground} accessToken={accessToken} />
                     </Dialog>
                 </>
             )}

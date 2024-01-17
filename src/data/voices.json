@@ -1843,5 +1843,59 @@
         "model": "xttsv2",
         "provider": "xtts",
         "lowLatency": true
+    },
+    {
+        "name": "Ryan",
+        "id": "Marcos Rudaski",
+        "accent": "Spanish",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "alloy",
+        "id": "alloy",
+        "accent": "English",
+        "languageCode": "all",
+        "model": "tts-1",
+        "provider": "openai",
+        "lowLatency": true
+    },
+    {
+        "name": "echo",
+        "id": "echo",
+        "accent": "English",
+        "languageCode": "all",
+        "model": "tts-1",
+        "provider": "openai",
+        "lowLatency": true
+    },
+    {
+        "name": "onyx",
+        "id": "onyx",
+        "accent": "English",
+        "languageCode": "all",
+        "model": "tts-1",
+        "provider": "openai",
+        "lowLatency": true
+    },
+    {
+        "name": "nova",
+        "id": "nova",
+        "accent": "English",
+        "languageCode": "all",
+        "model": "tts-1",
+        "provider": "openai",
+        "lowLatency": true
+    },
+    {
+        "name": "shimmer",
+        "id": "shimmer",
+        "accent": "English",
+        "languageCode": "all",
+        "model": "tts-1",
+        "provider": "openai",
+        "lowLatency": true
     }
 ]
