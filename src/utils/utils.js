@@ -210,8 +210,8 @@ const getSynthesizerConfig = (agentData) => {
 
 export const convertToCreateAgentPayload = (agentData) => {
     let payload = {
-        "assistant_name": agentData.basicConfig.assistantName,
-        "assistant_type": agentData.basicConfig.assistantTask,
+        "agent_name": agentData.basicConfig.assistantName,
+        "agent_type": agentData.basicConfig.assistantTask,
         "tasks": [
             {
                 "task_type": "conversation",
@@ -355,8 +355,8 @@ export const convertToCreateAgentForm = (payload) => {
     var formData = {
         basicConfig: {
             assistantType: llmAgent.agent_flow_type === "preprocessed" ? "IVR" : "FreeFlowing",
-            assistantName: payload.assistant_name,
-            assistantTask: payload.assistant_type
+            assistantName: payload.agent_name,
+            assistantTask: payload.agent_type
         },
         modelsConfig: {
             llmConfig: {
@@ -368,7 +368,8 @@ export const convertToCreateAgentForm = (payload) => {
                 model: getOriginalModel(transcriber.model, "asr"),
                 language: transcriber.language,
                 samplingRate: parseInt(synthesizer.provider_config.sampling_rate),
-                streaming: transcriber.stream,
+                streaming: true, // We'll aways keep transcriber stream to true.
+                endpointing: transcriber.endpointing,
                 channels: 1
             },
             ttsConfig: {

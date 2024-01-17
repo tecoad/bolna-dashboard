@@ -12,7 +12,7 @@ import { CircularProgress } from '@mui/material';
 import Backdrop from '@mui/material/Backdrop';
 import createApiInstance from '../utils/api';
 
-function AgentFormStepper({ initialData, userId, isUpdate, agentId, accessToken }) {
+function AgentFormStepper({ initialData, isUpdate, agentId, accessToken }) {
     const [activeStep, setActiveStep] = useState(0);
     const [formData, setFormData] = useState(initialData);
     const [completed, setCompleted] = useState({})
@@ -27,13 +27,12 @@ function AgentFormStepper({ initialData, userId, isUpdate, agentId, accessToken 
         position: { x: 250, y: 5 },
     };
 
-
-
     useEffect(() => {
         const fetchModels = async () => {
             setLoading(true);
             try {
-                const response = await axios.get(`${process.env.REACT_APP_FAST_API_BACKEND_URL}/user/models?user_id=${userId}`);
+                //const response = await axios.get(`${process.env.REACT_APP_FAST_API_BACKEND_URL}/user/models?user_id=${userId}`);
+                const response = await api.get('/get_all_voices');
                 setVoices(response.data.voices);
                 setLLMModels(response.data.llmModels);
                 console.log(`Voices ${JSON.stringify(response.data)}`)
@@ -45,11 +44,11 @@ function AgentFormStepper({ initialData, userId, isUpdate, agentId, accessToken 
             }
         };
 
-        if (userId) {
+        if (accessToken) {
             fetchModels();
         }
 
-    }, [userId]);
+    }, [accessToken]);
 
     var selectedVoice = null
     var selectedLLMModel = null
@@ -171,8 +170,8 @@ function AgentFormStepper({ initialData, userId, isUpdate, agentId, accessToken 
         let promptJson = {}
 
         let payload = {
-            "user_id": userId.toString(),
-            "assistant_config": transformedJson,
+            //"user_id": userId.toString(),
+            "agent_config": transformedJson,
         }
         console.log(`formData.basicConfig.agentType ${formData.basicConfig.assistantType} `)
         if (formData.basicConfig.assistantType == "IVR") {
@@ -182,7 +181,7 @@ function AgentFormStepper({ initialData, userId, isUpdate, agentId, accessToken 
             // a hacky way to serialize and deserialize on the frontend to save development time
             payload = {
                 ...payload,
-                "assistant_prompts": {
+                "agent_prompts": {
                     "serialized_prompts": JSON.stringify({ "task_1": promptJson }),
                     "deserialized_prompts": JSON.stringify({
                         "task_1": {
@@ -196,7 +195,7 @@ function AgentFormStepper({ initialData, userId, isUpdate, agentId, accessToken 
             promptJson["system_prompt"] = getPromptJsonFromRulesConfig(formData.rulesConfig.prompts)
             console.log(`Prompts JSON ${JSON.stringify(promptJson)} `)
             payload = {
-                ...payload, "assistant_prompts": {
+                ...payload, "agent_prompts": {
                     "serialized_prompts": JSON.stringify({ "task_1": promptJson }),
                     "deserialized_prompts": JSON.stringify({ "task_1": formData.rulesConfig.prompts })
                 }
@@ -248,7 +247,7 @@ function AgentFormStepper({ initialData, userId, isUpdate, agentId, accessToken 
             case 2:
                 return <FollowUpTasks formData={formData} onFormDataChange={handleFormDataChange} />;
             case 3:
-                return <ModelSettings formData={formData} onFormDataChange={handleFormDataChange} llmModels={llmModels} voices={voices} setVoices={setVoices} initiallySelectedVoice={selectedVoice} initiallySelectedModel={selectedLLMModel} userId={userId} />;
+                return <ModelSettings formData={formData} onFormDataChange={handleFormDataChange} llmModels={llmModels} voices={voices} setVoices={setVoices} initiallySelectedVoice={selectedVoice} initiallySelectedModel={selectedLLMModel} />;
             default:
                 return 'Unknown step';
         }

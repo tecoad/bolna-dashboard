@@ -11,7 +11,6 @@ function RunTable({ accessToken }) {
     const [runData, setRunData] = useState([]);
     const [loading, setLoading] = useState(false);
     const agent = location.state?.agent;
-    const userId = location.state?.userId;
     const agentId = agent?.range.split("#")[1];
     const api = createApiInstance(accessToken);
 

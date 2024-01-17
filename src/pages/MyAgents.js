@@ -6,7 +6,7 @@ import Backdrop from '@mui/material/Backdrop';
 import createApiInstance from '../utils/api';
 
 
-function MyAgents({ accessToken }) {
+function MyAgents({ accessToken, userId }) {
     const [agents, setAgents] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -51,7 +51,7 @@ function MyAgents({ accessToken }) {
 
                 ) : (
                     <Box>
-                        <JsonTable sx={{ width: '70%' }} jsonData={agents} columnsToShow={["assistant_name", "assistant_type", "assistant_status", "updated_at", "created_at"]} onClickPage={"agent-details"} clickable={true} headersDisplayedAs={["Agent Name", "Agent Task", "Agent Status", "Last Updated", "Created On"]} />
+                        <JsonTable sx={{ width: '70%' }} jsonData={agents} userId={userId} columnsToShow={["assistant_name", "assistant_type", "assistant_status", "updated_at", "created_at"]} onClickPage={"agent-details"} clickable={true} headersDisplayedAs={["Agent Name", "Agent Task", "Agent Status", "Last Updated", "Created On"]} />
                     </Box>
                 )
             }
