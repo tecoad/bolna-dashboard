@@ -33,6 +33,7 @@ function getPrefilledTemplate(option) {
     }
 }
 function BasicConfiguration({ formData, onFormDataChange }) {
+    console.log(`INitial form data ${JSON.stringify(formData)}`)
     const handleChange = (event) => {
         console.log(`NAME ${event.target.name}`);
         if (event.target.name === 'assistantTask') {

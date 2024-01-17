@@ -3,7 +3,7 @@ import { Typography, Box, FormControl, InputLabel, Select, MenuItem, TextField, 
 import { renderTooltip } from '../../components/CustomTooltip';
 
 function FollowUpTasks({ formData, onFormDataChange }) {
-    const [selectedTasks, setSelectedTasks] = useState(formData.followUpTaskConfig.tasks);
+    const [selectedTasks, setSelectedTasks] = useState(formData.followUpTaskConfig.selectedTasks);
     const [selectedNotificationMethods, setSelectedNotificationMethods] = useState(formData.followUpTaskConfig.notificationDetails.notificationMethods);
     console.log(`Form data follow up tasks ${JSON.stringify(formData)}`)
     const handleTasksChange = (event) => {

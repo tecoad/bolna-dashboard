@@ -264,7 +264,7 @@ function ModelSettings({ formData, onFormDataChange, llmModels, voices, setVoice
                             name="endpointing"
                             value={formData.modelsConfig.asrConfig.endpointing || 400}
                             onChange={e => handleChange("asr", e)}
-                            step={100}
+                            step={50}
                             marks={marks}
                             min={100}
                             max={1500}

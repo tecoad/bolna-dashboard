@@ -41,7 +41,7 @@ export const CREATE_AGENT_FORM = {
         graph: null
     },
     followUpTaskConfig: {
-        tasks: [],
+        selectedTasks: [],
         notificationDetails: {
             notificationMethods: [],
             emailTemplate: null,
@@ -312,7 +312,7 @@ function getOriginalModel(model, modelType, assistantType) {
 
 const getFollowupTasks = (followUpTasks) => {
     let followupTaskConfig = {
-        tasks: [],
+        selectedTasks: [],
         extractionDetails: null,
         notificationDetails: {
             notificationMethods: []
@@ -325,12 +325,12 @@ const getFollowupTasks = (followUpTasks) => {
 
     followUpTasks.forEach(task => {
         if (task.task_type == "extraction") {
-            followupTaskConfig.tasks.push("extraction")
+            followupTaskConfig.selectedTasks.push("extraction")
             followupTaskConfig.extractionDetails = task.tools_config?.llm_agent?.extraction_details
         } else if (task.task_type == "summarization") {
-            followupTaskConfig.tasks.push("summarization")
+            followupTaskConfig.selectedTasks.push("summarization")
         } else {
-            followupTaskConfig.tasks.push("notification")
+            followupTaskConfig.selectedTasks.push("notification")
             Object.keys(task.tools_config.api_tools).forEach(apiTool => {
                 followupTaskConfig.notificationDetails.notificationMethods.push(apiTool)
             })
