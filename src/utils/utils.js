@@ -28,7 +28,7 @@ export const CREATE_AGENT_FORM = {
     },
     engagementConfig: {
         channel: 'Websocket',
-        format: 'mp3'
+        format: 'wav'
     },
     rulesConfig: {
         prompts: {
