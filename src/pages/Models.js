@@ -88,7 +88,7 @@ function Models({ accessToken }) {
 
                     {/* Dialog for Voice Lab */}
                     <Dialog open={openVoiceLabs} onClose={handleCloseVoiceLabs} fullWidth maxWidth="md">
-                        <VoiceLab voices={voices} accessToken={accessToken} defaultValue={voices[0]} />
+                        <VoiceLab voices={voices} accessToken={accessToken} setVoices={setVoices} defaultValue={voices[0]} />
                     </Dialog>
                 </>
             )}
