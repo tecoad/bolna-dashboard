@@ -352,11 +352,12 @@ export const convertToCreateAgentForm = (payload) => {
     let followupTaskConfig = getFollowupTasks(followupTasks)
     console.log(`followupTaskConfig ${JSON.stringify(followupTaskConfig)}`)
     console.log(`Synthesizer provider config ${JSON.stringify(synthesizer.provider_config)}`)
+    var agentTypes = ["Lead Qualification", "Customer Service", "Sales And Marketing", "Recruiting", "Survey / Feedback", "Coaching", "VirtualRM", "Other"]
     var formData = {
         basicConfig: {
             assistantType: llmAgent.agent_flow_type === "preprocessed" ? "IVR" : "FreeFlowing",
             assistantName: payload.agent_name,
-            assistantTask: payload.agent_type
+            assistantTask: payload?.agent_type == undefined || payload?.agent_type == null || !agentTypes.includes(payload.agent_type) ? "Other" : payload.agent_type,
         },
         modelsConfig: {
             llmConfig: {
