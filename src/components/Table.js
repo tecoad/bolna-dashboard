@@ -40,6 +40,7 @@ function JsonTable({
     const navigate = useNavigate();
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
     const [deleteTarget, setDeleteTarget] = useState(null);
+    const [deleteApiUrl, setDeleteApiUrl] = useState(null);
     const [selectedDateTime, setSelectedDateTime] = React.useState(dayjs());
 
     const api = createApiInstance(accessToken);
@@ -75,9 +76,9 @@ function JsonTable({
     };
 
 
-    const handleDelete = async (accessToken, keyUuid) => {
+    const handleDelete = async (accessToken, keyUuid, apiUrl) => {
         try {
-            const response = await api.delete(`/delete_api_key/${keyUuid}`);
+            const response = await api.delete(`${apiUrl}/${keyUuid}`);
 
             if (response.data.state === "success") {
                 window.location.reload();
@@ -90,19 +91,22 @@ function JsonTable({
             // Close the delete confirmation dialog
             setDeleteDialogOpen(false);
             setDeleteTarget(null);
+            setDeleteApiUrl(null);
         }
     };
 
-    const handleDeleteClick = (keyUuid) => {
+    const handleDeleteClick = (keyUuid, apiUrl) => {
         // Show the delete confirmation dialog
         setDeleteDialogOpen(true);
         setDeleteTarget(keyUuid);
+        setDeleteApiUrl(apiUrl);
     };
 
     const handleDeleteDialogClose = () => {
         // Close the delete confirmation dialog without deleting
         setDeleteDialogOpen(false);
         setDeleteTarget(null);
+        setDeleteApiUrl(null);
     };
 
     const handleRowClick = (row) => {
@@ -160,7 +164,7 @@ function JsonTable({
                                     return (
                                         <TableCell key={row[value]}>
                                             {/* Render content for "earth" */}
-                                            <IconButton onClick={() => handleDeleteClick(row[value])} aria-label={`${key} ${row[value]}`}>
+                                            <IconButton onClick={() => handleDeleteClick(row[value.id], value.url)} aria-label={`${key} ${row[value.id]}`}>
                                                 <DeleteIcon />
                                             </IconButton>
                                         </TableCell>
@@ -221,12 +225,11 @@ function JsonTable({
                                     <Button onClick={handleDeleteDialogClose} color="primary">
                                         Cancel
                                     </Button>
-                                    <Button onClick={() => handleDelete(accessToken, deleteTarget)} color="primary" autoFocus>
+                                    <Button onClick={() => handleDelete(accessToken, deleteTarget, deleteApiUrl)} color="primary" autoFocus>
                                         Delete
                                     </Button>
                                 </DialogActions>
                             </Dialog>
-
                         </TableRow>
                     ))}
                 </TableBody>
