@@ -5,7 +5,7 @@ import { getVoiceLabel } from '../../utils/utils';
 import { renderTooltip } from '../../components/CustomTooltip';
 
 
-function ModelSettings({ formData, onFormDataChange, llmModels, voices, setVoices, initiallySelectedVoice, initiallySelectedModel }) {
+function ModelSettings({ formData, onFormDataChange, llmModels, voices, setVoices, initiallySelectedVoice, initiallySelectedModel, accessToken }) {
     var val = null
     var key = null
     const [selectedVoice, setSelectedVoice] = useState(initiallySelectedVoice);
@@ -296,7 +296,7 @@ function ModelSettings({ formData, onFormDataChange, llmModels, voices, setVoice
                 </Grid>
 
                 <Dialog open={isDialogOpen} onClose={handleDialogClose} fullWidth maxWidth="md">
-                    <VoiceLab setVoices={setVoices} voices={voices} defaultValue={selectedVoice} />
+                    <VoiceLab setVoices={setVoices} accessToken={accessToken} voices={voices} defaultValue={selectedVoice} />
                 </Dialog>
 
             </Grid>

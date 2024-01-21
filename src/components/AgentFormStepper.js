@@ -247,7 +247,7 @@ function AgentFormStepper({ initialData, isUpdate, agentId, accessToken }) {
             case 2:
                 return <FollowUpTasks formData={formData} onFormDataChange={handleFormDataChange} />;
             case 3:
-                return <ModelSettings formData={formData} onFormDataChange={handleFormDataChange} llmModels={llmModels} voices={voices} setVoices={setVoices} initiallySelectedVoice={selectedVoice} initiallySelectedModel={selectedLLMModel} />;
+                return <ModelSettings accessToken={accessToken} formData={formData} onFormDataChange={handleFormDataChange} llmModels={llmModels} voices={voices} setVoices={setVoices} initiallySelectedVoice={selectedVoice} initiallySelectedModel={selectedLLMModel} />;
             default:
                 return 'Unknown step';
         }
