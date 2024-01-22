@@ -38,7 +38,7 @@ function BatchCall({ agentId, accessToken }) {
                 formData.append('file', selectedFile);
                 formData.append('agent_id', agentId);
 
-                const response = await api.post('/upload_callers_list', formData, {
+                const response = await api.post('/batches', formData, {
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'multipart/form-data',
@@ -65,7 +65,7 @@ function BatchCall({ agentId, accessToken }) {
         const fetchBatches = async (agentId) => {
             setIsLoading(true);
             try {
-                const response = await api.get(`/get_callers_list?agent_id=${agentId}`);
+                const response = await api.get(`/batches?agent_id=${agentId}`);
                 setBatches(response.data);
             } catch (error) {
                 console.error('Error fetching agents: Making loading false', error);
@@ -109,7 +109,7 @@ function BatchCall({ agentId, accessToken }) {
                         onClick={handleOpenUploadDialog}
                         sx={{ backgroundColor: '#50C878', color: 'white', '&:hover': { backgroundColor: '#369456' } }}
                     >
-                        Upload new callers list
+                        Upload batch
                     </Button>
 
                   </label>
@@ -120,10 +120,18 @@ function BatchCall({ agentId, accessToken }) {
                     <JsonTable
                     sx={{ width: '70%' }}
                     jsonData={batches}
-                    columnsToShow={["callers_list_id", "humanized_created_at", "status"]}
+                    columnsToShow={["batch_id", "humanized_created_at", "status"]}
                     tooltipMap={{"humanized_created_at": "created_at"}}
                     actionsToShow={
-                        {"Schedule": {"id": "callers_list_id", "scheduled_at": "scheduled_at"}}
+                        {
+                            "Schedule": {
+                                "id": "batch_id", "scheduled_at": "scheduled_at"
+                            },
+                            "Delete": {
+                                "id": "batch_id", "url": "/batches"
+                            }
+                        }
+
                     }
                     accessToken={accessToken}
                     clickable={false}
