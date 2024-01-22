@@ -1254,7 +1254,7 @@
         "name": "Anika",
         "id": "JnE1oLCULGyis53Ji82O",
         "languageCode": "all",
-        "model": "eleven_monolingual_v1",
+        "model": "eleven_multilingual_v1",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "indian"
