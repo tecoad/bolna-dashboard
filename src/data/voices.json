@@ -1800,15 +1800,6 @@
         "lowLatency": true
     },
     {
-        "name": "Nolan",
-        "id": "Eugenio Mataracı",
-        "accent": "Italian",
-        "languageCode": "all",
-        "model": "xttsv2",
-        "provider": "xtts",
-        "lowLatency": true
-    },
-    {
         "name": "Oscar",
         "id": "Ferran Simen",
         "accent": "Spanish",
@@ -1848,6 +1839,15 @@
         "name": "Ryan",
         "id": "Marcos Rudaski",
         "accent": "Spanish",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": true
+    },
+    {
+        "name": "scarlet",
+        "id": "scarlet",
+        "accent": "American",
         "languageCode": "all",
         "model": "xttsv2",
         "provider": "xtts",

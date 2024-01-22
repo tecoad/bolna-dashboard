@@ -164,7 +164,7 @@ const getXTTSConfig = (voiceDetails, agentData) => {
     return {
         voice: voiceDetails.name,
         language: agentData.modelsConfig.asrConfig.language,
-        sampling_rate: agentData.modelsConfig.asrConfig.samplingRate
+        sampling_rate: agentData.modelsConfig.asrConfig.samplingRate.toString()
     }
 }
 
@@ -363,7 +363,8 @@ export const convertToCreateAgentForm = (payload) => {
             llmConfig: {
                 model: llmAgent.streaming_model,
                 maxTokens: llmAgent.max_tokens,
-                temperature: 0.2
+                temperature: 0.2,
+                family: llmAgent.family,
             },
             asrConfig: {
                 model: getOriginalModel(transcriber.model, "asr"),
