@@ -113,19 +113,27 @@ function JsonTable({
         setDeleteApiUrl(null);
     };
 
-    const handleRowClick = (row) => {
+    const handleRowClick = (row, agentId) => {
         if (clickable) {
-            if (onClickPage == "agent-details") {
+            if (onClickPage === "agent-details") {
                 navigate("/dashboard/agent-details", {
                     state: {
                         userId: userId,
                         agent: row
                     }
                 });
-            } else {
+            } else if (onClickPage === "run-details") {
                 console.log(`Row ${JSON.stringify(row)}`)
                 navigate("/dashboard/agent/run-details", {
                     state: {
+                        runDetails: row
+                    }
+                });
+            } else if (onClickPage === "batch-details") {
+                console.log(`Row ${JSON.stringify(row)}`)
+                navigate("/dashboard/agent/batch-details", {
+                    state: {
+                        agentId: agentId,
                         runDetails: row
                     }
                 });
@@ -147,7 +155,7 @@ function JsonTable({
                 </TableHead>
                 <TableBody>
                     {jsonData.map((row, index) => (
-                        <TableRow onClick={() => handleRowClick(row)} key={index} sx={{ '&:nth-of-type(odd)': { backgroundColor: '#f9f9f9' }, '&:nth-of-type(even)': { backgroundColor: '#fff' }, '&:last-child td, &:last-child th': { border: 0 }, '&:hover': { backgroundColor: '#e0e0e0' } }}>
+                        <TableRow onClick={() => handleRowClick(row, agent)} key={index} sx={{ '&:nth-of-type(odd)': { backgroundColor: '#f9f9f9' }, '&:nth-of-type(even)': { backgroundColor: '#fff' }, '&:last-child td, &:last-child th': { border: 0 }, '&:hover': { backgroundColor: '#e0e0e0' } }}>
                             {columnsToShow.map((column) => {
                                 var name = row[column] == undefined ? "" : row[column]
                                 if (tooltipMap && column in tooltipMap) {

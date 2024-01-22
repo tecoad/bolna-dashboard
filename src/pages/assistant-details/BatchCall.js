@@ -134,7 +134,8 @@ function BatchCall({ agentId, accessToken }) {
 
                     }
                     accessToken={accessToken}
-                    clickable={false}
+                    onClickPage="batch-details"
+                    clickable={true}
                     headersDisplayedAs={["Batch Identifier", "Uploaded At", "Status"]}
                     agent={agentId}
                     />
