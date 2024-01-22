@@ -51,14 +51,14 @@ function JsonTable({
         setSelectedDateTime(newDateTime);
     };
 
-    const handleDateTimeSubmit = async (callersListId, selectedDateTime, agentId) => {
+    const handleDateTimeSubmit = async (batchId, selectedDateTime, agentId) => {
         try {
             const formData = new FormData();
             formData.append('agent_id', agentId);
-            formData.append('callers_list_id', callersListId);
+            formData.append('batch_id', batchId);
             formData.append('scheduled_at', new Date(selectedDateTime).getTime() / 1000);
 
-            const response = await api.post('/create_callers_list_batch', formData);
+            const response = await api.post('/batches/schedule', formData);
 
             if (response.status === 200) {
                 console.log('Date & Time updated successfully');
@@ -76,9 +76,13 @@ function JsonTable({
     };
 
 
-    const handleDelete = async (accessToken, keyUuid, apiUrl) => {
+    const handleDelete = async (accessToken, keyUuid, apiUrl, agentId) => {
         try {
-            const response = await api.delete(`${apiUrl}/${keyUuid}`);
+            let resourceId = keyUuid;
+            if (apiUrl === '/batches') {
+                resourceId = `${agentId}-${keyUuid}`;
+            }
+            const response = await api.delete(`${apiUrl}/${resourceId}`);
 
             if (response.data.state === "success") {
                 window.location.reload();
@@ -160,20 +164,18 @@ function JsonTable({
                             })}
 
                             {Object.entries(actionsToShow).map(([key, value]) => {
-                                if (key === 'Delete') {
-                                    return (
-                                        <TableCell key={row[value]}>
-                                            {/* Render content for "earth" */}
+                                return (
+                                    <TableCell key={row[value]}>
+
+                                        {/* Render content for "Delete" */}
+                                        {key === 'Delete' && (
                                             <IconButton onClick={() => handleDeleteClick(row[value.id], value.url)} aria-label={`${key} ${row[value.id]}`}>
                                                 <DeleteIcon />
                                             </IconButton>
-                                        </TableCell>
-                                    );
-                                } else if (key === 'Schedule') {
-                                    return (
+                                        )}
 
-                                        <TableCell>
-                                          {/* DateTimePicker */}
+                                        {/* Render content for "Schedule" */}
+                                        {key === 'Schedule' && (
 
                                             <LocalizationProvider
                                                 dateAdapter={AdapterDayjs}
@@ -206,26 +208,23 @@ function JsonTable({
                                                         }}
                                                     />
                                                 )}
-
                                             </LocalizationProvider>
-                                        </TableCell>
-                                    );
-                                }
-
-                                return null; // or any other default content
+                                        )}
+                                    </TableCell>
+                                );
                             })}
 
                             {/* Delete confirmation dialog */}
                             <Dialog open={deleteDialogOpen} onClose={handleDeleteDialogClose}>
                                 <DialogTitle>Confirm Deletion</DialogTitle>
                                 <DialogContent>
-                                    Are you sure you want to delete this key?
+                                    Are you sure you want to delete this?
                                 </DialogContent>
                                 <DialogActions>
                                     <Button onClick={handleDeleteDialogClose} color="primary">
                                         Cancel
                                     </Button>
-                                    <Button onClick={() => handleDelete(accessToken, deleteTarget, deleteApiUrl)} color="primary" autoFocus>
+                                    <Button onClick={() => handleDelete(accessToken, deleteTarget, deleteApiUrl, agent)} color="primary" autoFocus>
                                         Delete
                                     </Button>
                                 </DialogActions>
