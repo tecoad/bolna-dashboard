@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Typography } from '@mui/material';
 import { DialogContent, Dialog, DialogTitle, DialogActions } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Tooltip from '@mui/material/Tooltip';
@@ -8,6 +8,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import createApiInstance from '../utils/api';
 import TextField from '@mui/material/TextField';
 import EventIcon from '@mui/icons-material/Event';
+import moment from 'moment';
+
 
 import dayjs, { Dayjs } from 'dayjs';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -56,7 +58,7 @@ function JsonTable({
             const formData = new FormData();
             formData.append('agent_id', agentId);
             formData.append('batch_id', batchId);
-            formData.append('scheduled_at', new Date(selectedDateTime).getTime() / 1000);
+            formData.append('scheduled_at', moment(new Date(selectedDateTime)).format());
 
             const response = await api.post('/batches/schedule', formData);
 
@@ -179,8 +181,9 @@ function JsonTable({
 
                                         {/* Render content for "Delete" */}
                                         {key === 'Delete' && (
-                                            <IconButton onClick={(event) => handleDeleteClick(event, row[value.id], value.url)} aria-label={`${key} ${row[value.id]}`}>
+                                            <IconButton onClick={(event) => handleDeleteClick(event, row[value.id], value.url)} aria-label={`${key} ${row[value.id]}`} sx={{ flexDirection: 'column' }}>
                                                 <DeleteIcon />
+                                                <Typography variant="caption">Delete</Typography>
                                             </IconButton>
                                         )}
 
@@ -239,6 +242,7 @@ function JsonTable({
                                     </Button>
                                 </DialogActions>
                             </Dialog>
+
                         </TableRow>
                     ))}
                 </TableBody>
