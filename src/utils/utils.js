@@ -336,12 +336,12 @@ const getFollowupTasks = (followUpTasks) => {
             })
         }
     })
-    console.log(`Follow up tasks ${JSON.stringify(followUpTasks)}`)
+    //console.log(`Follow up tasks ${JSON.stringify(followUpTasks)}`)
     return followupTaskConfig
 }
 
 export const convertToCreateAgentForm = (payload) => {
-    console.log(`Agent payload ${JSON.stringify(payload)}`)
+    //console.log(`Agent payload ${JSON.stringify(payload)}`)
     let agentTasks = [...payload.tasks]
     const agentData = agentTasks.shift()
     const followupTasks = [...agentTasks]

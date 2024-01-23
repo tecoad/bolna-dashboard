@@ -129,13 +129,16 @@ function BatchCall({ agentId, accessToken }) {
                             },
                             "Delete": {
                                 "id": "batch_id", "url": "/batches"
+                            },
+                            "Details": {
+                                "id": "batch_id"
                             }
                         }
 
                     }
                     accessToken={accessToken}
                     onClickPage="batch-details"
-                    clickable={true}
+                    clickable={false}
                     headersDisplayedAs={["Batch Identifier", "Uploaded At", "Status"]}
                     agent={agentId}
                     />

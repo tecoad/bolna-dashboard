@@ -17,7 +17,7 @@ function AgentDetails({ accessToken }) {
     const navigate = useNavigate();
     const agent = location.state?.agent;
     var [formData, setFormData] = useState(convertToCreateAgentForm(agent))
-    console.log(`Agent details ${JSON.stringify(agent)}`)
+    //console.log(`Agent details ${JSON.stringify(agent)}`)
     const userId = location.state?.userId;
     const [openPlayground, setOpenPlayground] = useState(false);
     const agentId = agent?.range.split("#")[1];
