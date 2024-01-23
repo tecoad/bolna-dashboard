@@ -24,6 +24,7 @@ function AgentDetails({ accessToken }) {
     const [loading, setLoading] = useState(false);
     const [prompt, setPrompt] = useState(null);
     const { handleClick } = CallComponent({ agentId, accessToken });
+    const [activeTab, setActiveTab] = useState(0);
     const api = createApiInstance(accessToken);
 
     useEffect(() => {
@@ -83,29 +84,32 @@ function AgentDetails({ accessToken }) {
                 </Box>
             ) : (
                 <>
-                    <Box display="flex" justifyContent="space-between" alignItems="center">
-                        <Typography variant="h4">Agent Details</Typography>
-                        <Box>
-                            <Button onClick={() => navigate('/dashboard/my-agents')}
-                                sx={{ marginRight: 2, backgroundColor: '#f5f5f5', color: 'black', '&:hover': { backgroundColor: '#e0e0e0' } }}
-                            >
-                                Back to My Agents
-                            </Button>
-                            <Button
-                                onClick={handleClick}
-                                sx={{ marginRight: 2, backgroundColor: '#50C878', color: 'white', '&:hover': { backgroundColor: '#369456' } }}
-                            >
-                                Call me
-                            </Button>
-                            <Button
-                                onClick={handlePlaygroundOpen}
-                                sx={{ backgroundColor: '#50C878', color: 'white', '&:hover': { backgroundColor: '#369456' } }}
-                            >
-                                Playground
-                            </Button>
+                    {activeTab < 3 && (
+                        <Box display="flex" justifyContent="space-between" alignItems="center">
+                            <Typography variant="h4">Agent Details</Typography>
+                            <Box>
+                                <Button onClick={() => navigate('/dashboard/my-agents')}
+                                    sx={{ marginRight: 2, backgroundColor: '#f5f5f5', color: 'black', '&:hover': { backgroundColor: '#e0e0e0' } }}
+                                >
+                                    Back to My Agents
+                                </Button>
+                                <Button
+                                    onClick={handleClick}
+                                    sx={{ marginRight: 2, backgroundColor: '#50C878', color: 'white', '&:hover': { backgroundColor: '#369456' } }}
+                                >
+                                    Call me
+                                </Button>
+                                <Button
+                                    onClick={handlePlaygroundOpen}
+                                    sx={{ backgroundColor: '#50C878', color: 'white', '&:hover': { backgroundColor: '#369456' } }}
+                                >
+                                    Playground
+                                </Button>
+                            </Box>
                         </Box>
-                    </Box>
-                    <CustomTabs tabsData={tabsData} orientation={"horizontal"} />
+
+                    )}
+                    <CustomTabs tabsData={tabsData} orientation={"horizontal"} setActiveTabInParent={setActiveTab} />
 
                     {/* Dialog for Playground */}
                     <Dialog open={openPlayground} onClose={handlePlaygroundClose} fullWidth maxWidth="md">

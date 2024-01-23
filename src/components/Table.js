@@ -76,7 +76,8 @@ function JsonTable({
     };
 
 
-    const handleDelete = async (accessToken, keyUuid, apiUrl, agentId) => {
+    const handleDelete = async (e, accessToken, keyUuid, apiUrl, agentId) => {
+        e.stopPropagation();
         try {
             let resourceId = keyUuid;
             if (apiUrl === '/batches') {
@@ -99,8 +100,9 @@ function JsonTable({
         }
     };
 
-    const handleDeleteClick = (keyUuid, apiUrl) => {
+    const handleDeleteClick = (e, keyUuid, apiUrl) => {
         // Show the delete confirmation dialog
+        e.stopPropagation();
         setDeleteDialogOpen(true);
         setDeleteTarget(keyUuid);
         setDeleteApiUrl(apiUrl);
@@ -177,7 +179,7 @@ function JsonTable({
 
                                         {/* Render content for "Delete" */}
                                         {key === 'Delete' && (
-                                            <IconButton onClick={() => handleDeleteClick(row[value.id], value.url)} aria-label={`${key} ${row[value.id]}`}>
+                                            <IconButton onClick={(event) => handleDeleteClick(event, row[value.id], value.url)} aria-label={`${key} ${row[value.id]}`}>
                                                 <DeleteIcon />
                                             </IconButton>
                                         )}
@@ -232,7 +234,7 @@ function JsonTable({
                                     <Button onClick={handleDeleteDialogClose} color="primary">
                                         Cancel
                                     </Button>
-                                    <Button onClick={() => handleDelete(accessToken, deleteTarget, deleteApiUrl, agent)} color="primary" autoFocus>
+                                    <Button onClick={(event) => handleDelete(event, accessToken, deleteTarget, deleteApiUrl, agent)} color="primary" autoFocus>
                                         Delete
                                     </Button>
                                 </DialogActions>
