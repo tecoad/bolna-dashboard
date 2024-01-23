@@ -16,6 +16,7 @@ import Keys from './pages/Keys';
 import Dashboard from './components/Dashboard';
 import AgentDetails from './pages/AgentDetails';
 import RunDetails from './pages/assistant-details/RunDetails';
+import BatchDetails from './pages/assistant-details/BatchDetails';
 
 
 // Create a theme instance.
@@ -118,6 +119,7 @@ function App() {
               <Route path="developer" element={<Keys accessToken={session?.access_token} />} />
               <Route path="agent-details" element={<AgentDetails accessToken={session?.access_token} />} />
               <Route path="agent/run-details" element={<RunDetails session={session} />} />
+              <Route path="agent/batch-details" element={<BatchDetails session={session} accessToken={session?.access_token} />} />
             </Route>
 
           </Routes>
