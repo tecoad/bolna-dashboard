@@ -1140,7 +1140,7 @@
         "model": "eleven_monolingual_v1",
         "provider": "elevenlabs",
         "lowLatency": false,
-        "accent": "american"
+        "accent": "character"
     },
     {
         "name": "Grace",
@@ -1251,6 +1251,15 @@
         "accent": "english-swedish"
     },
     {
+        "name": "Anika",
+        "id": "JnE1oLCULGyis53Ji82O",
+        "languageCode": "all",
+        "model": "eleven_multilingual_v2",
+        "provider": "elevenlabs",
+        "lowLatency": false,
+        "accent": "indian"
+    },
+    {
         "name": "rohan",
         "id": "rohan",
         "languageCode": "all",
@@ -1288,7 +1297,7 @@
     },
     {
         "name": "Anika",
-        "id": "QOQGV0NwUO8sk3CJ0VON",
+        "id": "JnE1oLCULGyis53Ji82O",
         "languageCode": "all",
         "model": "eleven_multilingual_v1",
         "provider": "elevenlabs",

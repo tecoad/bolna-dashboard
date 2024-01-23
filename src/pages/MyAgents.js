@@ -16,7 +16,7 @@ function MyAgents({ accessToken, userId }) {
         const fetchAgents = async () => {
             setIsLoading(true);
             try {
-                const response = await api.get(`/get_all_agents`);
+                const response = await api.get(`/agents`);
                 setAgents(response.data);
             } catch (error) {
                 console.error('Error fetching agents: Making loading false', error);
