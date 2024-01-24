@@ -54,7 +54,7 @@ function AgentFormStepper({ initialData, isUpdate, agentId, accessToken }) {
     var selectedLLMModel = null
     if (initialData.modelsConfig.ttsConfig.voice != '') {
         selectedVoice = voices.find(voice => voice.name === initialData.modelsConfig.ttsConfig.voice)
-        selectedLLMModel = llmModels.find(model => model.model == initialData.modelsConfig.llmConfig.model)
+        selectedLLMModel = llmModels.find(model => model.model.includes(initialData.modelsConfig.llmConfig.model))
     }
 
     if (initialData.modelsConfig.ttsConfig.voice == '' && voices.length != 0) {
