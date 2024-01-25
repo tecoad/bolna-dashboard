@@ -1251,15 +1251,6 @@
         "accent": "english-swedish"
     },
     {
-        "name": "Anika",
-        "id": "JnE1oLCULGyis53Ji82O",
-        "languageCode": "all",
-        "model": "eleven_multilingual_v2",
-        "provider": "elevenlabs",
-        "lowLatency": false,
-        "accent": "indian"
-    },
-    {
         "name": "rohan",
         "id": "rohan",
         "languageCode": "all",
@@ -1829,15 +1820,6 @@
     {
         "name": "Quincy",
         "id": "Luis Moray",
-        "accent": "Spanish",
-        "languageCode": "all",
-        "model": "xttsv2",
-        "provider": "xtts",
-        "lowLatency": true
-    },
-    {
-        "name": "Ryan",
-        "id": "Marcos Rudaski",
         "accent": "Spanish",
         "languageCode": "all",
         "model": "xttsv2",
