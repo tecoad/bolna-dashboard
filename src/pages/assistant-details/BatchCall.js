@@ -66,7 +66,7 @@ function BatchCall({ agentId, accessToken }) {
             setIsLoading(true);
             try {
                 const response = await api.get(`/batches?agent_id=${agentId}`);
-                setBatches(response.data);
+                setBatches(response.data?.batches);
             } catch (error) {
                 console.error('Error fetching agents: Making loading false', error);
                 setIsLoading(false)
