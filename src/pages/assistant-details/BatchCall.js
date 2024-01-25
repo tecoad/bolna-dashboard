@@ -17,6 +17,7 @@ function BatchCall({ agentId, accessToken }) {
     const [file, setFile] = useState(null);
     const [selectedFile, setSelectedFile] = useState(null);
     const [openUploadDialog, setOpenUploadDialog] = useState(false);
+    const [apiSuccess, setApiSuccess] = useState(false);
     const api = createApiInstance(accessToken);
 
   const handleFileChange = (event) => {
@@ -46,7 +47,7 @@ function BatchCall({ agentId, accessToken }) {
                 });
 
                 if (response.status === 200) {
-                    console.log('File uploaded successfully!');
+                    setApiSuccess(true);
                 } else {
                     console.error('Error uploading file.');
                 }
@@ -55,7 +56,6 @@ function BatchCall({ agentId, accessToken }) {
             } finally {
                 // Close the upload dialog
                 handleCloseUploadDialog();
-                window.location.reload();
             }
         }
     };
@@ -79,7 +79,7 @@ function BatchCall({ agentId, accessToken }) {
         if (accessToken && agentId) {
             fetchBatches(agentId);
         }
-    }, [accessToken, agentId]);
+    }, [accessToken, agentId, apiSuccess]);
 
 
     if (error) {
