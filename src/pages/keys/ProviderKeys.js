@@ -9,6 +9,7 @@ const ProviderKeys = ({ accessToken, openCreateProviderKey, setOpenCreateProvide
   const [isLoading, setIsLoading] = useState(true);
   const [newProviderKeyName, setNewProviderKeyName] = useState('');
   const [newProviderKeyValue, setNewProviderKeyValue] = useState('');
+  const [apiSuccess, setApiSuccess] = useState(false);
   const api = createApiInstance(accessToken);
 
 
@@ -24,7 +25,7 @@ const ProviderKeys = ({ accessToken, openCreateProviderKey, setOpenCreateProvide
         provider_value: newProviderKeyValue,
       };
       const response = await api.post('/providers', body);
-
+      setApiSuccess(true);
       handleCloseCreateProviderKey();
     } catch (error) {
       console.error('Error adding Provider:', error);
@@ -47,7 +48,7 @@ const ProviderKeys = ({ accessToken, openCreateProviderKey, setOpenCreateProvide
     if (accessToken) {
       fetchProviderKeys();
     }
-  }, [accessToken]);
+  }, [accessToken, apiSuccess]);
 
   return (
     <Box>
@@ -65,7 +66,7 @@ const ProviderKeys = ({ accessToken, openCreateProviderKey, setOpenCreateProvide
           tooltipMap={{"humanized_created_at": "created_at"}}
           actionsToShow={{
             "Delete": {
-              "id": "provider_uuid",
+              "id": "provider_name",
               "url": "/providers",
               "resourceType": "Provider"
             }
