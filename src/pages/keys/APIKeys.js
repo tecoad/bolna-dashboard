@@ -12,7 +12,10 @@ import CustomTabs from '../../components/CustomTabs';
 const APIKeys = ({ keys, handleOpenCreateKey, disabledText, handleCopyClick, handleCloseCreateKey, accessToken, openCreateKey }) => {
   return (
     <>
-      {/* JsonTable component */}
+      <Typography variant="body2" gutterBottom>
+            These keys can be used to read and write data to Bolna. Please do not share these keys and make sure you store them somewhere secure.
+      </Typography>
+
       <JsonTable
         sx={{ width: '70%' }}
         jsonData={keys}
