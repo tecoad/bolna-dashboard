@@ -18,6 +18,7 @@ function BatchCall({ agentId, accessToken }) {
     const [selectedFile, setSelectedFile] = useState(null);
     const [openUploadDialog, setOpenUploadDialog] = useState(false);
     const [apiSuccess, setApiSuccess] = useState(false);
+    const [toRefreshAfterDelete, setToRefreshAfterDelete] = useState(false);
     const api = createApiInstance(accessToken);
 
   const handleFileChange = (event) => {
@@ -79,7 +80,7 @@ function BatchCall({ agentId, accessToken }) {
         if (accessToken && agentId) {
             fetchBatches(agentId);
         }
-    }, [accessToken, agentId, apiSuccess]);
+    }, [accessToken, agentId, apiSuccess, toRefreshAfterDelete]);
 
 
     if (error) {
@@ -141,6 +142,7 @@ function BatchCall({ agentId, accessToken }) {
                     clickable={false}
                     headersDisplayedAs={["Batch Identifier", "Uploaded At", "Status"]}
                     agent={agentId}
+                    setToRefreshAfterDelete={setToRefreshAfterDelete}
                     />
                 </Box>
 

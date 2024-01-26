@@ -10,6 +10,7 @@ const ProviderKeys = ({ accessToken, openCreateProviderKey, setOpenCreateProvide
   const [newProviderKeyName, setNewProviderKeyName] = useState('');
   const [newProviderKeyValue, setNewProviderKeyValue] = useState('');
   const [apiSuccess, setApiSuccess] = useState(false);
+  const [toRefreshAfterDelete, setToRefreshAfterDelete] = useState(false);
   const api = createApiInstance(accessToken);
 
 
@@ -48,7 +49,7 @@ const ProviderKeys = ({ accessToken, openCreateProviderKey, setOpenCreateProvide
     if (accessToken) {
       fetchProviderKeys();
     }
-  }, [accessToken, apiSuccess]);
+  }, [accessToken, apiSuccess, toRefreshAfterDelete]);
 
   return (
     <Box>
@@ -72,6 +73,7 @@ const ProviderKeys = ({ accessToken, openCreateProviderKey, setOpenCreateProvide
             }
           }}
           headersDisplayedAs={["Provider Name", "Provider Value", "Created At"]}
+          setToRefreshAfterDelete={setToRefreshAfterDelete}
 
           // Customize other props as needed
         />
