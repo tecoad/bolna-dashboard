@@ -9,7 +9,7 @@ import createApiInstance from '../../utils/api';
 import CustomTabs from '../../components/CustomTabs';
 
 
-const APIKeys = ({ keys, handleOpenCreateKey, disabledText, handleCopyClick, handleCloseCreateKey, accessToken, openCreateKey }) => {
+const APIKeys = ({ keys, handleOpenCreateKey, disabledText, handleCopyClick, handleCloseCreateKey, accessToken, openCreateKey, setToRefreshAfterDelete }) => {
   return (
     <>
       <Typography variant="body2" gutterBottom>
@@ -23,6 +23,7 @@ const APIKeys = ({ keys, handleOpenCreateKey, disabledText, handleCopyClick, han
         tooltipMap={{"humanized_accessed_at": "accessed_at", "humanized_created_at": "created_at"}}
         accessToken={accessToken}
         clickable={false}
+        setToRefreshAfterDelete={setToRefreshAfterDelete}
         actionsToShow={{
             "Delete": {
               "id": "key_uuid",
