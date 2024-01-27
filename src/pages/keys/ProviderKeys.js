@@ -16,7 +16,8 @@ const ProviderKeys = ({ accessToken, openCreateProviderKey, setOpenCreateProvide
 
   const handleCloseCreateProviderKey = () => {
     setOpenCreateProviderKey(false);
-    setNewProviderKeyName(''); // Reset the form field on modal close
+    setNewProviderKeyName('');
+    setNewProviderKeyValue('');
   };
 
   const handleCreateProviderKey = async () => {
@@ -60,25 +61,31 @@ const ProviderKeys = ({ accessToken, openCreateProviderKey, setOpenCreateProvide
           <CircularProgress />
         </Box>
       ) : (
-        <JsonTable
-          sx={{ width: '70%' }}
-          jsonData={providerKeys}
-          accessToken={accessToken}
-          columnsToShow={["provider_name", "provider_value", "humanized_created_at"]}
-          clickable={false}
-          tooltipMap={{"humanized_created_at": "created_at"}}
-          actionsToShow={{
-            "Delete": {
-              "id": "provider_name",
-              "url": "/providers",
-              "resourceType": "Provider"
-            }
-          }}
-          headersDisplayedAs={["Provider Name", "Provider Value", "Created At"]}
-          setToRefreshAfterDelete={setToRefreshAfterDelete}
+        <>
+          <Typography variant="body2" gutterBottom>
+            These keys will be used to access your own Providers within Bolna.
+          </Typography>
 
-          // Customize other props as needed
-        />
+          <JsonTable
+            sx={{ width: '70%' }}
+            jsonData={providerKeys}
+            accessToken={accessToken}
+            columnsToShow={["provider_name", "provider_value", "humanized_created_at"]}
+            clickable={false}
+            tooltipMap={{"humanized_created_at": "created_at"}}
+            actionsToShow={{
+              "Delete": {
+                "id": "provider_name",
+                "url": "/providers",
+                "resourceType": "Provider"
+              }
+            }}
+            headersDisplayedAs={["Provider Name", "Provider Value", "Created At"]}
+            setToRefreshAfterDelete={setToRefreshAfterDelete}
+
+            // Customize other props as needed
+          />
+        </>
       )}
 
         {/* Dialog for adding Provider key */}
@@ -88,6 +95,22 @@ const ProviderKeys = ({ accessToken, openCreateProviderKey, setOpenCreateProvide
           fullWidth
           maxWidth="sm"
           aria-labelledby="add-provider-dialog-title"
+          slots={{
+            backdrop: (props) => (
+              <div
+                {...props}
+                style={{
+                  backdropFilter: 'blur(2px)',
+                  pointerEvents: 'none',
+                  position: 'fixed',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                }}
+              />
+            ),
+          }}
         >
           <DialogTitle id="add-provider-dialog-title">Add Provider</DialogTitle>
           <DialogContent>

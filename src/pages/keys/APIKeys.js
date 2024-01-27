@@ -41,6 +41,22 @@ const APIKeys = ({ keys, handleOpenCreateKey, disabledText, handleCopyClick, han
         maxWidth="md"
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
+        slots={{
+          backdrop: (props) => (
+            <div
+              {...props}
+              style={{
+                backdropFilter: 'blur(2px)',
+                pointerEvents: 'none',
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+              }}
+            />
+          ),
+        }}
       >
         <DialogTitle id="alert-dialog-title">
           {"Your API Key"}
