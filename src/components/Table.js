@@ -8,7 +8,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import createApiInstance from '../utils/api';
 import TextField from '@mui/material/TextField';
 import EventIcon from '@mui/icons-material/Event';
-import moment from 'moment';
+import moment from 'moment-timezone';
 
 
 import dayjs, { Dayjs } from 'dayjs';
@@ -37,7 +37,8 @@ function JsonTable({
     onClickPage,
     clickable,
     headersDisplayedAs,
-    agent
+    agent,
+    setToRefreshAfterDelete
 }) {
     const navigate = useNavigate();
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -88,7 +89,7 @@ function JsonTable({
             const response = await api.delete(`${apiUrl}/${resourceId}`);
 
             if (response.data.state === "success") {
-                window.location.reload();
+                setToRefreshAfterDelete(true);
             } else {
                 console.error('Delete failed');
             }
@@ -164,7 +165,7 @@ function JsonTable({
                                 var name = row[column] == undefined ? "" : row[column]
                                 if (tooltipMap && column in tooltipMap) {
                                     return (
-                                        <Tooltip key={column} title={row[tooltipMap[column]].toString()} disableInteractive>
+                                        <Tooltip key={column} title={ moment(row[tooltipMap[column]]).tz(moment.tz.guess()).format('YYYY-MM-DD HH:mm ZZ') } disableInteractive>
                                             <TableCell key={column}>{name.toString()}</TableCell>
                                         </Tooltip>
                                     )
