@@ -52,11 +52,14 @@ const APIKeys = ({ keys, handleOpenCreateKey, disabledText, handleCopyClick, han
                 fullWidth
                 disabled
                 value={disabledText}
-                // You can add more props as needed
+                InputProps={{
+                  endAdornment: (
+                    <IconButton onClick={handleCopyClick} type="button" aria-label="copy">
+                      <FileCopyIcon />
+                    </IconButton>
+                  ),
+                }}
               />
-              <IconButton onClick={handleCopyClick} type="button" aria-label="copy">
-                <FileCopyIcon />
-              </IconButton>
             </form>
             Please save it somewhere safe and accessible. If you lose your API key, you will need to generate a new one.
 
