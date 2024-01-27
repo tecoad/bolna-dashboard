@@ -39,7 +39,9 @@ const ProviderKeys = ({ accessToken, openCreateProviderKey, setOpenCreateProvide
       try {
         const response = await api.get('/providers');
         setProviderKeys(response.data);
-      } catch (error) {
+        setApiSuccess(false);
+        setToRefreshAfterDelete(false);
+        } catch (error) {
         console.error('Error fetching Providers:', error);
       } finally {
         setIsLoading(false); // Set loading state to false once data is fetched

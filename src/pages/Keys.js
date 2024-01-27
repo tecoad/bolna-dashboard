@@ -56,7 +56,9 @@ function Keys({ accessToken }) {
       try {
         const response = await api.get('/keys');
         setApiKeys(response.data);
-      } catch (error) {
+        setToRefreshAfterDelete(false);
+        setToRefreshAfterCreate(false);
+        } catch (error) {
         console.error('Error fetching agents: Making loading false', error);
         setIsLoading(false)
         setError(error);
