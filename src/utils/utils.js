@@ -350,8 +350,8 @@ export const convertToCreateAgentForm = (payload) => {
     const transcriber = agentData.tools_config?.transcriber;
     const input = agentData.tools_config?.input;
     let followupTaskConfig = getFollowupTasks(followupTasks)
-    console.log(`followupTaskConfig ${JSON.stringify(followupTaskConfig)}`)
-    console.log(`Synthesizer provider config ${JSON.stringify(synthesizer.provider_config)}`)
+    //console.log(`followupTaskConfig ${JSON.stringify(followupTaskConfig)}`)
+    //console.log(`Synthesizer provider config ${JSON.stringify(synthesizer.provider_config)}`)
     var agentTypes = ["Lead Qualification", "Customer Service", "Sales And Marketing", "Recruiting", "Survey / Feedback", "Coaching", "VirtualRM", "Other"]
     var formData = {
         basicConfig: {

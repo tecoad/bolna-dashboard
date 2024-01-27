@@ -167,19 +167,19 @@ function AgentFormStepper({ initialData, isUpdate, agentId, accessToken }) {
 
     const handleComplete = async () => {
         setLoading(true);
-        console.log("Form Data:", JSON.stringify(formData));
+        //console.log("Form Data:", JSON.stringify(formData));
         let transformedJson = convertToCreateAgentPayload(formData)
-        console.log(`Transformed JSON ${JSON.stringify(transformedJson)} `)
+        //console.log(`Transformed JSON ${JSON.stringify(transformedJson)} `)
         let promptJson = {}
 
         let payload = {
             //"user_id": userId.toString(),
             "agent_config": transformedJson,
         }
-        console.log(`formData.basicConfig.agentType ${formData.basicConfig.assistantType} `)
+        //console.log(`formData.basicConfig.agentType ${formData.basicConfig.assistantType} `)
         if (formData.basicConfig.assistantType == "IVR") {
             promptJson = translateToJSON();
-            console.log("Flow Data:", JSON.stringify(promptJson));
+            //console.log("Flow Data:", JSON.stringify(promptJson));
 
             // a hacky way to serialize and deserialize on the frontend to save development time
             payload = {
@@ -197,7 +197,7 @@ function AgentFormStepper({ initialData, isUpdate, agentId, accessToken }) {
         } else {
             const is7BModel = formData.modelsConfig.llmConfig.model.includes("7b") ? true : false
             promptJson["system_prompt"] = getPromptJsonFromRulesConfig(formData.rulesConfig.prompts, is7BModel)
-            console.log(`Prompts JSON ${JSON.stringify(promptJson)} `)
+            //console.log(`Prompts JSON ${JSON.stringify(promptJson)} `)
             payload = {
                 ...payload, "agent_prompts": {
                     "serialized_prompts": JSON.stringify({ "task_1": promptJson }),
@@ -206,7 +206,7 @@ function AgentFormStepper({ initialData, isUpdate, agentId, accessToken }) {
             }
         }
 
-        console.log(`Sending backkend request to ${process.env.REACT_APP_FAST_API_BACKEND_URL}, agentID ${agentId} json ${JSON.stringify(payload)}`)
+        //console.log(`Sending backkend request to ${process.env.REACT_APP_FAST_API_BACKEND_URL}, agentID ${agentId} json ${JSON.stringify(payload)}`)
         try {
             if (isUpdate) {
                 const response = await api.put(`/agent/${agentId}`, payload);
