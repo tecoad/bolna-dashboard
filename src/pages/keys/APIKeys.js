@@ -9,10 +9,13 @@ import createApiInstance from '../../utils/api';
 import CustomTabs from '../../components/CustomTabs';
 
 
-const APIKeys = ({ keys, handleOpenCreateKey, disabledText, handleCopyClick, handleCloseCreateKey, accessToken, openCreateKey }) => {
+const APIKeys = ({ keys, handleOpenCreateKey, disabledText, handleCopyClick, handleCloseCreateKey, accessToken, openCreateKey, setToRefreshAfterDelete }) => {
   return (
     <>
-      {/* JsonTable component */}
+      <Typography variant="body2" gutterBottom>
+            These keys can be used to read and write data to Bolna. Please do not share these keys and make sure you store them somewhere secure.
+      </Typography>
+
       <JsonTable
         sx={{ width: '70%' }}
         jsonData={keys}
@@ -20,6 +23,7 @@ const APIKeys = ({ keys, handleOpenCreateKey, disabledText, handleCopyClick, han
         tooltipMap={{"humanized_accessed_at": "accessed_at", "humanized_created_at": "created_at"}}
         accessToken={accessToken}
         clickable={false}
+        setToRefreshAfterDelete={setToRefreshAfterDelete}
         actionsToShow={{
             "Delete": {
               "id": "key_uuid",
@@ -37,6 +41,22 @@ const APIKeys = ({ keys, handleOpenCreateKey, disabledText, handleCopyClick, han
         maxWidth="md"
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
+        slots={{
+          backdrop: (props) => (
+            <div
+              {...props}
+              style={{
+                backdropFilter: 'blur(2px)',
+                pointerEvents: 'none',
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+              }}
+            />
+          ),
+        }}
       >
         <DialogTitle id="alert-dialog-title">
           {"Your API Key"}
@@ -52,11 +72,14 @@ const APIKeys = ({ keys, handleOpenCreateKey, disabledText, handleCopyClick, han
                 fullWidth
                 disabled
                 value={disabledText}
-                // You can add more props as needed
+                InputProps={{
+                  endAdornment: (
+                    <IconButton onClick={handleCopyClick} type="button" aria-label="copy">
+                      <FileCopyIcon />
+                    </IconButton>
+                  ),
+                }}
               />
-              <IconButton onClick={handleCopyClick} type="button" aria-label="copy">
-                <FileCopyIcon />
-              </IconButton>
             </form>
             Please save it somewhere safe and accessible. If you lose your API key, you will need to generate a new one.
 

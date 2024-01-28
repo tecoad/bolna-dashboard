@@ -56,8 +56,12 @@ function AgentDetails({ accessToken }) {
             }
             setLoading(false);
         };
-        fetchPromptData();
-    }, [agentId, userId]);
+
+        if (accessToken) {
+            fetchPromptData();
+        }
+
+    }, [accessToken, agentId, userId]);
 
 
     const handlePlaygroundOpen = () => {

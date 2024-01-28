@@ -19,6 +19,8 @@ function Keys({ accessToken }) {
   const [disabledText, setDisabledText] = useState('');
   const [activeTab, setActiveTab] = useState(0);
   const [openCreateProviderKey, setOpenCreateProviderKey] = useState(false);
+  const [toRefreshAfterCreate, setToRefreshAfterCreate] = useState(false);
+  const [toRefreshAfterDelete, setToRefreshAfterDelete] = useState(false);
   const api = createApiInstance(accessToken);
 
   const handleOpenCreateKey = async () => {
@@ -37,7 +39,7 @@ function Keys({ accessToken }) {
 
   const handleCloseCreateKey = () => {
     setOpenCreateKey(false);
-    window.location.reload();
+    setToRefreshAfterCreate(true);
   };
 
   const handleCopyClick = () => {
@@ -54,7 +56,9 @@ function Keys({ accessToken }) {
       try {
         const response = await api.get('/keys');
         setApiKeys(response.data);
-      } catch (error) {
+        setToRefreshAfterDelete(false);
+        setToRefreshAfterCreate(false);
+        } catch (error) {
         console.error('Error fetching agents: Making loading false', error);
         setIsLoading(false)
         setError(error);
@@ -66,7 +70,7 @@ function Keys({ accessToken }) {
     if (accessToken) {
       fetchApiKeys();
     }
-  }, [accessToken]);
+  }, [accessToken, toRefreshAfterCreate, toRefreshAfterDelete]);
 
 
   if (error) {
@@ -74,7 +78,7 @@ function Keys({ accessToken }) {
   }
 
   const tabsData = [
-    { name: 'API Keys', component: <APIKeys openCreateKey={openCreateKey} accessToken={accessToken} keys={apiKeys} handleOpenCreateKey={handleOpenCreateKey} disabledText={disabledText} handleCopyClick={handleCopyClick} handleCloseCreateKey={handleCloseCreateKey} /> },
+    { name: 'API Keys', component: <APIKeys openCreateKey={openCreateKey} accessToken={accessToken} keys={apiKeys} handleOpenCreateKey={handleOpenCreateKey} disabledText={disabledText} handleCopyClick={handleCopyClick} handleCloseCreateKey={handleCloseCreateKey} setToRefreshAfterDelete={setToRefreshAfterDelete} /> },
     { name: 'Provider Keys', component: <ProviderKeys accessToken={accessToken} setOpenCreateProviderKey={setOpenCreateProviderKey} openCreateProviderKey={openCreateProviderKey} /> },
   ];
 
