@@ -208,6 +208,13 @@ const getSynthesizerConfig = (agentData) => {
     return synthesizerConfig
 }
 
+export const get_streaming_model = (llm_model) => {
+    if (llm_model.includes("dolphin") || llm_model.includes("samantha")) {
+        return `cognitivecomputations/${llm_model}`
+    }
+    return llm_model
+}
+
 export const convertToCreateAgentPayload = (agentData) => {
     let payload = {
         "agent_name": agentData.basicConfig.assistantName,
@@ -219,7 +226,7 @@ export const convertToCreateAgentPayload = (agentData) => {
                     "llm_agent": {
                         "max_tokens": agentData.modelsConfig.llmConfig.maxTokens,
                         "family": agentData.modelsConfig.llmConfig.family,
-                        "streaming_model": agentData.modelsConfig.llmConfig.model,
+                        "streaming_model": get_streaming_model(agentData.modelsConfig.llmConfig.model),
                         "agent_flow_type": agentData.basicConfig.assistantType === "IVR" ? "preprocessed" : "streaming",
                         "classification_model": agentData.modelsConfig.llmConfig.model,
                         "use_fallback": true,
@@ -341,7 +348,7 @@ const getFollowupTasks = (followUpTasks) => {
 }
 
 export const convertToCreateAgentForm = (payload) => {
-    //console.log(`Agent payload ${JSON.stringify(payload)}`)
+    console.log(`Agent payload ${JSON.stringify(payload)}`)
     let agentTasks = [...payload.tasks]
     const agentData = agentTasks.shift()
     const followupTasks = [...agentTasks]
@@ -350,8 +357,6 @@ export const convertToCreateAgentForm = (payload) => {
     const transcriber = agentData.tools_config?.transcriber;
     const input = agentData.tools_config?.input;
     let followupTaskConfig = getFollowupTasks(followupTasks)
-    console.log(`followupTaskConfig ${JSON.stringify(followupTaskConfig)}`)
-    console.log(`Synthesizer provider config ${JSON.stringify(synthesizer.provider_config)}`)
     var agentTypes = ["Lead Qualification", "Customer Service", "Sales And Marketing", "Recruiting", "Survey / Feedback", "Coaching", "VirtualRM", "Other"]
     var formData = {
         basicConfig: {
