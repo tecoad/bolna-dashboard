@@ -48,6 +48,12 @@ function VoiceLab({ setVoices, voices, defaultValue, accessToken }) {
                     model: selectedVoice.model,
                     voice: selectedVoice.name,
                 }
+            } else if (selectedVoice.provider == "fourie") {
+                payload.provider_config = {
+                    voice: selectedVoice.name,
+                    voice_id: selectedVoice.id,
+                    gender: selectedVoice.gender,
+                }
             }
 
             console.log(`payload ${JSON.stringify(payload)} engine ${payload.provider_config.engine}`)
@@ -100,12 +106,17 @@ function VoiceLab({ setVoices, voices, defaultValue, accessToken }) {
                         defaultValue={selectedVoice}
                         getOptionLabel={getVoiceLabel}
                         filterOptions={(options, { inputValue }) => {
-                            return options.filter(option =>
-                                option.name.toLowerCase().includes(inputValue.toLowerCase()) ||
-                                option.languageCode.toLowerCase().includes(inputValue.toLowerCase()) ||
-                                option.model.toLowerCase().includes(inputValue.toLowerCase()) ||
-                                option.provider.toLowerCase().includes(inputValue.toLowerCase()) ||
-                                option.accent.toLowerCase().includes(inputValue.toLowerCase())
+                            return options.filter(option => {
+                                console.log(JSON.stringify(option))
+                                return (
+                                    option?.name.toLowerCase().includes(inputValue.toLowerCase()) ||
+                                    option?.languageCode.toLowerCase().includes(inputValue.toLowerCase()) ||
+                                    option?.model.toLowerCase().includes(inputValue.toLowerCase()) ||
+                                    option?.provider.toLowerCase().includes(inputValue.toLowerCase()) ||
+                                    option?.accent.toLowerCase().includes(inputValue.toLowerCase())
+                                )
+                            }
+
                             );
                         }}
                         renderInput={(params) => <TextField {...params} label="Select Voice" />}
