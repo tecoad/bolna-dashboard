@@ -132,7 +132,7 @@ function AgentFormStepper({ initialData, isUpdate, agentId, accessToken }) {
         return result;
     };
 
-    const getPromptJsonFromRulesConfig = (prompts, is7BModel = false) => {
+    const getPromptJsonFromRulesConfig = (prompts, is7BModel = false, isOpenAI) => {
         if (is7BModel) {
             return convertToText(prompts['assistantDescription'])
         }
@@ -196,7 +196,8 @@ function AgentFormStepper({ initialData, isUpdate, agentId, accessToken }) {
             }
         } else {
             const is7BModel = formData.modelsConfig.llmConfig.model.includes("7b") ? true : false
-            promptJson["system_prompt"] = getPromptJsonFromRulesConfig(formData.rulesConfig.prompts, is7BModel)
+            const isOpenAI = formData.modelsConfig.llmConfig.family.includes("openai") ? true : false
+            promptJson["system_prompt"] = getPromptJsonFromRulesConfig(formData.rulesConfig.prompts, is7BModel, isOpenAI)
             //console.log(`Prompts JSON ${JSON.stringify(promptJson)} `)
             payload = {
                 ...payload, "agent_prompts": {

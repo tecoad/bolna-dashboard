@@ -17,6 +17,7 @@ import Dashboard from './components/Dashboard';
 import AgentDetails from './pages/AgentDetails';
 import RunDetails from './pages/assistant-details/RunDetails';
 import BatchDetails from './pages/assistant-details/BatchDetails';
+import createApiInstance from './utils/api';
 
 
 // Create a theme instance.
@@ -57,15 +58,23 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey, options);
 function App() {
   const [session, setSession] = useState(null);
 
-
   useEffect(() => {
+
+    const createUser = async (api) => {
+      const response = await api.post(`/user`);
+    }
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session)
     })
 
     supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session)
+      if (session?.access_token) {
+        const api = createApiInstance(session?.access_token);
+        createUser(api);
+      }
     })
+
   }, [])
 
   const redirectUrl = (process.env.REACT_APP_REDIRECT_URL == null || process.env.REACT_APP_REDIRECT_URL == undefined) ? "https://app.bolna.dev" : process.env.REACT_APP_REDIRECT_URL
