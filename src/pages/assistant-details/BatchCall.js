@@ -119,6 +119,10 @@ function BatchCall({ agentId, accessToken }) {
                 </Box>
               </Box>
 
+                <Typography variant="body2" gutterBottom>
+                  Upload batches for scheduling multiple calls.
+                </Typography>
+
                 <Box>
                     <JsonTable
                     sx={{ width: '70%' }}
@@ -149,11 +153,12 @@ function BatchCall({ agentId, accessToken }) {
                 </Box>
 
               <Dialog open={openUploadDialog} onClose={handleCloseUploadDialog}>
-                <DialogTitle>Upload CSV File</DialogTitle>
+                <DialogTitle>Upload contacts File (csv supported)</DialogTitle>
                 <DialogContent>
                   <DialogContentText>
-                    Select a CSV file to upload.
-                  </DialogContentText>
+                    Select a CSV file to upload.<br/>
+                    Make sure the phone numbers are under <code>contact_number</code> header.
+                  </DialogContentText><br/>
                   <input type="file" accept=".csv" onChange={handleFileChange} />
                 </DialogContent>
                 <DialogActions>

@@ -1,13 +1,22 @@
 import React, { useState } from 'react';
 import { Tabs, Tab, Box, Typography } from '@mui/material';
 
-function CustomTabs({ tabsData, orientation, setActiveTabInParent }) {
+function CustomTabs({ tabsData, orientation, setActiveTabInParent, setOpenAnalyticsDialog=null }) {
     const [activeTab, setActiveTab] = useState(0);
 
     const handleChange = (event, newValue) => {
+        const tabName = tabsData[newValue].name;
         setActiveTab(newValue);
         if (setActiveTabInParent != null && setActiveTabInParent != undefined) {
             setActiveTabInParent(newValue)
+        }
+
+        if (setOpenAnalyticsDialog) {
+            if (tabName === 'Analytics') {
+                setOpenAnalyticsDialog(true); // Open the Analytics dialog
+            } else {
+                setOpenAnalyticsDialog(false);
+            }
         }
     };
 

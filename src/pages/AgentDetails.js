@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Box, Typography, Button, Dialog, CircularProgress } from '@mui/material';
+import { Box, Typography, Button, Dialog, CircularProgress, DialogTitle, DialogContent } from '@mui/material';
+import { List, ListItem, ListItemText } from '@mui/material';
 import CustomTabs from '../components/CustomTabs';
 import Analytics from './assistant-details/Analytics';
 import RunsTable from './assistant-details/RunsTable';
@@ -27,12 +28,13 @@ function AgentDetails({ accessToken }) {
     const [activeTab, setActiveTab] = useState(0);
     const api = createApiInstance(accessToken);
 
+    const [openAnalyticsDialog, setOpenAnalyticsDialog] = useState(false);
+
     useEffect(() => {
         const fetchPromptData = async () => {
             setLoading(true);
             try {
                 const response = await api.get(`/agent/prompts?agent_id=${agentId}`);
-                console.log(`GOT Deserialized prompt ${JSON.stringify(response.data)}`)
 
                 // Create a new object for formData
                 var newFormData = { ...formData };
@@ -73,8 +75,8 @@ function AgentDetails({ accessToken }) {
     };
 
     const tabsData = [
-        { name: 'Analytics', component: <Analytics /> },
         { name: 'Agent Execution', component: <RunsTable accessToken={accessToken} /> },
+        { name: 'Analytics', component: <Analytics /> },
         { name: 'Edit agent details', component: <AgentFormStepper initialData={formData} isUpdate={true} agentId={agentId} accessToken={accessToken} /> },
         { name: 'Batch call', component: <BatchCall agentId={agentId} accessToken={accessToken} /> },
     ];
@@ -113,11 +115,32 @@ function AgentDetails({ accessToken }) {
                         </Box>
 
                     )}
-                    <CustomTabs tabsData={tabsData} orientation={"horizontal"} setActiveTabInParent={setActiveTab} />
+                    <CustomTabs tabsData={tabsData} orientation={"horizontal"} setActiveTabInParent={setActiveTab} setOpenAnalyticsDialog={setOpenAnalyticsDialog} />
 
                     {/* Dialog for Playground */}
                     <Dialog open={openPlayground} onClose={handlePlaygroundClose} fullWidth maxWidth="md">
                         <ChatComponent agentId={agentId} userId={userId} isOpen={openPlayground} accessToken={accessToken} />
+                    </Dialog>
+
+                    {/* Dialog for Analytics */}
+                    <Dialog open={openAnalyticsDialog} onClose={() => setOpenAnalyticsDialog(false)} fullWidth maxWidth="md">
+                        <DialogTitle>Rich Analuytcvis</DialogTitle>
+                        <DialogContent>
+                            <Typography variant="body1">
+                                Your agent analytics will appear here showing:
+                            </Typography>
+                            <List dense="true">
+                            <ListItem>
+                                <ListItemText primary="Conversations" />
+                            </ListItem>
+                            <ListItem>
+                                <ListItemText primary="Cost" />
+                            </ListItem>
+                            <ListItem>
+                                <ListItemText primary="Durations" />
+                            </ListItem>
+                            </List>
+                        </DialogContent>
                     </Dialog>
                 </>
             )}

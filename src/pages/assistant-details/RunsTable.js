@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import JsonTable from '../../components/Table';
 import fakeData from '../../data/fake_run_details.json';
 import createApiInstance from '../../utils/api';
@@ -38,15 +38,33 @@ function RunTable({ accessToken }) {
             {loading ? (
                 <p>Loading...</p>
             ) : (
-                <JsonTable
-                    sx={{ width: '70%' }}
-                    jsonData={runData || []}
-                    columnsToShow={["range", "conversation_time", "createdAt", "total_cost"]}
-                    onClickPage="run-details"
-                    clickable={true}
-                    headersDisplayedAs={["Run ID", "Run Duration", "Run Date", "Total Cost"]}
-                    agent={agent}
-                />
+                <>
+                {runData && runData.length > 0 ? (
+                    <>
+                        <Typography variant="body2" gutterBottom>
+                            This displays all the agent executions (including Call Me & Playground & Batch)
+                        </Typography>
+
+                        <JsonTable
+                            sx={{ width: '70%' }}
+                            jsonData={runData}
+                            columnsToShow={["range", "conversation_time", "createdAt", "total_cost"]}
+                            onClickPage="run-details"
+                            clickable={true}
+                            headersDisplayedAs={["Run ID", "Run Duration", "Run Date", "Total Cost"]}
+                            agent={agent}
+                        />
+
+                    </>
+
+                    ) : (
+                    <Typography variant="body1" gutterBottom>
+                        Use Playground or Call Me to interact with your created agent. <br/>
+                        All interactions can be found in the Analytics tab.
+                    </Typography>
+                )}
+
+            </>
             )}
         </Box>
     );

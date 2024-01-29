@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Drawer, List, ListItem, ListItemIcon, ListItemText, Divider, IconButton, Typography, Box, Toolbar, AppBar } from '@mui/material';
+import { Drawer, List, ListItem, ListItemIcon, ListItemText, Divider, IconButton, Typography, Box, Toolbar, AppBar, ListItemSecondaryAction, Badge } from '@mui/material';
 import { Menu as MenuIcon, AccountBox, GroupAdd, Dashboard as DashboardIcon, ExitToApp } from '@mui/icons-material';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import GroupIcon from '@mui/icons-material/Group'; // Icon for "My Agents"
@@ -51,10 +51,22 @@ function Dashboard({ supabase }) {
                 <ListItem button component={NavLink} to="datasets">
                     <ListItemIcon><StorageIcon /></ListItemIcon>
                     <ListItemText primary="Datasets" />
+                    <ListItemSecondaryAction sx={{ right: '20%' }} color="info">
+                        <Badge
+                            badgeContent="Coming Soon"
+                            color="info"
+                        />
+                    </ListItemSecondaryAction>
                 </ListItem>
                 <ListItem button component={NavLink} to="integrations">
                     <ListItemIcon><SettingsInputComponentIcon /></ListItemIcon>
                     <ListItemText primary="Integrations" />
+                    <ListItemSecondaryAction sx={{ right: '20%'}}>
+                        <Badge
+                            badgeContent={<Typography variant="body6">Coming Soon</Typography>}
+                            color="info"
+                        />
+                    </ListItemSecondaryAction>
                 </ListItem>
                 <ListItem button component={NavLink} to="account">
                     <ListItemIcon><AccountBoxIcon /></ListItemIcon>
