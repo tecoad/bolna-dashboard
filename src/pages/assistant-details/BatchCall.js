@@ -98,7 +98,7 @@ function BatchCall({ agentId, accessToken }) {
           ) : (
             <>
               <Box display="flex" justifyContent="space-between" alignItems="center">
-                <Typography variant="h5">Batches</Typography>
+                <Typography variant="body2">Upload batches for scheduling multiple calls.</Typography>
                 <Box>
                   <input
                     type="file"
@@ -118,10 +118,6 @@ function BatchCall({ agentId, accessToken }) {
                   </label>
                 </Box>
               </Box>
-
-                <Typography variant="body2" gutterBottom>
-                  Upload batches for scheduling multiple calls.
-                </Typography>
 
                 <Box>
                     <JsonTable

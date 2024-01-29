@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Box, Typography, Button, Dialog, CircularProgress, DialogTitle, DialogContent } from '@mui/material';
-import { List, ListItem, ListItemText } from '@mui/material';
+import { Box, Typography, Button, Dialog, CircularProgress, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 import CustomTabs from '../components/CustomTabs';
 import Analytics from './assistant-details/Analytics';
 import RunsTable from './assistant-details/RunsTable';
@@ -26,9 +25,17 @@ function AgentDetails({ accessToken }) {
     const [prompt, setPrompt] = useState(null);
     const { handleClick } = CallComponent({ agentId, accessToken });
     const [activeTab, setActiveTab] = useState(0);
+    const [openAnalyticsDialog, setOpenAnalyticsDialog] = useState(false);
     const api = createApiInstance(accessToken);
 
-    const [openAnalyticsDialog, setOpenAnalyticsDialog] = useState(false);
+
+    const handleAnalyticsDialogClickOpen = () => {
+      setOpenAnalyticsDialog(true);
+    };
+
+    const handleAnalyticsDialogClose = () => {
+      setOpenAnalyticsDialog(false);
+    };
 
     useEffect(() => {
         const fetchPromptData = async () => {
@@ -75,8 +82,8 @@ function AgentDetails({ accessToken }) {
     };
 
     const tabsData = [
-        { name: 'Analytics', component: <Analytics accessToken={accessToken} agentId={agentId} /> },
         { name: 'Agent Execution', component: <RunsTable accessToken={accessToken} /> },
+        { name: 'Analytics', component: <Analytics accessToken={accessToken} agentId={agentId} /> },
         { name: 'Edit agent details', component: <AgentFormStepper initialData={formData} isUpdate={true} agentId={agentId} accessToken={accessToken} /> },
         { name: 'Batch call', component: <BatchCall agentId={agentId} accessToken={accessToken} /> },
     ];
@@ -90,9 +97,9 @@ function AgentDetails({ accessToken }) {
                 </Box>
             ) : (
                 <>
-                    {activeTab < 3 && (
+                    {activeTab && (
                         <Box display="flex" justifyContent="space-between" alignItems="center">
-                            <Typography variant="h4">Agent Details</Typography>
+                            <Typography variant="h4">{ agent?.agent_name || 'Agent Details' }</Typography>
                             <Box>
                                 <Button onClick={() => navigate('/dashboard/my-agents')}
                                     sx={{ marginRight: 2, backgroundColor: '#f5f5f5', color: 'black', '&:hover': { backgroundColor: '#e0e0e0' } }}
@@ -123,24 +130,39 @@ function AgentDetails({ accessToken }) {
                     </Dialog>
 
                     {/* Dialog for Analytics */}
-                    <Dialog open={openAnalyticsDialog} onClose={() => setOpenAnalyticsDialog(false)} fullWidth maxWidth="md">
-                        <DialogTitle>Rich Analuytcvis</DialogTitle>
-                        <DialogContent>
+                    <Dialog
+                        open={openAnalyticsDialog}
+                        onClose={() => setOpenAnalyticsDialog(false)}
+                        maxWidth="xs"
+                        slots={{
+                            backdrop: (props) => (
+                              <div
+                                {...props}
+                                style={{
+                                  backdropFilter: 'blur(2px)',
+                                  pointerEvents: 'none',
+                                  position: 'fixed',
+                                  top: 0,
+                                  left: 0,
+                                  right: 0,
+                                  bottom: 0,
+                                }}
+                              />
+                            ),
+                          }}
+
+                          >
+                        <DialogTitle>Rich Analytics</DialogTitle>
+                        <DialogContent dividers="true">
                             <Typography variant="body1">
-                                Your agent analytics will appear here showing:
+                                All analytics related to your agent conversations alongwith the costs and durations will be displayed here.
                             </Typography>
-                            <List dense="true">
-                            <ListItem>
-                                <ListItemText primary="Conversations" />
-                            </ListItem>
-                            <ListItem>
-                                <ListItemText primary="Cost" />
-                            </ListItem>
-                            <ListItem>
-                                <ListItemText primary="Durations" />
-                            </ListItem>
-                            </List>
                         </DialogContent>
+                        <DialogActions>
+                            <Button onClick={handleAnalyticsDialogClose} autoFocus>
+                                Close
+                            </Button>
+                        </DialogActions>
                     </Dialog>
                 </>
             )}

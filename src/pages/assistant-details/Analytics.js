@@ -33,7 +33,7 @@ function Analytics({ accessToken, agentId }) {
     });
 
     //const [analyticsData, setAnalyticsData] = useState({})
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
 
     //Uncomment it when you have the data
     // useEffect(() => {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Tabs, Tab, Box, Typography } from '@mui/material';
+import { Tabs, Tab, Box, Typography, Badge } from '@mui/material';
 
 function CustomTabs({ tabsData, orientation, setActiveTabInParent, setOpenAnalyticsDialog=null }) {
     const [activeTab, setActiveTab] = useState(0);
@@ -30,7 +30,7 @@ function CustomTabs({ tabsData, orientation, setActiveTabInParent, setOpenAnalyt
 
     const tabsContainerStyle = {
         borderRight: orientation === 'vertical' ? '1px solid rgba(0, 0, 0, 0.12)' : 'none',
-        borderBottom: orientation === 'horizontal' ? '1px solid rgba(0, 0, 0, 0.12)' : 'none',
+        borderBottom: orientation === 'horizontal' ? '1px solid rgba(0, 0, 0, 0.12)' : 'none'
     };
 
     return (
@@ -45,7 +45,30 @@ function CustomTabs({ tabsData, orientation, setActiveTabInParent, setOpenAnalyt
                     scrollButtons="auto"
                 >
                     {tabsData.map((tab, index) => (
-                        <Tab sx={activeTab === index ? activeTabStyle : {}} label={tab.name} key={index} />
+                        <Tab
+                            sx={activeTab === index ? activeTabStyle : {}}
+                            label={
+                                tab.badgeContent ? (
+                                    <Badge
+                                        badgeContent={tab.badgeContent}
+                                        color="secondary"
+                                        sx={{
+                                            '& .MuiBadge-badge': {
+                                                backgroundColor: 'red',
+                                                fontFamily: 'Arial',
+                                                right: '10px'
+                                            } 
+                                        }}
+                                    >
+                                    {tab.name}
+                                  </Badge>
+                                ) : (
+                                  tab.name
+                                )
+                            }
+
+                            key={index}
+                        />
                     ))}
                 </Tabs>
             </Box>

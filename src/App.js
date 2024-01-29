@@ -57,11 +57,20 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey, options);
 
 function App() {
   const [session, setSession] = useState(null);
+  const [userInfo, setUserInfo] = useState(null);
 
   useEffect(() => {
-
     const createUser = async (api) => {
-      const response = await api.post(`/user`);
+      try {
+        const response = await api.post(`/user`);
+        if (response.status === 200) {
+          setUserInfo(response.data.data);
+        } else {
+          console.error('Failed to make user call');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
     }
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session)
@@ -118,13 +127,12 @@ function App() {
             >
             </Route>
 
-            <Route path="/dashboard" element={<Dashboard supabase={supabase} />}>
+            <Route path="/dashboard" element={<Dashboard supabase={supabase} userInfo={userInfo} />}>
               <Route path="my-agents" element={<MyAgents userId={session?.user?.id} accessToken={session?.access_token} />} />
               <Route path="create-agents" element={<CreateAgents accessToken={session?.access_token} />} />
               <Route path="models" element={<Models accessToken={session?.access_token} />} />
               <Route path="datasets" element={<Datasets session={session} />} />
               <Route path="integrations" element={<Integrations session={session} />} />
-              <Route path="account" element={<Account session={session} />} />
               <Route path="developer" element={<Keys accessToken={session?.access_token} />} />
               <Route path="agent-details" element={<AgentDetails accessToken={session?.access_token} />} />
               <Route path="agent/run-details" element={<RunDetails session={session} />} />

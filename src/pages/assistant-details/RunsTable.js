@@ -29,7 +29,11 @@ function RunTable({ accessToken }) {
             }
 
         };
-        fetchData();
+
+        if (accessToken) {
+            fetchData();
+        }
+
     }, [agentId, accessToken]); // Empty dependency array ensures this effect runs once on component mount
 
 
