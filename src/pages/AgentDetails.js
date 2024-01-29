@@ -73,7 +73,7 @@ function AgentDetails({ accessToken }) {
     };
 
     const tabsData = [
-        { name: 'Analytics', component: <Analytics /> },
+        { name: 'Analytics', component: <Analytics accessToken={accessToken} agentId={agentId} /> },
         { name: 'Agent Execution', component: <RunsTable accessToken={accessToken} /> },
         { name: 'Edit agent details', component: <AgentFormStepper initialData={formData} isUpdate={true} agentId={agentId} accessToken={accessToken} /> },
         { name: 'Batch call', component: <BatchCall agentId={agentId} accessToken={accessToken} /> },

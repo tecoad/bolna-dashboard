@@ -38,7 +38,8 @@ function JsonTable({
     clickable,
     headersDisplayedAs,
     agent,
-    setToRefreshAfterDelete
+    setToRefreshAfterDelete,
+    dateColumns
 }) {
     const navigate = useNavigate();
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -163,9 +164,20 @@ function JsonTable({
                         <TableRow onClick={() => handleRowClick(row, agent)} key={index} sx={{ '&:nth-of-type(odd)': { backgroundColor: '#f9f9f9' }, '&:nth-of-type(even)': { backgroundColor: '#fff' }, '&:last-child td, &:last-child th': { border: 0 }, '&:hover': { backgroundColor: '#e0e0e0' } }}>
                             {columnsToShow.map((column) => {
                                 var name = row[column] == undefined ? "" : row[column]
+                                if (dateColumns != undefined && column in dateColumns) {
+                                    const options = {
+                                        weekday: 'long',
+                                        year: 'numeric',
+                                        month: 'long',
+                                        day: 'numeric',
+                                    };
+                                    var d = new Date(name)
+                                    console.log(`DATE ${d}`)
+                                    name = new Date(name).toLocaleDateString(undefined, options)
+                                }
                                 if (tooltipMap && column in tooltipMap) {
                                     return (
-                                        <Tooltip key={column} title={ moment(row[tooltipMap[column]]).tz(moment.tz.guess()).format('YYYY-MM-DD HH:mm ZZ') } disableInteractive>
+                                        <Tooltip key={column} title={moment(row[tooltipMap[column]]).tz(moment.tz.guess()).format('YYYY-MM-DD HH:mm ZZ')} disableInteractive>
                                             <TableCell key={column}>{name.toString()}</TableCell>
                                         </Tooltip>
                                     )
