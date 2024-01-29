@@ -46,6 +46,7 @@ function RunTable({ accessToken }) {
                     clickable={true}
                     headersDisplayedAs={["Run ID", "Run Duration", "Run Date", "Total Cost"]}
                     agent={agent}
+                    dateColumns={["createdAt"]}
                 />
             )}
         </Box>
