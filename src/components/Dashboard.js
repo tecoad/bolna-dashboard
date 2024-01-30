@@ -159,7 +159,7 @@ function Dashboard({ supabase, userInfo=null }) {
                     <div style={{ flexGrow: 1 }} /> {/* This will push the text to the right */}
 
                     <Typography variant="body1" noWrap sx={{ marginRight: 5 }}>
-                        Credits: ${userInfo?.wallet || 0}
+                        Credits: {userInfo?.wallet || 0}
                     </Typography>
 
                     <IconButton

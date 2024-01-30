@@ -46,7 +46,7 @@ function RunTable({ accessToken }) {
                 {runData && runData.length > 0 ? (
                     <>
                         <Typography variant="body2" gutterBottom>
-                            This displays all the agent executions (including Call Me & Playground & Batch)
+                            This displays all the agent executions (including Call Me & Playground)
                         </Typography>
 
                         <JsonTable
@@ -55,7 +55,7 @@ function RunTable({ accessToken }) {
                             columnsToShow={["range", "conversation_time", "createdAt", "total_cost"]}
                             onClickPage="run-details"
                             clickable={true}
-                            headersDisplayedAs={["Run ID", "Run Duration", "Run Date", "Total Cost"]}
+                            headersDisplayedAs={["Run ID", "Run Duration", "Run Date", "Total Credits Used"]}
                             agent={agent}
                         />
 

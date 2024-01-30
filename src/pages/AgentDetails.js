@@ -97,7 +97,7 @@ function AgentDetails({ accessToken }) {
                 </Box>
             ) : (
                 <>
-                    {activeTab && (
+                    {activeTab < 3 && (
                         <Box display="flex" justifyContent="space-between" alignItems="center">
                             <Typography variant="h4">{ agent?.agent_name || 'Agent Details' }</Typography>
                             <Box>

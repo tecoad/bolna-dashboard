@@ -42,7 +42,7 @@ function ExecutionMetadata({ executionDetails }) {
                     "Run ID": executionDetails.range,
                     "Run Duration": `${executionDetails.conversation_time} seconds`,
                     "Run Date": new Date(executionDetails.createdAt).toLocaleDateString(),
-                    "Total Cost": `$${executionDetails.total_cost}`
+                    "Total Credits Used": `${executionDetails.total_cost}`
                 })}
                 {renderSection("Usage Breakdown", {
                     "Transcriber Model": executionDetails?.usage_breakdown?.transcriberModel,
