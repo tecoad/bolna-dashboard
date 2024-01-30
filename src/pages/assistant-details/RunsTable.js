@@ -42,6 +42,7 @@ function RunTable({ accessToken }) {
             {loading ? (
                 <p>Loading...</p>
             ) : (
+
                 <>
                 {runData && runData.length > 0 ? (
                     <>
@@ -57,6 +58,7 @@ function RunTable({ accessToken }) {
                             clickable={true}
                             headersDisplayedAs={["Run ID", "Run Duration", "Run Date", "Total Credits Used"]}
                             agent={agent}
+                            dateColumns={["createdAt"]}
                         />
 
                     </>

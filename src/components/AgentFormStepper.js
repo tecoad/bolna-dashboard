@@ -133,11 +133,9 @@ function AgentFormStepper({ initialData, isUpdate, agentId, accessToken }) {
     };
 
     const getPromptJsonFromRulesConfig = (prompts, is7BModel = false, isOpenAI) => {
-        if (is7BModel) {
-            return convertToText(prompts['assistantDescription'])
-        }
+
         var base_prompt = `
-            ### Assistant Description
+            ### Agent Description
          ${convertToText(prompts['assistantDescription'])} 
         `
         if (prompts['exampleConversation'] != null && prompts['exampleConversation'] != undefined) {

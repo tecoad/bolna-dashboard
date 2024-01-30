@@ -164,9 +164,8 @@ function JsonTable({
                         <TableRow onClick={() => handleRowClick(row, agent)} key={index} sx={{ '&:nth-of-type(odd)': { backgroundColor: '#f9f9f9' }, '&:nth-of-type(even)': { backgroundColor: '#fff' }, '&:last-child td, &:last-child th': { border: 0 }, '&:hover': { backgroundColor: '#e0e0e0' } }}>
                             {columnsToShow.map((column) => {
                                 var name = row[column] == undefined ? "" : row[column]
-                                if (dateColumns != undefined && column in dateColumns) {
+                                if (dateColumns != undefined && dateColumns.includes(column)) {
                                     const options = {
-                                        weekday: 'long',
                                         year: 'numeric',
                                         month: 'long',
                                         day: 'numeric',
