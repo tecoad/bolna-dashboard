@@ -1,21 +1,33 @@
 import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Drawer, List, ListItem, ListItemIcon, ListItemText, Divider, IconButton, Typography, Box, Toolbar, AppBar } from '@mui/material';
-import { Menu as MenuIcon, AccountBox, GroupAdd, Dashboard as DashboardIcon, ExitToApp } from '@mui/icons-material';
+import { Drawer, List, ListItem, ListItemIcon, ListItemText, Divider, IconButton, Typography, Box, Toolbar, AppBar, ListItemSecondaryAction, Badge, Avatar } from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Popover, MenuItem, Stack } from '@mui/material';
+import { Menu as MenuIcon } from '@mui/icons-material';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import GroupIcon from '@mui/icons-material/Group'; // Icon for "My Agents"
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'; // Icon for "Create Agents"
 import InsightsIcon from '@mui/icons-material/Insights'; // Icon for "Models"
 import StorageIcon from '@mui/icons-material/Storage'; // Icon for "Datasets"
 import SettingsInputComponentIcon from '@mui/icons-material/SettingsInputComponent'; // Icon for "Integrations"
-import AccountBoxIcon from '@mui/icons-material/AccountBox'; // Icon for "Account"
 import DataObjectIcon from '@mui/icons-material/DataObject';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 
 
 const drawerWidth = 240;
+const MENU_OPTIONS = [
+    {
+      label: 'Add More Credits',
+      icon: 'eva:home-fill',
+      action: 'ADD_CREDITS'
+    }
+  ];
 
-function Dashboard({ supabase }) {
+function Dashboard({ supabase, userInfo=null }) {
     const [mobileOpen, setMobileOpen] = useState(false);
+    const [accountOpen, setAccountOpen] = useState(null);
+    const [openCreditDialog, setOpenCreditDialog] = useState(false);
+    const [selectedCurrency, setSelectedCurrency] = useState(null);
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -28,8 +40,35 @@ function Dashboard({ supabase }) {
             alert("Logged out")
             navigate("/");
         })
-
     }
+
+    const handleAccountOpen = (event) => {
+        setAccountOpen(event.currentTarget);
+      };
+
+      const handleAccountClose = () => {
+        setAccountOpen(null);
+      };
+
+      const handleMenuItemClick = (action) => {
+        if (action === 'ADD_CREDITS') {
+            setOpenCreditDialog(true);
+        }
+      };
+
+      const handleCreditCloseDialog = () => {
+        setOpenCreditDialog(false);
+      };
+
+      const handleCurrencySelection = (currency) => {
+        setSelectedCurrency(currency);
+        // Redirect user to payment link based on selected currency
+        if (currency === 'USA') {
+          window.location.href = 'payment-link-usa'; // Replace 'payment-link-usa' with the actual payment link for USA
+        } else if (currency === 'UK') {
+          window.location.href = 'payment-link-uk'; // Replace 'payment-link-uk' with the actual payment link for UK
+        }
+      };
 
     const drawer = (
         <div>
@@ -51,14 +90,22 @@ function Dashboard({ supabase }) {
                 <ListItem button component={NavLink} to="datasets">
                     <ListItemIcon><StorageIcon /></ListItemIcon>
                     <ListItemText primary="Datasets" />
+                    <ListItemSecondaryAction sx={{ right: '20%' }} color="info">
+                        <Badge
+                            badgeContent="Coming Soon"
+                            color="info"
+                        />
+                    </ListItemSecondaryAction>
                 </ListItem>
                 <ListItem button component={NavLink} to="integrations">
                     <ListItemIcon><SettingsInputComponentIcon /></ListItemIcon>
                     <ListItemText primary="Integrations" />
-                </ListItem>
-                <ListItem button component={NavLink} to="account">
-                    <ListItemIcon><AccountBoxIcon /></ListItemIcon>
-                    <ListItemText primary="Account" />
+                    <ListItemSecondaryAction sx={{ right: '20%'}}>
+                        <Badge
+                            badgeContent={<Typography variant="body6">Coming Soon</Typography>}
+                            color="info"
+                        />
+                    </ListItemSecondaryAction>
                 </ListItem>
             </List>
             <Divider />
@@ -69,12 +116,6 @@ function Dashboard({ supabase }) {
                 </ListItem>
             </List>
             <Divider />
-            <List>
-                <ListItem button key="Logout" onClick={logoutUser}>
-                    <ListItemIcon><ExitToApp /></ListItemIcon>
-                    <ListItemText primary="Logout" />
-                </ListItem>
-            </List>
         </div>
     );
 
@@ -91,8 +132,6 @@ function Dashboard({ supabase }) {
                 return 'Datasets';
             case 'integrations':
                 return 'Integrations';
-            case 'account':
-                return 'Account';
             case 'developer':
                 return 'Developer';
             default:
@@ -117,6 +156,106 @@ function Dashboard({ supabase }) {
                     <Typography variant="h5" noWrap>
                         {pageTitle}
                     </Typography>
+                    <div style={{ flexGrow: 1 }} /> {/* This will push the text to the right */}
+
+                    <Typography variant="body1" noWrap sx={{ marginRight: 5 }}>
+                        Credits: {userInfo?.wallet || 0}
+                    </Typography>
+
+                    <IconButton
+                        onClick={handleAccountOpen}
+                        sx={{
+                        width: 40,
+                        height: 40,
+                        ...(accountOpen && {
+                            background: (theme) =>
+                            `linear-gradient(135deg, ${theme.palette.primary.light} 0%, ${theme.palette.primary.main} 100%)`,
+                        }),
+                        }}
+                    >
+                        <Avatar
+                        src=""
+                        alt={userInfo?.user_info?.name || ''}
+                        sx={{
+                            width: 36,
+                            height: 36,
+                            border: (theme) => `solid 2px ${theme.palette.background.default}`,
+                        }}
+                        >
+                        {userInfo?.user_info?.name ? userInfo?.user_info?.name.charAt(0).toUpperCase() : userInfo?.user_info?.email.charAt(0).toUpperCase()}
+                        </Avatar>
+                    </IconButton>
+
+                    <Popover
+                        open={!!accountOpen}
+                        anchorEl={accountOpen}
+                        onClose={handleAccountClose}
+                        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                        PaperProps={{
+                        sx: {
+                            p: 0,
+                            mt: 1,
+                            ml: 0.75,
+                            width: 200,
+                        },
+                        }}
+
+                        >
+                        <Box sx={{ my: 1.5, px: 2 }}>
+                        <Typography variant="subtitle2" noWrap>
+                            {userInfo?.user_info?.name || ''}
+                        </Typography>
+                        <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
+                            {userInfo?.user_info?.email || ''}
+                        </Typography>
+                        </Box>
+
+                        <Divider sx={{ borderStyle: 'dashed' }} />
+
+                        {MENU_OPTIONS.map((option) => (
+                        <MenuItem key={option.label} onClick={() => handleMenuItemClick(option.action)}>
+                            {option.label}
+                        </MenuItem>
+                        ))}
+
+                        <Dialog open={openCreditDialog} onClose={handleCreditCloseDialog}>
+                            <DialogTitle>Add More Credits</DialogTitle>
+
+                            <DialogContent dividers="true">
+                            <div>
+
+                            <Stack direction="row" spacing={2}>
+                                <Button variant="contained" endIcon={<CurrencyRupeeIcon />} onClick={() => handleCurrencySelection('USA')}>
+                                    Indian
+                                </Button>
+
+                                <Button variant="contained" endIcon={<AttachMoneyIcon />} onClick={() => handleCurrencySelection('IND')}>
+                                    Elsewhere
+                                </Button>
+                            </Stack>
+
+                            </div>
+                            </DialogContent>
+                            <DialogActions>
+                            <Button onClick={handleCreditCloseDialog} color="primary">
+                                Close
+                            </Button>
+                            </DialogActions>
+                        </Dialog>
+
+                        <Divider sx={{ borderStyle: 'dashed', m: 0 }} />
+
+                        <MenuItem
+                        disableRipple
+                        disableTouchRipple
+                        onClick={logoutUser}
+                        sx={{ typography: 'body2', color: 'error.main', py: 1.5 }}
+                        >
+                        Logout
+                        </MenuItem>
+                    </Popover>
+
                 </Toolbar>
             </AppBar>
             <Box

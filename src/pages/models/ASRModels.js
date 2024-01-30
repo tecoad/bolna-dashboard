@@ -8,7 +8,9 @@ function ASRModels() {
             <Typography variant='body1'>
                 This will basically include a list of finetuned ASRs user has.
                 <br />
-                Reach out to us if you would like to use our orchestration platform finetuned ASR Models
+                <a href='https://calendly.com/bolna/30min' target='_blank'>
+                    Reach out to us
+                </a> if you would like to use our orchestration platform finetuned ASR Models
 
             </Typography>
 

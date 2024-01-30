@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Box, Divider, Paper, Typography, Grid } from '@mui/material';
-import axios from 'axios';
+import { Box, Paper, Typography, Grid, Chip } from '@mui/material';
 import { Pie, Bar } from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
 
@@ -34,7 +33,7 @@ function Analytics({ accessToken, agentId }) {
     });
 
     //const [analyticsData, setAnalyticsData] = useState({})
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
 
     //Uncomment it when you have the data
     // useEffect(() => {
@@ -139,6 +138,11 @@ function Analytics({ accessToken, agentId }) {
 
 
     return (
+        <>
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', p: 3 }}>
+            <Chip label="This is dummy data" color="info" />
+        </Box>
+
         <Box sx={{ p: 3 }}>
 
             {loading ? (<> LOADING </>) : (
@@ -189,6 +193,7 @@ function Analytics({ accessToken, agentId }) {
             )}
 
         </Box>
+        </>
     );
 }
 

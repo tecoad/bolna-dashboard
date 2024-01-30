@@ -69,6 +69,7 @@ function BatchCall({ agentId, accessToken }) {
                 const response = await api.get(`/batches?agent_id=${agentId}`);
                 setBatches(response.data?.batches);
                 setToRefreshAfterDelete(false);
+                setApiSuccess(false);
               } catch (error) {
                 console.error('Error fetching agents: Making loading false', error);
                 setIsLoading(false)
@@ -97,7 +98,7 @@ function BatchCall({ agentId, accessToken }) {
           ) : (
             <>
               <Box display="flex" justifyContent="space-between" alignItems="center">
-                <Typography variant="h5">Batches</Typography>
+                <Typography variant="body2">Upload batches for scheduling multiple calls together.</Typography>
                 <Box>
                   <input
                     type="file"
@@ -148,11 +149,12 @@ function BatchCall({ agentId, accessToken }) {
                 </Box>
 
               <Dialog open={openUploadDialog} onClose={handleCloseUploadDialog}>
-                <DialogTitle>Upload CSV File</DialogTitle>
+                <DialogTitle>Upload contacts File (csv supported)</DialogTitle>
                 <DialogContent>
                   <DialogContentText>
-                    Select a CSV file to upload.
-                  </DialogContentText>
+                    Select a CSV file to upload.<br/>
+                    Make sure the phone numbers are under <code>contact_number</code> header.
+                  </DialogContentText><br/>
                   <input type="file" accept=".csv" onChange={handleFileChange} />
                 </DialogContent>
                 <DialogActions>
