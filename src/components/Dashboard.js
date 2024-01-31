@@ -64,9 +64,9 @@ function Dashboard({ supabase, userInfo=null }) {
         setSelectedCurrency(currency);
         // Redirect user to payment link based on selected currency
         if (currency === 'IND') {
-            window.open(`https://buy.stripe.com/test_14k03t5Ui6sbbM4dQU?client_reference_id=${userInfo.user_id}`, '_blank');
+            window.open(`https://buy.stripe.com/dR617u8lDfZPcZa4gh?client_reference_id=${userInfo.user_id}`);
         } else if (currency === 'USD') {
-            window.open(`https://buy.stripe.com/test_aEUdUj6Ym4k32bu147?client_reference_id=${userInfo.user_id}`, '_blank');
+            window.open(`https://buy.stripe.com/fZe8zW6dv8xn4sEcMM?client_reference_id=${userInfo.user_id}`);
         }
       };
 
