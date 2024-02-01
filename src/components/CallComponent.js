@@ -5,14 +5,14 @@ const CallComponent = ({ agentId, accessToken }) => {
   const api = createApiInstance(accessToken);
   const handleClick = async () => {
     // Prompt the user to enter a phone number
-    const phoneNumber = window.prompt('Enter your phone number:');
+    const phoneNumber = window.prompt('Enter your phone number with the country code. \nReach out to us to whitelist your number for calling to work.');
 
     // Check if the user entered a phone number
     if (phoneNumber !== null && phoneNumber !== '') {
       try {
         const response = await api.post('/make_call', {
-            agent_id: agentId,
-            recipient_phone_number: phoneNumber
+          agent_id: agentId,
+          recipient_phone_number: phoneNumber
         });
 
         // const response = await fetch('http://localhost:8001/make_call', {
