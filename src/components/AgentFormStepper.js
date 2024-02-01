@@ -212,6 +212,7 @@ function AgentFormStepper({ initialData, isUpdate, agentId, accessToken }) {
                 console.log(response.data);
 
             } else {
+                console.log(JSON.stringify(payload));
                 const response = await api.post('/agent', payload);
                 console.log(response.data);
             }

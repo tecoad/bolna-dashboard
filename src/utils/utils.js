@@ -47,6 +47,7 @@ export const CREATE_AGENT_FORM = {
             emailTemplate: null,
             whatsappTemplate: null,
             smsTemeplate: null,
+            webhookURL: null
         },
         extractionDetails: null
     }
@@ -82,9 +83,10 @@ const getToolsConfig = (taskType, extraConfig) => {
         }
     }
 
+    var apiTools = {}
+
     if (taskType === "notification") {
         console.log(`Setting notification follow-up task`)
-        var apiTools = {}
         extraConfig.notificationMethods.forEach(mech => {
             if (mech === "email") {
                 apiTools["email"] = {
@@ -114,7 +116,11 @@ const getToolsConfig = (taskType, extraConfig) => {
     } else if (taskType === "extraction") {
         llmTaskConfig.llm_agent.streaming_model = "gpt-4-1106-preview"
         llmTaskConfig.llm_agent.extraction_details = extraConfig
-    } else {
+    } else if ((taskType) === "webhook") {
+        apiTools["webhookURL"] = extraConfig["webhookURL"]
+        return { api_tools: apiTools }
+    }
+    else {
         console.log("SUmmarization task")
         llmTaskConfig.llm_agent.streaming_model = "gpt-4-1106-preview"
     }
@@ -260,7 +266,7 @@ export const convertToCreateAgentPayload = (agentData) => {
 
     if (agentData.followUpTaskConfig?.selectedTasks?.length > 0) {
         agentData.followUpTaskConfig.selectedTasks.forEach(task => {
-            let taskConf = task == "notification" ? agentData.followUpTaskConfig.notificationDetails : task == "extraction" ? agentData.followUpTaskConfig.extractionDetails : null
+            let taskConf = (task == "notification" || task == "webhook") ? agentData.followUpTaskConfig.notificationDetails : task == "extraction" ? agentData.followUpTaskConfig.extractionDetails : null
             var followUpTask = getJsonForTaskType(task, taskConf)
             payload.tasks.push(followUpTask)
         })
@@ -337,9 +343,10 @@ const getFollowupTasks = (followUpTasks) => {
         } else if (task.task_type == "summarization") {
             followupTaskConfig.selectedTasks.push("summarization")
         } else {
-            followupTaskConfig.selectedTasks.push("notification")
+            followupTaskConfig.selectedTasks.push("webhook")
             Object.keys(task.tools_config.api_tools).forEach(apiTool => {
-                followupTaskConfig.notificationDetails.notificationMethods.push(apiTool)
+                followupTaskConfig.notificationDetails[apiTool] = task.tools_config.api_tools[apiTool]
+                //followupTaskConfig.notificationDetails.notificationMethods.push(task.tools_config.api_tools[apiTool])
             })
         }
     })

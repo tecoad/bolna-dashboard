@@ -37,7 +37,21 @@ function FollowUpTasks({ formData, onFormDataChange }) {
             });
 
             console.log(`Updated notification MEthodss ${JSON.stringify(updatedNotificationMethods)}`)
+        } else if (name === "webhookURL") {
+            onFormDataChange({
+                ...formData,
+                followUpTaskConfig: {
+                    ...formData.followUpTaskConfig,
+                    notificationDetails: {
+                        ...formData.followUpTaskConfig.notificationDetails,
+                        webhookURL: value,
+                    }
+                },
+            });
         } else {
+            if (value.includes("webhook") && !value.includes("extraction")) {
+                value.push("extraction")
+            }
             setSelectedTasks(value);
             onFormDataChange({
                 ...formData,
@@ -49,7 +63,7 @@ function FollowUpTasks({ formData, onFormDataChange }) {
         }
     };
 
-    const isNotificationSelected = selectedTasks.includes('notification');
+    const isNotificationSelected = selectedTasks.includes('webhook');
     const isExtractionSelected = selectedTasks.includes('extraction');
 
     return (
@@ -74,52 +88,26 @@ function FollowUpTasks({ formData, onFormDataChange }) {
                         )}
                     >
                         <MenuItem value="summarization">Summarization</MenuItem>
-                        <MenuItem value="notification">Notification</MenuItem>
+                        <MenuItem value="webhook">Webhook</MenuItem>
                         <MenuItem value="extraction">Extraction</MenuItem>
                     </Select>
                 </FormControl>
                 {isNotificationSelected && (
-                    <FormControl component="fieldset" margin="normal">
-                        <FormLabel component="legend">Notification Method</FormLabel>
-                        <FormGroup>
-                            <FormControlLabel
-                                control={<Checkbox
-                                    checked={selectedNotificationMethods.includes('email')}
-                                    onChange={handleTasksChange}
-                                    name="notificationMethods"
-                                    value="email"
-                                />}
-                                label="Email"
+                    <Box sx={{ justifyContent: 'space-between', flexDirection: "column", display: 'flex', alignItems: 'center', width: '70%', marginY: 1 }}>
+
+                        <Box sx={{ display: 'block' }}>
+                        </Box>
+                        <FormControl fullWidth margin="normal">
+                            <TextField
+                                label="Webhook URL"
+                                defaultValue={formData?.followUpTaskConfig?.notificationDetails?.webhookURL}
+                                margin="normal"
+                                placeholder="Webhook we should notify the output too"
+                                name="webhookURL"
+                                onChange={handleTasksChange}
                             />
-                            <FormControlLabel
-                                control={<Checkbox
-                                    checked={selectedNotificationMethods.includes('whatsapp')}
-                                    onChange={handleTasksChange}
-                                    name="notificationMethods"
-                                    value="whatsapp"
-                                />}
-                                label="Whatsapp"
-                            />
-                            <FormControlLabel
-                                control={<Checkbox
-                                    checked={selectedNotificationMethods.includes('sms')}
-                                    onChange={handleTasksChange}
-                                    name="notificationMethods"
-                                    value="sms"
-                                />}
-                                label="SMS"
-                            />
-                            <FormControlLabel
-                                control={<Checkbox
-                                    checked={selectedNotificationMethods.includes('calendar')}
-                                    onChange={handleTasksChange}
-                                    name="notificationMethods"
-                                    value="calendar"
-                                />}
-                                label="Calendar Invite"
-                            />
-                        </FormGroup>
-                    </FormControl>
+                        </FormControl>
+                    </Box>
                 )}
 
                 {isExtractionSelected && (
@@ -152,6 +140,15 @@ function FollowUpTasks({ formData, onFormDataChange }) {
                                         user pulse - Whether the user beleives India will win the world cup or not. Example Austrailia will win the cup, yields no, Rohit Sharma will finally get a world cup medal yields yes
 
                                     </li>
+                                    {
+                                        isNotificationSelected ? (
+                                            <li>
+                                                <b> Webhook payload - If you've chosen webhook trigger as a followup task as well, make sure that your extraction prompt triggers all the prompt.</b>
+
+                                            </li>
+                                        ) : null
+                                    }
+
                                 </ol>
 
                             </Typography>
