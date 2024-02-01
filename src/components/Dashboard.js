@@ -63,10 +63,10 @@ function Dashboard({ supabase, userInfo=null }) {
       const handleCurrencySelection = (currency) => {
         setSelectedCurrency(currency);
         // Redirect user to payment link based on selected currency
-        if (currency === 'USA') {
-          window.location.href = 'payment-link-usa'; // Replace 'payment-link-usa' with the actual payment link for USA
-        } else if (currency === 'UK') {
-          window.location.href = 'payment-link-uk'; // Replace 'payment-link-uk' with the actual payment link for UK
+        if (currency === 'IND') {
+            window.open(`https://buy.stripe.com/dR617u8lDfZPcZa4gh?client_reference_id=${userInfo.user_id}`);
+        } else if (currency === 'USD') {
+            window.open(`https://buy.stripe.com/fZe8zW6dv8xn4sEcMM?client_reference_id=${userInfo.user_id}`);
         }
       };
 
@@ -113,6 +113,13 @@ function Dashboard({ supabase, userInfo=null }) {
                 <ListItem button component={NavLink} to="developer">
                     <ListItemIcon><DataObjectIcon /></ListItemIcon>
                     <ListItemText primary="Developer" />
+                </ListItem>
+            </List>
+            <Divider />
+            <List>
+                <ListItem button component={NavLink} onClick={() => setOpenCreditDialog(true)}>
+                    <ListItemIcon><DataObjectIcon /></ListItemIcon>
+                    <ListItemText primary="Add Credits" />
                 </ListItem>
             </List>
             <Divider />
@@ -219,19 +226,19 @@ function Dashboard({ supabase, userInfo=null }) {
                         </MenuItem>
                         ))}
 
-                        <Dialog open={openCreditDialog} onClose={handleCreditCloseDialog}>
+                        <Dialog open={openCreditDialog} onClose={() => setOpenCreditDialog(false)}>
                             <DialogTitle>Add More Credits</DialogTitle>
 
                             <DialogContent dividers="true">
                             <div>
 
                             <Stack direction="row" spacing={2}>
-                                <Button variant="contained" endIcon={<CurrencyRupeeIcon />} onClick={() => handleCurrencySelection('USA')}>
-                                    Indian
+                                <Button variant="contained" endIcon={<CurrencyRupeeIcon />} onClick={() => handleCurrencySelection('IND')}>
+                                    For people residing in India
                                 </Button>
 
-                                <Button variant="contained" endIcon={<AttachMoneyIcon />} onClick={() => handleCurrencySelection('IND')}>
-                                    Elsewhere
+                                <Button variant="contained" endIcon={<AttachMoneyIcon />} onClick={() => handleCurrencySelection('USD')}>
+                                    For people residing elsewhere
                                 </Button>
                             </Stack>
 
