@@ -15,7 +15,7 @@ function RunDetails() {
 
     const tabsData = [
         { name: 'Execution Metadata', component: <ExecutionMetadata executionDetails={runDetails} /> },
-        { name: 'Execution Logs', component: <ExecutionLogs />, badgeContent: 'Soon' },
+        { name: 'Execution Logs', component: <ExecutionLogs /> },
     ];
 
     return (
