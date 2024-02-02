@@ -6,6 +6,7 @@ import SendIcon from '@mui/icons-material/Send';
 import MicIcon from '@mui/icons-material/Mic';
 import MicOffIcon from '@mui/icons-material/MicOff';
 import { base64ToBlob, getDefaultSampleRate } from '../utils/utils';
+import { red } from '@mui/material/colors'; // Import red color
 
 const sampleRate = getDefaultSampleRate()
 
@@ -191,7 +192,7 @@ function ChatComponent({ agentId, isOpen, userId, accessToken }) {
                         </IconButton>
                     }
                 />
-                <IconButton color="secondary" onClick={recording ? stopRecording : startRecording}>
+                <IconButton color="secondary" onClick={recording ? stopRecording : startRecording} style={{ color: recording ? red[500] : undefined }}>
                     {recording ? <MicOffIcon /> : <MicIcon />}
                 </IconButton>
             </Box>

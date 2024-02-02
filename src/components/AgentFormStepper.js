@@ -92,6 +92,9 @@ function AgentFormStepper({ initialData, isUpdate, agentId, accessToken }) {
         const newCompleted = completed;
         newCompleted[activeStep] = true;
         setCompleted(newCompleted);
+        if (activeStep === steps.length - 1) {
+            handleComplete()
+        }
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
 
