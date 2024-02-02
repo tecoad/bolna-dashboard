@@ -143,7 +143,7 @@ function FollowUpTasks({ formData, onFormDataChange }) {
                                     {
                                         isNotificationSelected ? (
                                             <li>
-                                                <b> Webhook payload - If you've chosen webhook trigger as a followup task as well, make sure that your extraction prompt triggers all the prompt.</b>
+                                                <b> Webhook payload - If you've chosen webhook trigger as a followup task as well, make sure that your extraction prompt triggers the task. Explicitly mention the json keys required.</b>
 
                                             </li>
                                         ) : null
