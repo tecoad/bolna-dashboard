@@ -56,7 +56,7 @@ function RunTable({ accessToken }) {
                             columnsToShow={["range", "conversation_time", "createdAt", "total_cost"]}
                             onClickPage="run-details"
                             clickable={true}
-                            headersDisplayedAs={["Run ID", "Run Duration", "Run Date", "Total Credits Used"]}
+                            headersDisplayedAs={["Run ID", "Run Duration (seconds)", "Run Date", "Total Credits Used"]}
                             agent={agent}
                             dateColumns={["createdAt"]}
                         />

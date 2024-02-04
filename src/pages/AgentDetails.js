@@ -23,7 +23,7 @@ function AgentDetails({ accessToken }) {
     const agentId = agent?.range.split("#")[1];
     const [loading, setLoading] = useState(false);
     const [prompt, setPrompt] = useState(null);
-    const { handleClick } = CallComponent({ agentId, accessToken });
+    //const { handleClick } = CallComponent({ agentId, accessToken });
     const [activeTab, setActiveTab] = useState(0);
     const [openAnalyticsDialog, setOpenAnalyticsDialog] = useState(false);
     const api = createApiInstance(accessToken);
@@ -49,12 +49,12 @@ function AgentDetails({ accessToken }) {
                 if (newFormData.basicConfig.assistantType == "FreeFlowing") {
                     setFormData({ ...formData, rulesConfig: { ...formData.rulesConfig, prompts: { ...response.data.data['task_1'] } } });
                     newFormData = { ...formData, rulesConfig: { ...formData.rulesConfig, prompts: { ...response.data.data['task_1'] } } }
-                    console.log(`Everything is free flowing ${JSON.stringify(newFormData)}`)
+                    //console.log(`Everything is free flowing ${JSON.stringify(newFormData)}`)
 
                 } else {
                     setFormData({ ...formData, rulesConfig: { ...formData.rulesConfig, graph: { ...response.data.data['task_1'] } } });
                     newFormData = { ...formData, rulesConfig: { ...formData.rulesConfig, graph: { ...response.data.data['task_1'] } } }
-                    console.log(`ivr based ${JSON.stringify(newFormData)}`)
+                    //console.log(`ivr based ${JSON.stringify(newFormData)}`)
                 }
 
                 // Log the updated formData
@@ -106,12 +106,9 @@ function AgentDetails({ accessToken }) {
                                 >
                                     Back to My Agents
                                 </Button>
-                                <Button
-                                    onClick={handleClick}
-                                    sx={{ marginRight: 2, backgroundColor: '#50C878', color: 'white', '&:hover': { backgroundColor: '#369456' } }}
-                                >
-                                    Call me
-                                </Button>
+
+
+                                <CallComponent agentId={agentId} accessToken={accessToken} />
                                 <Button
                                     onClick={handlePlaygroundOpen}
                                     sx={{ backgroundColor: '#50C878', color: 'white', '&:hover': { backgroundColor: '#369456' } }}

@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Drawer, List, ListItem, ListItemIcon, ListItemText, Divider, IconButton, Typography, Box, Toolbar, AppBar, ListItemSecondaryAction, Badge, Avatar } from '@mui/material';
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Popover, MenuItem, Stack } from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Popover, MenuItem, Stack, ListSubheader, ListItemButton } from '@mui/material';
 import { Menu as MenuIcon } from '@mui/icons-material';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import GroupIcon from '@mui/icons-material/Group'; // Icon for "My Agents"
@@ -12,6 +12,7 @@ import SettingsInputComponentIcon from '@mui/icons-material/SettingsInputCompone
 import DataObjectIcon from '@mui/icons-material/DataObject';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
+import PaymentIcon from '@mui/icons-material/Payment';
 
 
 const drawerWidth = 240;
@@ -92,7 +93,7 @@ function Dashboard({ supabase, userInfo=null }) {
                     <ListItemText primary="Datasets" />
                     <ListItemSecondaryAction sx={{ right: '20%' }} color="info">
                         <Badge
-                            badgeContent="Coming Soon"
+                            badgeContent="Soon"
                             color="info"
                         />
                     </ListItemSecondaryAction>
@@ -102,7 +103,7 @@ function Dashboard({ supabase, userInfo=null }) {
                     <ListItemText primary="Integrations" />
                     <ListItemSecondaryAction sx={{ right: '20%'}}>
                         <Badge
-                            badgeContent={<Typography variant="body6">Coming Soon</Typography>}
+                            badgeContent={<Typography variant="body6">Soon</Typography>}
                             color="info"
                         />
                     </ListItemSecondaryAction>
@@ -118,11 +119,31 @@ function Dashboard({ supabase, userInfo=null }) {
             <Divider />
             <List>
                 <ListItem button component={NavLink} onClick={() => setOpenCreditDialog(true)}>
-                    <ListItemIcon><DataObjectIcon /></ListItemIcon>
+                    <ListItemIcon><PaymentIcon /></ListItemIcon>
                     <ListItemText primary="Add Credits" />
                 </ListItem>
             </List>
             <Divider />
+
+
+      <List component="nav" aria-label="secondary mailbox folders" sx={{ display: 'flex'}}>
+        <ListItem disablePadding>
+          <ListItemButton component="a" href="#link1" sx={{ pr: 0 }}>
+            <ListItemText primary={<Typography variant="caption" align="right">FAQs</Typography>} />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton component="a" href="#link2" sx={{ p: 0 }}>
+            <ListItemText primary={<Typography variant="caption" align="center">Chat on Discord</Typography>} />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton component="a" href="#link3" sx={{ p: 0 }}>
+            <ListItemText primary={<Typography variant="caption" align="center">Contact Us</Typography>} />
+          </ListItemButton>
+        </ListItem>
+      </List>
+
         </div>
     );
 
