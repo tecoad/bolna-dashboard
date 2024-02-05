@@ -126,19 +126,19 @@ function Dashboard({ supabase, userInfo=null }) {
             <Divider />
 
 
-      <List component="nav" aria-label="secondary mailbox folders" sx={{ display: 'flex'}}>
+      <List component="nav" sx={{ display: 'flex'}}>
         <ListItem disablePadding>
-          <ListItemButton component="a" href="#link1" sx={{ pr: 0 }}>
+          <ListItemButton component="a" href="https://bolna.canny.io/" sx={{ pr: 0 }}>
             <ListItemText primary={<Typography variant="caption" align="right">FAQs</Typography>} />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
-          <ListItemButton component="a" href="#link2" sx={{ p: 0 }}>
+          <ListItemButton component="a" href="https://discord.gg/yDfcqreByj" sx={{ p: 0 }}>
             <ListItemText primary={<Typography variant="caption" align="center">Chat on Discord</Typography>} />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
-          <ListItemButton component="a" href="#link3" sx={{ p: 0 }}>
+          <ListItemButton component="a" href="https://forms.gle/xaeX5CpN6L9i64hE6" sx={{ p: 0 }}>
             <ListItemText primary={<Typography variant="caption" align="center">Contact Us</Typography>} />
           </ListItemButton>
         </ListItem>
