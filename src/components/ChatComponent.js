@@ -5,10 +5,10 @@ import { Input, IconButton, Box, CircularProgress, Paper } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import MicIcon from '@mui/icons-material/Mic';
 import MicOffIcon from '@mui/icons-material/MicOff';
-import { base64ToBlob, getDefaultSampleRate } from '../utils/utils';
+import { base64ToBlob } from '../utils/utils';
 import { red } from '@mui/material/colors'; // Import red color
 
-const sampleRate = getDefaultSampleRate()
+//const sampleRate = getDefaultSampleRate()
 
 function ChatComponent({ agentId, isOpen, userId, accessToken }) {
     const [message, setMessage] = useState('');
@@ -119,7 +119,6 @@ function ChatComponent({ agentId, isOpen, userId, accessToken }) {
     };
 
     const startRecording = async () => {
-        console.log(`sample rate ${sampleRate}`)
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
             mediaRecorder.current = new MediaRecorder(stream, { type: 'audio/webm' });
