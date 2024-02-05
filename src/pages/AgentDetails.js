@@ -11,6 +11,7 @@ import CallComponent from '../components/CallComponent'; // Import your CallComp
 import AgentFormStepper from '../components/AgentFormStepper';
 import { convertToCreateAgentForm, convertToText } from '../utils/utils';
 import createApiInstance from '../utils/api';
+import WebsocketComponent from '../components/WebsocketComponent';
 
 function AgentDetails({ accessToken }) {
     const location = useLocation();
@@ -20,6 +21,7 @@ function AgentDetails({ accessToken }) {
     //console.log(`Agent details ${JSON.stringify(agent)}`)
     const userId = location.state?.userId;
     const [openPlayground, setOpenPlayground] = useState(false);
+    const [openWebcall, setOpenWebcall] = useState(false);
     const agentId = agent?.range.split("#")[1];
     const [loading, setLoading] = useState(false);
     const [prompt, setPrompt] = useState(null);
@@ -28,13 +30,14 @@ function AgentDetails({ accessToken }) {
     const [openAnalyticsDialog, setOpenAnalyticsDialog] = useState(false);
     const api = createApiInstance(accessToken);
 
+    const isTelephonyAgent = agent.tasks[0]["tools_config"]["input"]["provider"] == "twilio"
 
     const handleAnalyticsDialogClickOpen = () => {
-      setOpenAnalyticsDialog(true);
+        setOpenAnalyticsDialog(true);
     };
 
     const handleAnalyticsDialogClose = () => {
-      setOpenAnalyticsDialog(false);
+        setOpenAnalyticsDialog(false);
     };
 
     useEffect(() => {
@@ -81,6 +84,13 @@ function AgentDetails({ accessToken }) {
         setOpenPlayground(false);
     };
 
+    const handleWebcallOpen = () => {
+        setOpenWebcall(true);
+    };
+    const handleWebcallClose = () => {
+        setOpenWebcall(false);
+    };
+
     const tabsData = [
         { name: 'Agent Execution', component: <RunsTable accessToken={accessToken} /> },
         { name: 'Analytics', component: <Analytics accessToken={accessToken} agentId={agentId} /> },
@@ -99,19 +109,33 @@ function AgentDetails({ accessToken }) {
                 <>
                     {activeTab < 3 && (
                         <Box display="flex" justifyContent="space-between" alignItems="center">
-                            <Typography variant="h4">{ agent?.agent_name || 'Agent Details' }</Typography>
+                            <Typography variant="h4">{agent?.agent_name || 'Agent Details'}</Typography>
                             <Box>
                                 <Button onClick={() => navigate('/dashboard/my-agents')}
                                     sx={{ marginRight: 2, backgroundColor: '#f5f5f5', color: 'black', '&:hover': { backgroundColor: '#e0e0e0' } }}
                                 >
                                     Back to My Agents
                                 </Button>
-                                <Button
-                                    onClick={handleClick}
-                                    sx={{ marginRight: 2, backgroundColor: '#50C878', color: 'white', '&:hover': { backgroundColor: '#369456' } }}
-                                >
-                                    Call me
-                                </Button>
+
+                                {
+                                    isTelephonyAgent ? (<Button
+                                        onClick={handleClick}
+                                        sx={{ marginRight: 2, backgroundColor: '#50C878', color: 'white', '&:hover': { backgroundColor: '#369456' } }}
+                                    >
+                                        Call me
+                                    </Button>) : (
+                                        <>
+                                            {/* Change this to copy-able client.py code
+                                            <Button
+                                                        onClick={handleWebcallOpen}
+                                                        sx={{ marginRight: 2, backgroundColor: '#50C878', color: 'white', '&:hover': { backgroundColor: '#369456' } }}
+                                                    >
+                                                        Webcall
+                                                    </Button> */}
+                                        </>
+                                    )
+                                }
+
                                 <Button
                                     onClick={handlePlaygroundOpen}
                                     sx={{ backgroundColor: '#50C878', color: 'white', '&:hover': { backgroundColor: '#369456' } }}
@@ -129,6 +153,11 @@ function AgentDetails({ accessToken }) {
                         <ChatComponent agentId={agentId} userId={userId} isOpen={openPlayground} accessToken={accessToken} />
                     </Dialog>
 
+                    {/* Dialog for Websocket */}
+                    <Dialog open={openWebcall} onClose={handleWebcallClose} fullWidth maxWidth="md">
+                        <WebsocketComponent agentId={agentId} userId={userId} isOpen={openWebcall} accessToken={accessToken} />
+                    </Dialog>
+
                     {/* Dialog for Analytics */}
                     <Dialog
                         open={openAnalyticsDialog}
@@ -136,22 +165,22 @@ function AgentDetails({ accessToken }) {
                         maxWidth="xs"
                         slots={{
                             backdrop: (props) => (
-                              <div
-                                {...props}
-                                style={{
-                                  backdropFilter: 'blur(2px)',
-                                  pointerEvents: 'none',
-                                  position: 'fixed',
-                                  top: 0,
-                                  left: 0,
-                                  right: 0,
-                                  bottom: 0,
-                                }}
-                              />
+                                <div
+                                    {...props}
+                                    style={{
+                                        backdropFilter: 'blur(2px)',
+                                        pointerEvents: 'none',
+                                        position: 'fixed',
+                                        top: 0,
+                                        left: 0,
+                                        right: 0,
+                                        bottom: 0,
+                                    }}
+                                />
                             ),
-                          }}
+                        }}
 
-                          >
+                    >
                         <DialogTitle>Rich Analytics</DialogTitle>
                         <DialogContent dividers="true">
                             <Typography variant="body1">

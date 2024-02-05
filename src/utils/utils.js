@@ -431,12 +431,12 @@ export const base64ToBlob = (base64, contentType) => {
 }
 
 
-export const getDefaultSampleRate = () => {
-    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    const sampleRate = audioContext.sampleRate;
-    audioContext.close();
-    return sampleRate;
-}
+// export const getDefaultSampleRate = () => {
+//     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+//     const sampleRate = audioContext.sampleRate;
+//     audioContext.close();
+//     return sampleRate;
+// }
 
 export const getVoiceLabel = (option) => {
     let label = option.name;
