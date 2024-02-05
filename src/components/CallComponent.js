@@ -1,53 +1,84 @@
+import React, { useState, useEffect } from 'react';
+import { DialogContentText, Typography, Button, Dialog, CircularProgress, DialogTitle, DialogContent, DialogActions, TextField } from '@mui/material';
 import createApiInstance from '../utils/api';
 
 
 const CallComponent = ({ agentId, accessToken }) => {
+  const [open, setOpen] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const api = createApiInstance(accessToken);
-  const handleClick = async () => {
-    // Prompt the user to enter a phone number
-    const phoneNumber = window.prompt('Enter your phone number with the country code. \nReach out to us to whitelist your number for calling to work.');
 
-    // Check if the user entered a phone number
-    if (phoneNumber !== null && phoneNumber !== '') {
+  const handleClick = async () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleConfirm = async () => {
+    if (phoneNumber !== '') {
       try {
         const response = await api.post('/make_call', {
           agent_id: agentId,
           recipient_phone_number: phoneNumber
         });
 
-        // const response = await fetch('http://localhost:8001/make_call', {
-        //   method: 'POST', // or 'GET' or any other HTTP method
-        //   headers: {
-        //     'Content-Type': 'application/json',
-        //     // Add any additional headers if needed
-        //   },
-        //   body: JSON.stringify({
-        //     agent_id: agentId,
-        //     user_id: userId,
-        //     call_details: {
-        //       recipient_phone_number: phoneNumber,
-        //       recipient_data: "",
-        //     },
-        //   }),
-        // });
-
-        if (response.status != 200) {
+        if (response.status !== 200) {
           throw new Error('Network response was not ok');
         }
 
         // Handle the successful response here
         console.log('API call successful');
+        setOpen(false); // Close the dialog after successful API call
       } catch (error) {
         // Handle errors here
-        console.error('There was an error making the API call:', error.message);
+        console.error('There was an error making the API call');
+        setErrorMessage(error?.response?.data?.message); 
       }
     }
   };
 
-  // Return the handleClick function
-  return {
-    handleClick,
-  };
+  return (
+    <>
+      <Button
+        onClick={handleClick}
+        sx={{ marginRight: 2, backgroundColor: '#50C878', color: 'white', '&:hover': { backgroundColor: '#369456' } }}
+      >
+        Call me
+      </Button>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Enter your phone number</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Enter your phone number with the country code.
+          </DialogContentText>
+
+          <TextField
+            autoFocus
+            margin="dense"
+            id="phone-number"
+            label="Phone Number"
+            type="text"
+            fullWidth
+            value={phoneNumber}
+            onChange={(e) => setPhoneNumber(e.target.value)}
+          />
+
+          {errorMessage && (
+            <DialogContentText style={{ color: 'red' }}>
+              {errorMessage}
+            </DialogContentText>
+          )}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleConfirm}>Confirm</Button>
+        </DialogActions>
+      </Dialog>
+    </>
+  );
 };
 
 export default CallComponent;
