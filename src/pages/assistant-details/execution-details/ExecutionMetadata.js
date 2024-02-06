@@ -2,7 +2,6 @@ import React from 'react';
 import { Box, Typography, Divider, Grid, Paper, AudioPlayer, List, ListItem, ListItemText } from '@mui/material';
 
 function ExecutionMetadata({ executionDetails }) {
-    console.log(`${JSON.stringify(executionDetails)}`)
     const DetailItem = ({ title, content }) => (
         <Box display="flex" justifyContent="space-between" my={1}>
             <Typography variant="subtitle1">{title}:</Typography>
@@ -42,7 +41,7 @@ function ExecutionMetadata({ executionDetails }) {
                     "Run ID": executionDetails.range,
                     "Run Duration": `${executionDetails.conversation_time} seconds`,
                     "Run Date": new Date(executionDetails.createdAt).toLocaleDateString(),
-                    "Total Credits Used": `${executionDetails.total_cost}`
+                    "Total Credits Used": `${executionDetails.total_cost.toFixed(5)}`
                 })}
                 {renderSection("Usage Breakdown", {
                     "Transcriber Model": executionDetails?.usage_breakdown?.transcriberModel,
@@ -74,10 +73,11 @@ function ExecutionMetadata({ executionDetails }) {
             {/* Right Side */}
             <Box flex={2} sx={{ pl: 2 }}>
                 <Typography variant='h5'>Qualitative Details</Typography>
+                <Divider sx={{ my: 2 }} />
                 {
-                    executionDetails?.recording ? (
-                        <>
-                            <audio controls src={executionDetails.recording} style={{ width: '100%' }}>
+                    executionDetails?.telephony_data?.recording_url ? (
+                        <>  <Typography variant='h6'>Recording</Typography>
+                            <audio controls src={executionDetails.telephony_data.recording_url} style={{ width: '100%' }}>
                                 Your browser does not support the audio element.
                             </audio>
                             <Divider sx={{ my: 2 }} />

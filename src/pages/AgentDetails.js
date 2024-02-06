@@ -53,6 +53,7 @@ function AgentDetails({ accessToken }) {
                     setFormData({ ...formData, rulesConfig: { ...formData.rulesConfig, prompts: { ...response.data.data['task_1'] } } });
                     newFormData = { ...formData, rulesConfig: { ...formData.rulesConfig, prompts: { ...response.data.data['task_1'] } } }
                     //console.log(`Everything is free flowing ${JSON.stringify(newFormData)}`)
+                    //console.log(`Everything is free flowing ${JSON.stringify(newFormData)}`)
 
                 } else {
                     setFormData({ ...formData, rulesConfig: { ...formData.rulesConfig, graph: { ...response.data.data['task_1'] } } });
@@ -132,8 +133,6 @@ function AgentDetails({ accessToken }) {
                                         </>
                                     )
                                 }
-
-
 
                                 <Button
                                     onClick={handlePlaygroundOpen}

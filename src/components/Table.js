@@ -171,6 +171,7 @@ function JsonTable({
                                         day: 'numeric',
                                     };
                                     var d = new Date(name)
+
                                     name = new Date(name).toLocaleDateString(undefined, options)
                                 }
                                 if (tooltipMap && column in tooltipMap) {
