@@ -35,11 +35,7 @@ const CallComponent = ({ agentId, accessToken }) => {
       } catch (error) {
         // Handle errors here
         console.error('There was an error making the API call');
-<<<<<<< HEAD
         setErrorMessage(error?.response?.data?.message);
-=======
-        setErrorMessage(error?.response?.data?.message); 
->>>>>>> dfd51407f3fcb7c8856dff0b994e405a08d0f4ad
       }
     }
   };
