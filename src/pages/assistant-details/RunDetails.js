@@ -29,10 +29,10 @@ function RunDetails() {
                 <>
                     <Box display="flex" justifyContent="space-between" alignItems="center">
                         <Box>
-                            <Button onClick={() => navigate('/dashboard/my-agents')}
+                            <Button onClick={() => navigate(-1)}
                                 sx={{ marginRight: 2, backgroundColor: '#f5f5f5', color: 'black', '&:hover': { backgroundColor: '#e0e0e0' } }}
                             >
-                                Back to My Agents
+                                Back to Agent Details
                             </Button>
 
                         </Box>

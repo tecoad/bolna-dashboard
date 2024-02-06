@@ -123,6 +123,7 @@ const getToolsConfig = (taskType, extraConfig) => {
     else {
         console.log("SUmmarization task")
         llmTaskConfig.llm_agent.streaming_model = "gpt-4-1106-preview"
+        console.log("${llmTaskConfig.llm_agent.streaming_model}")
     }
 
     return llmTaskConfig
