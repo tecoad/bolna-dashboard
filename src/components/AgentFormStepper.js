@@ -211,6 +211,7 @@ function AgentFormStepper({ initialData, isUpdate, agentId, accessToken }) {
         //console.log(`Sending backkend request to ${process.env.REACT_APP_FAST_API_BACKEND_URL}, agentID ${agentId} json ${JSON.stringify(payload)}`)
         try {
             if (isUpdate) {
+                console.log(`PAYLOAD ${JSON.stringify(payload)}`);
                 const response = await api.put(`/agent/${agentId}`, payload);
                 console.log(response.data);
 

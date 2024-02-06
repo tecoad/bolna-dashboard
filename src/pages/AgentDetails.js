@@ -53,6 +53,7 @@ function AgentDetails({ accessToken }) {
                     setFormData({ ...formData, rulesConfig: { ...formData.rulesConfig, prompts: { ...response.data.data['task_1'] } } });
                     newFormData = { ...formData, rulesConfig: { ...formData.rulesConfig, prompts: { ...response.data.data['task_1'] } } }
                     //console.log(`Everything is free flowing ${JSON.stringify(newFormData)}`)
+                    //console.log(`Everything is free flowing ${JSON.stringify(newFormData)}`)
 
                 } else {
                     setFormData({ ...formData, rulesConfig: { ...formData.rulesConfig, graph: { ...response.data.data['task_1'] } } });
@@ -119,8 +120,8 @@ function AgentDetails({ accessToken }) {
 
                                 {
                                     isTelephonyAgent ? (
-                                     <CallComponent agentId={agentId} accessToken={accessToken} />
-                                      ) : (
+                                        <CallComponent agentId={agentId} accessToken={accessToken} />
+                                    ) : (
                                         <>
                                             {/* Change this to copy-able client.py code
                                             <Button
@@ -133,17 +134,17 @@ function AgentDetails({ accessToken }) {
                                     )
                                 }
 
-
                                 <Button
                                     onClick={handlePlaygroundOpen}
                                     sx={{ backgroundColor: '#50C878', color: 'white', '&:hover': { backgroundColor: '#369456' } }}
                                 >
                                     Playground
                                 </Button>
-                            </Box>
-                        </Box>
+                            </Box >
+                        </Box >
 
-                    )}
+                    )
+                    }
                     <CustomTabs tabsData={tabsData} orientation={"horizontal"} setActiveTabInParent={setActiveTab} setOpenAnalyticsDialog={setOpenAnalyticsDialog} />
 
                     {/* Dialog for Playground */}
@@ -194,7 +195,7 @@ function AgentDetails({ accessToken }) {
                 </>
             )}
 
-        </Box>
+        </Box >
     );
 }
 
