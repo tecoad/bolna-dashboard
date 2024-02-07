@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { DialogContentText, Typography, Button, Dialog, CircularProgress, DialogTitle, DialogContent, DialogActions, TextField } from '@mui/material';
+import { Divider, DialogContentText, Typography, Button, Dialog, CircularProgress, DialogTitle, DialogContent, DialogActions, TextField, Alert } from '@mui/material';
 import createApiInstance from '../utils/api';
 
 
@@ -64,7 +64,13 @@ const CallComponent = ({ agentId, accessToken }) => {
             fullWidth
             value={phoneNumber}
             onChange={(e) => setPhoneNumber(e.target.value)}
+            sx={{ marginBottom: 2 }}
           />
+
+          <br/>
+          <Alert severity="info">For demo purposes, the calls will be limited to 100 seconds.<br/>
+          You may use your own Twilio keys to remove this limitation. <br/>
+          <a href="https://docs.bolna.dev/providers#steps-to-add-your-own-provider-credentails" target="_blank" rel="noopener noreferrer"> Refer docs here</a>. </Alert>
 
           {errorMessage && (
             <DialogContentText style={{ color: 'red' }}>
