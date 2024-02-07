@@ -13,12 +13,13 @@ export const CREATE_AGENT_FORM = {
             family: ''
         },
         asrConfig: {
-            model: 'Nova-2',
+            model: 'deepgram',
             language: 'en',
             samplingRate: 8000,
             streaming: true,
             channels: 1,
-            endpointing: 400
+            endpointing: 400,
+            keywords: ''
         },
         ttsConfig: {
             voice: '',
@@ -68,7 +69,7 @@ function getModel(model, modelType, assistantType) {
         console.log(`Model ${model}`)
         return model
     } else {
-        model = model == "Nova-2" ? "deepgram" : model;
+        //model = model == "Nova-2" ? "deepgram" : model;
         return model
     }
 }
@@ -244,7 +245,8 @@ export const convertToCreateAgentPayload = (agentData) => {
                         "model": getModel(agentData.modelsConfig.asrConfig.model, "asr"),
                         "stream": agentData.modelsConfig.asrConfig.streaming,
                         "language": agentData.modelsConfig.asrConfig.language,
-                        "endpointing": agentData.modelsConfig.asrConfig.endpointing
+                        "endpointing": agentData.modelsConfig.asrConfig.endpointing,
+                        "keywords": agentData.modelsConfig.asrConfig.keywords,
                     },
                     "input": {
                         "provider": agentData.engagementConfig.channel == "Websocket" ? "default" : "twilio",
@@ -319,7 +321,7 @@ function getOriginalModel(model, modelType, assistantType) {
     } else if (modelType === "tts") {
         return getVoiceFromModel(model);
     } else {
-        model = model == "deepgram" ? "Nova-2" : model;
+        //model = model == "deepgram" ? "Nova-2" : model;
         return model;
     }
 }
@@ -385,7 +387,8 @@ export const convertToCreateAgentForm = (payload) => {
                 samplingRate: parseInt(synthesizer.provider_config.sampling_rate),
                 streaming: true, // We'll aways keep transcriber stream to true.
                 endpointing: transcriber.endpointing,
-                channels: 1
+                channels: 1,
+                keywords: transcriber.keywords
             },
             ttsConfig: {
                 voice: synthesizer.provider_config.voice,
