@@ -13,6 +13,10 @@ import DataObjectIcon from '@mui/icons-material/DataObject';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import PaymentIcon from '@mui/icons-material/Payment';
+import LiveHelpIcon from '@mui/icons-material/LiveHelp';
+import ArticleIcon from '@mui/icons-material/Article';
+import ChatIcon from '@mui/icons-material/Chat';
+import SupportIcon from '@mui/icons-material/Support';
 
 
 const drawerWidth = 240;
@@ -126,23 +130,44 @@ function Dashboard({ supabase, userInfo=null }) {
             <Divider />
 
 
-      <List component="nav" sx={{ display: 'flex'}}>
-        <ListItem disablePadding>
-          <ListItemButton component="a" target="_blank" href="https://bolna.canny.io/" sx={{ pr: 0 }}>
-            <ListItemText primary={<Typography variant="caption" align="right">FAQs</Typography>} />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton component="a" target="_blank" href="https://discord.gg/yDfcqreByj" sx={{ p: 0 }}>
-            <ListItemText primary={<Typography variant="caption" align="center">Chat on Discord</Typography>} />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton component="a" target="_blank" href="https://forms.gle/xaeX5CpN6L9i64hE6" sx={{ p: 0 }}>
-            <ListItemText primary={<Typography variant="caption" align="center">Contact Us</Typography>} />
-          </ListItemButton>
-        </ListItem>
-      </List>
+          <List component="nav" sx={{ display: 'flex'}}>
+            <ListItem disablePadding>
+              <ListItemButton component="a" target="_blank" href="https://bolna.canny.io/">
+                  <ListItemIcon sx={{ minWidth: 'auto', marginRight: 1, pb: 0 }}>
+                    <LiveHelpIcon /> {/* Use the icon component */}
+                  </ListItemIcon>
+
+                <ListItemText primary={<Typography variant="caption">FAQs</Typography>} />
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton component="a" target="_blank" href="https://docs.bolna.dev">
+                  <ListItemIcon sx={{ minWidth: 'auto', marginRight: 1, pb: 0 }}>
+                    <ArticleIcon /> {/* Use the icon component */}
+                  </ListItemIcon>
+
+                <ListItemText sx={{ lineHeight: 0.5 }} primary={<Typography variant="caption">Read Docs</Typography>} />
+              </ListItemButton>
+            </ListItem>
+          </List>
+          <List component="nav" sx={{ display: 'flex', m: 0, p:0 }}>
+            <ListItem disablePadding>
+              <ListItemButton component="a" target="_blank" href="https://discord.gg/yDfcqreByj">
+                  <ListItemIcon sx={{ minWidth: 'auto', marginRight: 1, pb: 0 }}>
+                    <ChatIcon /> {/* Use the icon component */}
+                  </ListItemIcon>
+                <ListItemText primary={<Typography variant="caption">Chat on Discord</Typography>} />
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton component="a" target="_blank" href="https://forms.gle/xaeX5CpN6L9i64hE6">
+                <ListItemIcon sx={{ minWidth: 'auto', marginRight: 1, pb: 0 }}>
+                    <SupportIcon /> {/* Use the icon component */}
+                </ListItemIcon>
+                <ListItemText sx={{ pb: 0 }} primary={<Typography variant="caption">Contact Us</Typography>} />
+              </ListItemButton>
+            </ListItem>
+          </List>
 
         </div>
     );
