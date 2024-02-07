@@ -49,8 +49,23 @@ function ExecutionMetadata({ executionDetails }) {
                     "Transcriber Duration": executionDetails?.usage_breakdown?.transcriberDuration,
                     "Synthesizer Model": executionDetails?.usage_breakdown?.synthesizerModel,
                     "Synthesizer Characters": executionDetails?.usage_breakdown?.synthesizerCharacters,
-                    "LLM Details": executionDetails?.usage_breakdown?.llmModel
+                    "LLM Details": executionDetails?.usage_breakdown?.llmModel,
                 })}
+
+                {(executionDetails?.average_latency != undefined || executionDetails?.average_latency != null) ? (
+                    <>
+                        {
+                            renderSection("Latency Details (In seconds)", {
+                                "Average First byte Latency": executionDetails?.average_latency?.average_first_byte_latency.toFixed(3),
+                                "Average Transcriber Latency": executionDetails?.average_latency?.average_transcriber_latency.toFixed(3),
+                                "Average LLM Latency": executionDetails?.average_latency?.average_llm_latency.toFixed(3),
+                                "Average synthesizer Latency": executionDetails?.average_latency?.average_synthesizer_latency.toFixed(3),
+                            })
+                        }
+                    </>
+                ) : null}
+
+
 
             </Box>
 
