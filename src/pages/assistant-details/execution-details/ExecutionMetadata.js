@@ -41,7 +41,8 @@ function ExecutionMetadata({ executionDetails }) {
                     "Run ID": executionDetails.range,
                     "Run Duration": `${executionDetails.conversation_time} seconds`,
                     "Run Date": new Date(executionDetails.createdAt).toLocaleDateString(),
-                    "Total Credits Used": `${executionDetails.total_cost.toFixed(5)}`
+                    "Total Credits Used": `${executionDetails.total_cost.toFixed(5)}`,
+                    "Telephony Used": executionDetails.telephony_data.hosted_twilio ? "bolna hosted" : "self"
                 })}
                 {renderSection("Usage Breakdown", {
                     "Transcriber Model": executionDetails?.usage_breakdown?.transcriberModel,
