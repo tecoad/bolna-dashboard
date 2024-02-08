@@ -15,6 +15,8 @@ const CallComponent = ({ agentId, accessToken }) => {
 
   const handleClose = () => {
     setOpen(false);
+    setPhoneNumber('');
+    setErrorMessage('');
   };
 
   const handleConfirm = async () => {
