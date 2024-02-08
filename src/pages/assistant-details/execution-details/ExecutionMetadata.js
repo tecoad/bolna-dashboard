@@ -78,9 +78,7 @@ function ExecutionMetadata({ executionDetails }) {
                 {
                     executionDetails?.telephony_data?.recording_url ? (
                         <>  <Typography variant='h6'>Recording</Typography>
-                            <audio controls src={executionDetails.telephony_data.recording_url} style={{ width: '100%' }}>
-                                Your browser does not support the audio element.
-                            </audio>
+                                You call recordings will shortly appear here.
                             <Divider sx={{ my: 2 }} />
 
                         </>
