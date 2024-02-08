@@ -24,7 +24,7 @@ function ChatComponent({ agentId, isOpen, userId, accessToken }) {
     var i = 0
 
     function handleIncomingMessage(receivedMessage) {
-        console.log(`Data ${receivedMessage} JSON Sata ${JSON.stringify(receivedMessage)}`)
+        console.log(`Data ${receivedMessage.type} JSON Sata ${JSON.stringify(receivedMessage)}`)
 
         if (receivedMessage.type == "text") {
             if (receivedMessage.data == '<beginning_of_stream>') {
@@ -63,7 +63,10 @@ function ChatComponent({ agentId, isOpen, userId, accessToken }) {
             };
             setMessages(prev => [...prev, audioMessage]);
             setIsTyping(false);
+        } else if (receivedMessage.type == "close") {
+            alert("Insufficient funds")
         }
+
 
     }
 
