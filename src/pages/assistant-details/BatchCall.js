@@ -98,7 +98,7 @@ function BatchCall({ agentId, accessToken }) {
           ) : (
             <>
               <Box display="flex" justifyContent="space-between" alignItems="center">
-                <Typography variant="body2">Upload batches for scheduling multiple calls together.</Typography>
+                <Typography variant="body2"><a href='https://calendly.com/bolna/30min' target='_blank'>Reach out to us</a> if you would like to upload batches for scheduling multiple calls together.</Typography>
                 <Box>
                   <input
                     type="file"
@@ -108,12 +108,6 @@ function BatchCall({ agentId, accessToken }) {
                   />
                   <label htmlFor="file-input">
 
-                    <Button
-                        onClick={handleOpenUploadDialog}
-                        sx={{ backgroundColor: '#50C878', color: 'white', '&:hover': { backgroundColor: '#369456' } }}
-                    >
-                        Upload batch
-                    </Button>
 
                   </label>
                 </Box>
