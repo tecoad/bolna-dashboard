@@ -78,7 +78,9 @@ function ExecutionMetadata({ executionDetails }) {
                 {
                     executionDetails?.telephony_data?.recording_url ? (
                         <>  <Typography variant='h6'>Recording</Typography>
+                            <Paper elevation={2} sx={{ mt: 2, p: 2, maxHeight: '300px', overflow: 'auto' }}>
                                 Your call recordings will shortly appear here.
+                            </Paper>
                             <Divider sx={{ my: 2 }} />
 
                         </>
