@@ -78,7 +78,7 @@ function ExecutionMetadata({ executionDetails }) {
                 {
                     executionDetails?.telephony_data?.recording_url ? (
                         <>  <Typography variant='h6'>Recording</Typography>
-                                You call recordings will shortly appear here.
+                                Your call recordings will shortly appear here.
                             <Divider sx={{ my: 2 }} />
 
                         </>
