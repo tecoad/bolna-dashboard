@@ -16,7 +16,7 @@ import ArticleIcon from '@mui/icons-material/Article';
 import ChatIcon from '@mui/icons-material/Chat';
 import SupportIcon from '@mui/icons-material/Support';
 import CreditDialog from './CreditDialog';
-
+import { Mixpanel } from '../utils/mixpanel';
 
 const drawerWidth = 240;
 const MENU_OPTIONS = [
@@ -40,6 +40,8 @@ function Dashboard({ supabase, userInfo=null }) {
     };
 
     const logoutUser = () => {
+        Mixpanel.identify(userInfo.user_id);
+        Mixpanel.track('logout');
         supabase.auth.signOut().then(() => {
             alert("Logged out")
             navigate("/");

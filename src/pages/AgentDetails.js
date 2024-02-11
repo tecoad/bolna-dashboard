@@ -11,6 +11,7 @@ import CallComponent from '../components/CallComponent'; // Import your CallComp
 import AgentFormStepper from '../components/AgentFormStepper';
 import { convertToCreateAgentForm, convertToText } from '../utils/utils';
 import createApiInstance from '../utils/api';
+import { Mixpanel } from '../utils/mixpanel';
 import WebsocketComponent from '../components/WebsocketComponent';
 
 function AgentDetails({ accessToken }) {
@@ -78,6 +79,7 @@ function AgentDetails({ accessToken }) {
 
 
     const handlePlaygroundOpen = () => {
+        Mixpanel.track('playground_click');
         setOpenPlayground(true);
     };
 
