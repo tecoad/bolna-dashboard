@@ -10,13 +10,12 @@ import InsightsIcon from '@mui/icons-material/Insights'; // Icon for "Models"
 import StorageIcon from '@mui/icons-material/Storage'; // Icon for "Datasets"
 import SettingsInputComponentIcon from '@mui/icons-material/SettingsInputComponent'; // Icon for "Integrations"
 import DataObjectIcon from '@mui/icons-material/DataObject';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import PaymentIcon from '@mui/icons-material/Payment';
 import LiveHelpIcon from '@mui/icons-material/LiveHelp';
 import ArticleIcon from '@mui/icons-material/Article';
 import ChatIcon from '@mui/icons-material/Chat';
 import SupportIcon from '@mui/icons-material/Support';
+import CreditDialog from './CreditDialog';
 
 
 const drawerWidth = 240;
@@ -63,16 +62,7 @@ function Dashboard({ supabase, userInfo=null }) {
 
       const handleCreditCloseDialog = () => {
         setOpenCreditDialog(false);
-      };
-
-      const handleCurrencySelection = (currency) => {
-        setSelectedCurrency(currency);
-        // Redirect user to payment link based on selected currency
-        if (currency === 'IND') {
-            window.open(`https://buy.stripe.com/bIY9E06dv28Z3oA002?client_reference_id=${userInfo.user_id}`);
-        } else if (currency === 'USD') {
-            window.open(`https://buy.stripe.com/dR64jG0Tb00R7EQ3cf?client_reference_id=${userInfo.user_id}`);
-        }
+        setAccountOpen(null);
       };
 
     const drawer = (
@@ -122,11 +112,13 @@ function Dashboard({ supabase, userInfo=null }) {
             </List>
             <Divider />
             <List>
-                <ListItem button component={NavLink} onClick={() => setOpenCreditDialog(true)}>
+                <ListItem button onClick={() => setOpenCreditDialog(true)}>
                     <ListItemIcon><PaymentIcon /></ListItemIcon>
                     <ListItemText primary="Add Credits" />
                 </ListItem>
             </List>
+            <CreditDialog open={openCreditDialog} handleClose={handleCreditCloseDialog} userInfo={userInfo} />
+
             <Divider />
 
 
@@ -272,30 +264,7 @@ function Dashboard({ supabase, userInfo=null }) {
                         </MenuItem>
                         ))}
 
-                        <Dialog open={openCreditDialog} onClose={() => setOpenCreditDialog(false)}>
-                            <DialogTitle>Add More Credits</DialogTitle>
-
-                            <DialogContent dividers="true">
-                            <div>
-
-                            <Stack direction="row" spacing={2}>
-                                <Button variant="contained" endIcon={<CurrencyRupeeIcon />} onClick={() => handleCurrencySelection('IND')}>
-                                    For people residing in India
-                                </Button>
-
-                                <Button variant="contained" endIcon={<AttachMoneyIcon />} onClick={() => handleCurrencySelection('USD')}>
-                                    For people residing elsewhere
-                                </Button>
-                            </Stack>
-
-                            </div>
-                            </DialogContent>
-                            <DialogActions>
-                            <Button onClick={handleCreditCloseDialog} color="primary">
-                                Close
-                            </Button>
-                            </DialogActions>
-                        </Dialog>
+                        <CreditDialog open={openCreditDialog} handleClose={handleCreditCloseDialog} userInfo={userInfo} />
 
                         <Divider sx={{ borderStyle: 'dashed', m: 0 }} />
 

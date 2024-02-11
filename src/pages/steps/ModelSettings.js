@@ -80,10 +80,7 @@ function ModelSettings({ formData, onFormDataChange, llmModels, voices, setVoice
     ];
 
     const languages = ['en', 'hi', 'es', 'fr', 'it'];
-    const asrModels = ['AWS', 'Google', 'Nova-2', 'Whisper'];
-    const samplingRates = [8000, 16000, 24000, 44100, 48000];
-    const channels = ['1', '2'];
-
+    const asrModels = ['whisper', 'deepgram'];
 
     return (
         <form>
@@ -209,7 +206,7 @@ function ModelSettings({ formData, onFormDataChange, llmModels, voices, setVoice
                         <InputLabel>Model Name </InputLabel>
                         <Select
                             name="model"
-                            value={formData.modelsConfig.asrConfig.model || ''}
+                            value={formData.modelsConfig.asrConfig.model}
                             onChange={e => handleChange("asr", e)}
                             variant='standard'
                             fullWidth
@@ -221,9 +218,22 @@ function ModelSettings({ formData, onFormDataChange, llmModels, voices, setVoice
                         {renderTooltip("These models will convert speech to text. Whisper is an open source model and hence cheapest but others might be better for your usecase.")}
                     </FormControl>
 
+                    <FormControl sx={{ alignItems: "left", width: "60%", flexDirection: 'row' }} >
+                        <TextField
+                            label="Keywords (Comma seperated)"
+                            type="text"
+                            name="keywords"
+                            value={formData.modelsConfig.asrConfig.keywords || ''}
+                            onChange={e => handleChange("asr", e)}
+                            fullWidth
+                            margin="normal"
+                            variant='standard'
+                        />
+                        {renderTooltip("Enter certain keywords/proper nouns you'd want to boost while understanding speech. You can also add a boosting factor between 0-10 ex: marmik:5")}
+                    </FormControl>
 
 
-                    <FormControl sx={{ alignItems: "left", width: "60%", marginTop: '10px', flexDirection: 'row' }} gutterBottom>
+                    {/* <FormControl sx={{ alignItems: "left", width: "60%", marginTop: '10px', flexDirection: 'row' }} gutterBottom>
                         <InputLabel>Sampling Rate</InputLabel>
                         <Select
                             disabled={formData.engagementConfig.channel == "Telephone"}
@@ -238,7 +248,7 @@ function ModelSettings({ formData, onFormDataChange, llmModels, voices, setVoice
                             ))}
                         </Select>
                         {renderTooltip("If your chosen engagement setting is websocket, kindly let us know the sample rate at which we will receive the audio")}
-                    </FormControl>
+                    </FormControl> */}
 
                     <FormControl sx={{ alignItems: "left", width: "60%", marginTop: '10px', flexDirection: 'row' }}>
                         <InputLabel>Streaming</InputLabel>
