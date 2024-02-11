@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Divider, DialogContentText, Typography, Button, Dialog, CircularProgress, DialogTitle, DialogContent, DialogActions, TextField, Alert } from '@mui/material';
 import createApiInstance from '../utils/api';
+import { Mixpanel } from '../utils/mixpanel';
 
 
 const CallComponent = ({ agentId, accessToken }) => {
@@ -10,6 +11,7 @@ const CallComponent = ({ agentId, accessToken }) => {
   const api = createApiInstance(accessToken);
 
   const handleClick = async () => {
+    Mixpanel.track('call_me_click');
     setOpen(true);
   };
 
