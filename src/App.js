@@ -18,7 +18,8 @@ import AgentDetails from './pages/AgentDetails';
 import RunDetails from './pages/assistant-details/RunDetails';
 import BatchDetails from './pages/assistant-details/BatchDetails';
 import createApiInstance from './utils/api';
-import { MixpanelProvider } from 'react-mixpanel-browser';
+import { Mixpanel } from './utils/mixpanel';
+
 
 // Create a theme instance.
 const theme = createTheme({
@@ -53,10 +54,6 @@ const options = {
 const supabaseUrl = process.env.REACT_APP_SUPABASE_URL;
 const supabaseAnonKey = process.env.REACT_APP_SUPABASE_SECRET;
 const supabase = createClient(supabaseUrl, supabaseAnonKey, options);
-const MIXPANEL_TOKEN = process.env.REACT_APP_MIXPANEL_KEY;
-const MIXPANEL_CONFIG = {
-  track_pageview: true
-};
 
 function App() {
   const [session, setSession] = useState(null);
@@ -67,7 +64,14 @@ function App() {
       try {
         const response = await api.post(`/user`);
         if (response.status === 200) {
-          setUserInfo(response.data.data);
+          const userInfo = response.data.data;
+          Mixpanel.identify(userInfo.user_id);
+          Mixpanel.track('login');
+          Mixpanel.people.set({
+            $email: userInfo.user_info.email,
+          });
+
+          setUserInfo(userInfo);
         } else {
           console.error('Failed to make user call');
         }
@@ -93,60 +97,58 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <MixpanelProvider config={MIXPANEL_CONFIG} token={MIXPANEL_TOKEN}>
-        <Router>
-          <div className="App">
-            <Routes>
-              <Route exact path="/"
-                element={
-                  !session ? (
-                    <header className="App-header">
-                      <Auth
-                        redirectTo={redirectUrl}
-                        supabaseClient={supabase}
-                        providers={["github", "google"]}
-                        appearance={{
-                          theme: ThemeSupa,
-                          variables: {
-                            default: {
-                              colors: {
-                                brand: "#060d37",
-                                brandAccent: "indigo",
-                                messageText: "white",
-                                anchorTextColor: "white",
-                              },
+      <Router>
+        <div className="App">
+          <Routes>
+            <Route exact path="/"
+              element={
+                !session ? (
+                  <header className="App-header">
+                    <Auth
+                      redirectTo={redirectUrl}
+                      supabaseClient={supabase}
+                      providers={["github", "google"]}
+                      appearance={{
+                        theme: ThemeSupa,
+                        variables: {
+                          default: {
+                            colors: {
+                              brand: "#060d37",
+                              brandAccent: "indigo",
+                              messageText: "white",
+                              anchorTextColor: "white",
                             },
                           },
-                        }}
-                        theme="dark"
-                      />
+                        },
+                      }}
+                      theme="dark"
+                    />
 
 
-                    </header>
-                  ) : (
-                    <Navigate to="/dashboard/my-agents" />
-                  )
-                }
-              >
-              </Route>
+                  </header>
+                ) : (
+                  <Navigate to="/dashboard/my-agents" />
+                )
+              }
+            >
+            </Route>
 
-              <Route path="/dashboard" element={<Dashboard supabase={supabase} userInfo={userInfo} />}>
-                <Route path="my-agents" element={<MyAgents userId={session?.user?.id} accessToken={session?.access_token} />} />
-                <Route path="create-agents" element={<CreateAgents accessToken={session?.access_token} />} />
-                <Route path="models" element={<Models accessToken={session?.access_token} />} />
-                <Route path="datasets" element={<Datasets session={session} />} />
-                <Route path="integrations" element={<Integrations session={session} />} />
-                <Route path="account" element={<Account session={session} />} />
-                <Route path="developer" element={<Keys accessToken={session?.access_token} />} />
-                <Route path="agent-details" element={<AgentDetails accessToken={session?.access_token} />} />
-                <Route path="agent/run-details" element={<RunDetails session={session} />} />
-                <Route path="agent/batch-details" element={<BatchDetails session={session} accessToken={session?.access_token} />} />
-              </Route>
+            <Route path="/dashboard" element={<Dashboard supabase={supabase} userInfo={userInfo} />}>
+              <Route path="my-agents" element={<MyAgents userId={session?.user?.id} accessToken={session?.access_token} />} />
+              <Route path="create-agents" element={<CreateAgents accessToken={session?.access_token} />} />
+              <Route path="models" element={<Models accessToken={session?.access_token} />} />
+              <Route path="datasets" element={<Datasets session={session} />} />
+              <Route path="integrations" element={<Integrations session={session} />} />
+              <Route path="account" element={<Account session={session} />} />
+              <Route path="developer" element={<Keys accessToken={session?.access_token} />} />
+              <Route path="agent-details" element={<AgentDetails accessToken={session?.access_token} />} />
+              <Route path="agent/run-details" element={<RunDetails session={session} />} />
+              <Route path="agent/batch-details" element={<BatchDetails session={session} accessToken={session?.access_token} />} />
+            </Route>
 
-            </Routes>
-          </div>
-        </Router>
-      </MixpanelProvider>
+          </Routes>
+        </div>
+      </Router>
     </ThemeProvider>
   );
 }
