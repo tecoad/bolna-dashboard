@@ -855,6 +855,42 @@
         "accent": "Arab"
     },
     {
+        "name": "rohan",
+        "id": "rohan",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": false,
+        "accent": "english-indian"
+    },
+    {
+        "name": "deepika",
+        "id": "deepika",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": false,
+        "accent": "english-indian"
+    },
+    {
+        "name": "anish",
+        "id": "anish",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": false,
+        "accent": "english-indian"
+    },
+    {
+        "name": "virat",
+        "id": "virat",
+        "languageCode": "all",
+        "model": "xttsv2",
+        "provider": "xtts",
+        "lowLatency": false,
+        "accent": "english-indian"
+    },
+    {
         "name": "Rachel",
         "id": "21m00Tcm4TlvDq8ikWAM",
         "languageCode": "all",
@@ -1134,15 +1170,6 @@
         "accent": "american"
     },
     {
-        "name": "\ud83c\udf85 Santa Claus",
-        "id": "knrPHWnBmmDHMoiMeP3l",
-        "languageCode": "all",
-        "model": "eleven_monolingual_v1",
-        "provider": "elevenlabs",
-        "lowLatency": false,
-        "accent": "character"
-    },
-    {
         "name": "Grace",
         "id": "oWAxZDx7w5VEj9dCyTzz",
         "languageCode": "all",
@@ -1251,44 +1278,8 @@
         "accent": "english-swedish"
     },
     {
-        "name": "rohan",
-        "id": "rohan",
-        "languageCode": "all",
-        "model": "xttsv2",
-        "provider": "xtts",
-        "lowLatency": false,
-        "accent": "english-indian"
-    },
-    {
-        "name": "deepika",
-        "id": "deepika",
-        "languageCode": "all",
-        "model": "xttsv2",
-        "provider": "xtts",
-        "lowLatency": false,
-        "accent": "english-indian"
-    },
-    {
-        "name": "anish",
-        "id": "anish",
-        "languageCode": "all",
-        "model": "xttsv2",
-        "provider": "xtts",
-        "lowLatency": false,
-        "accent": "english-indian"
-    },
-    {
-        "name": "virat",
-        "id": "virat",
-        "languageCode": "all",
-        "model": "xttsv2",
-        "provider": "xtts",
-        "lowLatency": false,
-        "accent": "english-indian"
-    },
-    {
-        "name": "Anika",
-        "id": "QOQGV0NwUO8sk3CJ0VON",
+        "name": "Monika Sogam",
+        "id": "2zRM7PkgwBPiau2jvVXc",
         "languageCode": "all",
         "model": "eleven_multilingual_v1",
         "provider": "elevenlabs",
@@ -1296,19 +1287,28 @@
         "accent": "indian"
     },
     {
-        "name": "Meera",
-        "id": "TTa58Hl9lmhnQEvhp1WM",
+        "name": "Anjali",
+        "id": "9Obr7f4dpFOqW7oOe0Wv",
         "languageCode": "all",
-        "model": "eleven_multilingual_v1",
+        "model": "eleven_monolingual_v1",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "indian"
     },
     {
-        "name": "Jitendra",
-        "id": "LibICWVR19ig6BZk257C",
+        "name": "Sara",
+        "id": "9j4qoW0xi8IMQue5UZp8",
         "languageCode": "all",
-        "model": "eleven_multilingual_v1",
+        "model": "eleven_monolingual_v1",
+        "provider": "elevenlabs",
+        "lowLatency": false,
+        "accent": "indian"
+    },
+    {
+        "name": "Anashala",
+        "id": "A9CmZYiNgVuRYI6jHcKx",
+        "languageCode": "all",
+        "model": "eleven_monolingual_v1",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "indian"
@@ -1317,7 +1317,187 @@
         "name": "Sanjay",
         "id": "E5k6oDZaruAl0DpYuvja",
         "languageCode": "all",
-        "model": "eleven_multilingual_v1",
+        "model": "eleven_monolingual_v1",
+        "provider": "elevenlabs",
+        "lowLatency": false,
+        "accent": "indian"
+    },
+    {
+        "name": "Roshni",
+        "id": "Fq3xF89N6IVz3pE1A2d3",
+        "languageCode": "all",
+        "model": "eleven_monolingual_v1",
+        "provider": "elevenlabs",
+        "lowLatency": false,
+        "accent": "indian"
+    },
+    {
+        "name": "Shazia",
+        "id": "HAA7dcPAObhIbTdJUCxC",
+        "languageCode": "all",
+        "model": "eleven_monolingual_v1",
+        "provider": "elevenlabs",
+        "lowLatency": false,
+        "accent": "Indian "
+    },
+    {
+        "name": "Lila",
+        "id": "JQVLAuuDDy2FoiP2g3Ag",
+        "languageCode": "all",
+        "model": "eleven_monolingual_v1",
+        "provider": "elevenlabs",
+        "lowLatency": false,
+        "accent": "indian"
+    },
+    {
+        "name": "Jitendra",
+        "id": "LibICWVR19ig6BZk257C",
+        "languageCode": "all",
+        "model": "eleven_monolingual_v1",
+        "provider": "elevenlabs",
+        "lowLatency": false,
+        "accent": "indian"
+    },
+    {
+        "name": "Diva",
+        "id": "ORNaUqhguAaowiuj6Juf",
+        "languageCode": "all",
+        "model": "eleven_monolingual_v1",
+        "provider": "elevenlabs",
+        "lowLatency": false,
+        "accent": "indian"
+    },
+    {
+        "name": "mari",
+        "id": "ORQ3zjV4e5R4y1suG19a",
+        "languageCode": "all",
+        "model": "eleven_monolingual_v1",
+        "provider": "elevenlabs",
+        "lowLatency": false,
+        "accent": "indian"
+    },
+    {
+        "name": "Lilavati",
+        "id": "OT7ByqXVgc251PD11k70",
+        "languageCode": "all",
+        "model": "eleven_monolingual_v1",
+        "provider": "elevenlabs",
+        "lowLatency": false,
+        "accent": "indian"
+    },
+    {
+        "name": "Rani ",
+        "id": "PnPm4iJGyBEIIbThYFO3",
+        "languageCode": "all",
+        "model": "eleven_monolingual_v1",
+        "provider": "elevenlabs",
+        "lowLatency": false,
+        "accent": "indian"
+    },
+    {
+        "name": "Anika",
+        "id": "QOQGV0NwUO8sk3CJ0VON",
+        "languageCode": "all",
+        "model": "eleven_monolingual_v1",
+        "provider": "elevenlabs",
+        "lowLatency": false,
+        "accent": "indian"
+    },
+    {
+        "name": "Adi",
+        "id": "QxH580FDvCrN8VkV7wql",
+        "languageCode": "all",
+        "model": "eleven_monolingual_v1",
+        "provider": "elevenlabs",
+        "lowLatency": false,
+        "accent": "indian"
+    },
+    {
+        "name": "Prisha",
+        "id": "R0yMVzYr2Y98JCvt91DE",
+        "languageCode": "all",
+        "model": "eleven_monolingual_v1",
+        "provider": "elevenlabs",
+        "lowLatency": false,
+        "accent": "indian"
+    },
+    {
+        "name": "Meera",
+        "id": "TTa58Hl9lmhnQEvhp1WM",
+        "languageCode": "all",
+        "model": "eleven_monolingual_v1",
+        "provider": "elevenlabs",
+        "lowLatency": false,
+        "accent": "indian"
+    },
+    {
+        "name": "Ava",
+        "id": "WJO0hs8trl0TY3VXSwCl",
+        "languageCode": "all",
+        "model": "eleven_monolingual_v1",
+        "provider": "elevenlabs",
+        "lowLatency": false,
+        "accent": "indian"
+    },
+    {
+        "name": "Sundara",
+        "id": "a5vyLYWk517BmFTTk94t",
+        "languageCode": "all",
+        "model": "eleven_monolingual_v1",
+        "provider": "elevenlabs",
+        "lowLatency": false,
+        "accent": "Indian "
+    },
+    {
+        "name": "Shalaka",
+        "id": "ckISpxBYkeIFvxQyE57N",
+        "languageCode": "all",
+        "model": "eleven_monolingual_v1",
+        "provider": "elevenlabs",
+        "lowLatency": false,
+        "accent": "Indian "
+    },
+    {
+        "name": "Preeti",
+        "id": "fkbhSHvNl87CE4SB7lsr",
+        "languageCode": "all",
+        "model": "eleven_monolingual_v1",
+        "provider": "elevenlabs",
+        "lowLatency": false,
+        "accent": "indian"
+    },
+    {
+        "name": "Maryam",
+        "id": "l0mnKN5hdghur3xo5b7i",
+        "languageCode": "all",
+        "model": "eleven_monolingual_v1",
+        "provider": "elevenlabs",
+        "lowLatency": false,
+        "accent": "indian"
+    },
+    {
+        "name": "Aspara",
+        "id": "mmOan6cOuvkl9Q2dbs5V",
+        "languageCode": "all",
+        "model": "eleven_monolingual_v1",
+        "provider": "elevenlabs",
+        "lowLatency": false,
+        "accent": "Indian "
+    },
+    {
+        "name": "Kavya",
+        "id": "qDGvjpTYd9TeWzpCUX2g",
+        "languageCode": "all",
+        "model": "eleven_monolingual_v1",
+        "provider": "elevenlabs",
+        "lowLatency": false,
+        "accent": "indian"
+    },
+    {
+        "name": "Jiya",
+        "id": "vPq3KPXSl3LzYlIQl1Ab",
+        "languageCode": "all",
+        "model": "eleven_monolingual_v1",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "indian"
