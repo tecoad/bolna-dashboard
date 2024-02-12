@@ -33,9 +33,9 @@ function getPrefilledTemplate(option) {
     }
 }
 function BasicConfiguration({ formData, onFormDataChange }) {
-    console.log(`INitial form data ${JSON.stringify(formData)}`)
+    //console.log(`INitial form data ${JSON.stringify(formData)}`)
     const handleChange = (event) => {
-        console.log(`NAME ${event.target.name}`);
+        //console.log(`NAME ${event.target.name}`);
         if (event.target.name === 'assistantTask') {
             onFormDataChange({
                 ...formData, basicConfig: { ...formData.basicConfig, [event.target.name]: event.target.value }, rulesConfig: { ...formData.rulesConfig, prompts: { ...getPrefilledTemplate(event.target.value) } }
@@ -82,7 +82,7 @@ function BasicConfiguration({ formData, onFormDataChange }) {
                         label="Agent Name"
                         variant="outlined"
                         name="assistantName"
-                        value={formData.basicConfig.assistantName || ''}
+                        value={formData.basicConfig.assistantName || 'My Agent'}
                         onChange={handleChange}
                     />
                 </FormControl>

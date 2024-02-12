@@ -49,6 +49,8 @@ function Dashboard({ supabase, userInfo=null }) {
     }
 
     const handleAccountOpen = (event) => {
+        Mixpanel.identify(userInfo.user_id);
+        Mixpanel.track('open_profile');
         setAccountOpen(event.currentTarget);
       };
 
@@ -58,6 +60,8 @@ function Dashboard({ supabase, userInfo=null }) {
 
       const handleMenuItemClick = (action) => {
         if (action === 'ADD_CREDITS') {
+            Mixpanel.identify(userInfo.user_id);
+            Mixpanel.track('click_profile_add_credits');
             setOpenCreditDialog(true);
         }
       };
@@ -67,24 +71,32 @@ function Dashboard({ supabase, userInfo=null }) {
         setAccountOpen(null);
       };
 
+      const handleNavLinkClick = (e) => {
+        //console.log(e.target.innerText);
+        // Track event using Mixpanel
+        Mixpanel.track('nav_item_clicked', {
+          item: e.target.innerText
+        });
+      };
+
     const drawer = (
         <div>
             <Toolbar />
             <Divider />
             <List>
-                <ListItem button component={NavLink} to="my-agents">
+                <ListItem button component={NavLink} to="my-agents" onClick={handleNavLinkClick}>
                     <ListItemIcon><GroupIcon /></ListItemIcon>
                     <ListItemText primary="My Agents" />
                 </ListItem>
-                <ListItem button component={NavLink} to="create-agents">
+                <ListItem button component={NavLink} to="create-agents" onClick={handleNavLinkClick}>
                     <ListItemIcon><AddCircleOutlineIcon /></ListItemIcon>
                     <ListItemText primary="Create Agents" />
                 </ListItem>
-                <ListItem button component={NavLink} to="models">
+                <ListItem button component={NavLink} to="models" onClick={handleNavLinkClick}>
                     <ListItemIcon><InsightsIcon /></ListItemIcon>
                     <ListItemText primary="Models" />
                 </ListItem>
-                <ListItem button component={NavLink} to="datasets">
+                <ListItem button component={NavLink} to="datasets" onClick={handleNavLinkClick}>
                     <ListItemIcon><StorageIcon /></ListItemIcon>
                     <ListItemText primary="Datasets" />
                     <ListItemSecondaryAction sx={{ right: '20%' }} color="info">
@@ -94,7 +106,7 @@ function Dashboard({ supabase, userInfo=null }) {
                         />
                     </ListItemSecondaryAction>
                 </ListItem>
-                <ListItem button component={NavLink} to="integrations">
+                <ListItem button component={NavLink} to="integrations" onClick={handleNavLinkClick}>
                     <ListItemIcon><SettingsInputComponentIcon /></ListItemIcon>
                     <ListItemText primary="Integrations" />
                     <ListItemSecondaryAction sx={{ right: '20%'}}>
@@ -107,7 +119,7 @@ function Dashboard({ supabase, userInfo=null }) {
             </List>
             <Divider />
             <List>
-                <ListItem button component={NavLink} to="developer">
+                <ListItem button component={NavLink} to="developer" onClick={handleNavLinkClick}>
                     <ListItemIcon><DataObjectIcon /></ListItemIcon>
                     <ListItemText primary="Developer" />
                 </ListItem>
@@ -119,7 +131,7 @@ function Dashboard({ supabase, userInfo=null }) {
                     <ListItemText primary="Add Credits" />
                 </ListItem>
             </List>
-            <CreditDialog open={openCreditDialog} handleClose={handleCreditCloseDialog} userInfo={userInfo} />
+            <CreditDialog open={openCreditDialog} handleClose={handleCreditCloseDialog} userInfo={userInfo} source={"navitem"} />
 
             <Divider />
 
@@ -131,7 +143,7 @@ function Dashboard({ supabase, userInfo=null }) {
                     <LiveHelpIcon /> {/* Use the icon component */}
                   </ListItemIcon>
 
-                <ListItemText primary={<Typography variant="caption">FAQs</Typography>} />
+                <ListItemText primary={<Typography variant="caption">FAQs</Typography>} onClick={handleNavLinkClick} />
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding>
@@ -140,7 +152,7 @@ function Dashboard({ supabase, userInfo=null }) {
                     <ArticleIcon /> {/* Use the icon component */}
                   </ListItemIcon>
 
-                <ListItemText sx={{ lineHeight: 0.5 }} primary={<Typography variant="caption">Read Docs</Typography>} />
+                <ListItemText sx={{ lineHeight: 0.5 }} primary={<Typography variant="caption">Read Docs</Typography>} onClick={handleNavLinkClick} />
               </ListItemButton>
             </ListItem>
           </List>
@@ -150,7 +162,7 @@ function Dashboard({ supabase, userInfo=null }) {
                   <ListItemIcon sx={{ minWidth: 'auto', marginRight: 1, pb: 0 }}>
                     <ChatIcon /> {/* Use the icon component */}
                   </ListItemIcon>
-                <ListItemText primary={<Typography variant="caption">Chat on Discord</Typography>} />
+                <ListItemText primary={<Typography variant="caption">Chat on Discord</Typography>} onClick={handleNavLinkClick} />
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding>
@@ -158,7 +170,7 @@ function Dashboard({ supabase, userInfo=null }) {
                 <ListItemIcon sx={{ minWidth: 'auto', marginRight: 1, pb: 0 }}>
                     <SupportIcon /> {/* Use the icon component */}
                 </ListItemIcon>
-                <ListItemText sx={{ pb: 0 }} primary={<Typography variant="caption">Contact Us</Typography>} />
+                <ListItemText sx={{ pb: 0 }} primary={<Typography variant="caption">Contact Us</Typography>} onClick={handleNavLinkClick} />
               </ListItemButton>
             </ListItem>
           </List>
@@ -266,7 +278,7 @@ function Dashboard({ supabase, userInfo=null }) {
                         </MenuItem>
                         ))}
 
-                        <CreditDialog open={openCreditDialog} handleClose={handleCreditCloseDialog} userInfo={userInfo} />
+                        <CreditDialog open={openCreditDialog} handleClose={handleCreditCloseDialog} userInfo={userInfo} source={"dropdown"} />
 
                         <Divider sx={{ borderStyle: 'dashed', m: 0 }} />
 

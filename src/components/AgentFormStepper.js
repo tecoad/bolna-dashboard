@@ -35,7 +35,7 @@ function AgentFormStepper({ initialData, isUpdate, agentId, accessToken }) {
                 const response = await api.get('/get_all_voices');
                 setVoices(response.data.voices);
                 setLLMModels(response.data.llmModels);
-                console.log(`Voices ${JSON.stringify(response.data)}`)
+                //console.log(`Voices ${JSON.stringify(response.data)}`)
             } catch (error) {
                 console.error('Error fetching agents Msking loading false:', error);
                 setLoading(false);
@@ -61,7 +61,7 @@ function AgentFormStepper({ initialData, isUpdate, agentId, accessToken }) {
         selectedVoice = voices[0]
         const initialModel = initialData.basicConfig.assistantType == "IVR" ? "gpt-3.5-turbo-1106" : "gpt-3.5-turbo-16k"
         selectedLLMModel = llmModels.filter(model => model.model == initialModel)[0] // Make sure initially selected model is a gpt-3.5 one
-        console.log(`Setting voice to ${voices[0].name}`)
+        //console.log(`Setting voice to ${voices[0].name}`)
         initialData.modelsConfig.ttsConfig.voice = voices[0].name;
         initialData.modelsConfig.llmConfig.model = selectedLLMModel.model;
         initialData.modelsConfig.llmConfig.family = selectedLLMModel.family;
@@ -211,14 +211,14 @@ function AgentFormStepper({ initialData, isUpdate, agentId, accessToken }) {
         //console.log(`Sending backkend request to ${process.env.REACT_APP_FAST_API_BACKEND_URL}, agentID ${agentId} json ${JSON.stringify(payload)}`)
         try {
             if (isUpdate) {
-                console.log(`PAYLOAD ${JSON.stringify(payload)}`);
+                //console.log(`PAYLOAD ${JSON.stringify(payload)}`);
                 const response = await api.put(`/agent/${agentId}`, payload);
-                console.log(response.data);
+                //console.log(response.data);
 
             } else {
-                console.log(JSON.stringify(payload));
+                //console.log(JSON.stringify(payload));
                 const response = await api.post('/agent', payload);
-                console.log(response.data);
+                //console.log(response.data);
             }
             navigate('/dashboard/my-agents');
         } catch (error) {

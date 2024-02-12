@@ -169,6 +169,9 @@ function JsonTable({
                                         year: 'numeric',
                                         month: 'long',
                                         day: 'numeric',
+                                        hour: 'numeric',
+                                        minute: 'numeric',
+                                        hour12: false
                                     };
                                     var d = new Date(name)
 
