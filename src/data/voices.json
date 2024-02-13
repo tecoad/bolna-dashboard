@@ -894,7 +894,7 @@
         "name": "Rachel",
         "id": "21m00Tcm4TlvDq8ikWAM",
         "languageCode": "all",
-        "model": "eleven_monolingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "american"
@@ -903,7 +903,7 @@
         "name": "Drew",
         "id": "29vD33N1CtxCmqQRPOHJ",
         "languageCode": "all",
-        "model": "eleven_monolingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "american"
@@ -912,7 +912,7 @@
         "name": "Clyde",
         "id": "2EiwWnXFnvU5JabPnv8n",
         "languageCode": "all",
-        "model": "eleven_multilingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "american"
@@ -921,7 +921,7 @@
         "name": "Paul",
         "id": "5Q0t7uMcjvnagumLfvZi",
         "languageCode": "all",
-        "model": "eleven_monolingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "american"
@@ -930,7 +930,7 @@
         "name": "Domi",
         "id": "AZnzlk1XvdvUeBnXmlld",
         "languageCode": "all",
-        "model": "eleven_monolingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "american"
@@ -939,7 +939,7 @@
         "name": "Dave",
         "id": "CYw3kZ02Hs0563khs1Fj",
         "languageCode": "all",
-        "model": "eleven_multilingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "british-essex"
@@ -948,7 +948,7 @@
         "name": "Fin",
         "id": "D38z5RcWu1voky8WS1ja",
         "languageCode": "all",
-        "model": "eleven_multilingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "irish"
@@ -957,7 +957,7 @@
         "name": "Sarah",
         "id": "EXAVITQu4vr4xnSDxMaL",
         "languageCode": "all",
-        "model": "eleven_monolingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "american"
@@ -966,7 +966,7 @@
         "name": "Antoni",
         "id": "ErXwobaYiN019PkySvjV",
         "languageCode": "all",
-        "model": "eleven_monolingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "american"
@@ -975,7 +975,7 @@
         "name": "Thomas",
         "id": "GBv7mTt0atIp3Br8iCZE",
         "languageCode": "all",
-        "model": "eleven_multilingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "american"
@@ -984,7 +984,7 @@
         "name": "Charlie",
         "id": "IKne3meq5aSn9XLyUdCD",
         "languageCode": "all",
-        "model": "eleven_multilingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "australian"
@@ -993,7 +993,7 @@
         "name": "George",
         "id": "JBFqnCBsd6RMkjVDRZzb",
         "languageCode": "all",
-        "model": "eleven_monolingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "british"
@@ -1002,7 +1002,7 @@
         "name": "Emily",
         "id": "LcfcDJNUP1GQjkzn1xUU",
         "languageCode": "all",
-        "model": "eleven_multilingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "american"
@@ -1011,7 +1011,7 @@
         "name": "Elli",
         "id": "MF3mGyEYCl7XYWbV9V6O",
         "languageCode": "all",
-        "model": "eleven_monolingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "american"
@@ -1020,7 +1020,7 @@
         "name": "Callum",
         "id": "N2lVS1w4EtoT3dr4eOWO",
         "languageCode": "all",
-        "model": "eleven_multilingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "american"
@@ -1029,7 +1029,7 @@
         "name": "Patrick",
         "id": "ODq5zmih8GrVes37Dizd",
         "languageCode": "all",
-        "model": "eleven_multilingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "american"
@@ -1038,7 +1038,7 @@
         "name": "Harry",
         "id": "SOYHLrjzK2X1ezoPC6cr",
         "languageCode": "all",
-        "model": "eleven_multilingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "american"
@@ -1047,7 +1047,7 @@
         "name": "Liam",
         "id": "TX3LPaxmHKxFdv7VOQHJ",
         "languageCode": "all",
-        "model": "eleven_multilingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "american"
@@ -1056,7 +1056,7 @@
         "name": "Dorothy",
         "id": "ThT5KcBeYPX3keUQqHPh",
         "languageCode": "all",
-        "model": "eleven_multilingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "british"
@@ -1065,7 +1065,7 @@
         "name": "Josh",
         "id": "TxGEqnHWrfWFTfGW9XjX",
         "languageCode": "all",
-        "model": "eleven_monolingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "american"
@@ -1074,7 +1074,7 @@
         "name": "Arnold",
         "id": "VR6AewLTigWG4xSOukaG",
         "languageCode": "all",
-        "model": "eleven_monolingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "american"
@@ -1083,7 +1083,7 @@
         "name": "Charlotte",
         "id": "XB0fDUnXU5powFXDhCwa",
         "languageCode": "all",
-        "model": "eleven_multilingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "english-swedish"
@@ -1092,7 +1092,7 @@
         "name": "Matilda",
         "id": "XrExE9yKIg1WjnnlVkGX",
         "languageCode": "all",
-        "model": "eleven_multilingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "american"
@@ -1101,7 +1101,7 @@
         "name": "Matthew",
         "id": "Yko7PKHZNXotIFUBG7I9",
         "languageCode": "all",
-        "model": "eleven_multilingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "british"
@@ -1110,7 +1110,7 @@
         "name": "James",
         "id": "ZQe5CZNOzWyzPSCn5a3c",
         "languageCode": "all",
-        "model": "eleven_multilingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "australian"
@@ -1119,7 +1119,7 @@
         "name": "Joseph",
         "id": "Zlb1dXrM653N07WRdFW3",
         "languageCode": "all",
-        "model": "eleven_multilingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "british"
@@ -1128,7 +1128,7 @@
         "name": "Jeremy",
         "id": "bVMeCyTHy58xNoL34h3p",
         "languageCode": "all",
-        "model": "eleven_multilingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "american-irish"
@@ -1137,7 +1137,7 @@
         "name": "Michael",
         "id": "flq6f7yk4E4fJM5XTYuZ",
         "languageCode": "all",
-        "model": "eleven_multilingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "american"
@@ -1146,7 +1146,7 @@
         "name": "Ethan",
         "id": "g5CIjZEefAph4nQFvHAz",
         "languageCode": "all",
-        "model": "eleven_multilingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "american"
@@ -1155,7 +1155,7 @@
         "name": "Gigi",
         "id": "jBpfuIE2acCO8z3wKNLl",
         "languageCode": "all",
-        "model": "eleven_multilingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "american"
@@ -1164,7 +1164,7 @@
         "name": "Freya",
         "id": "jsCqWAovK2LkecY7zXl4",
         "languageCode": "all",
-        "model": "eleven_multilingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "american"
@@ -1173,7 +1173,7 @@
         "name": "Grace",
         "id": "oWAxZDx7w5VEj9dCyTzz",
         "languageCode": "all",
-        "model": "eleven_multilingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "american-southern"
@@ -1182,7 +1182,7 @@
         "name": "Daniel",
         "id": "onwK4e9ZLuTAKqWW03F9",
         "languageCode": "all",
-        "model": "eleven_multilingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "british"
@@ -1191,7 +1191,7 @@
         "name": "Lily",
         "id": "pFZP5JQG7iQjIQuC4Bku",
         "languageCode": "all",
-        "model": "eleven_monolingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "british"
@@ -1200,7 +1200,7 @@
         "name": "Serena",
         "id": "pMsXgVXv3BLzUgSXRplE",
         "languageCode": "all",
-        "model": "eleven_multilingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "american"
@@ -1209,7 +1209,7 @@
         "name": "Adam",
         "id": "pNInz6obpgDQGcFmaJgB",
         "languageCode": "all",
-        "model": "eleven_monolingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "american"
@@ -1218,7 +1218,7 @@
         "name": "Nicole",
         "id": "piTKgcLEGmPE4e6mEKli",
         "languageCode": "all",
-        "model": "eleven_multilingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "american"
@@ -1227,7 +1227,7 @@
         "name": "Bill",
         "id": "pqHfZKP75CvOlQylNhV4",
         "languageCode": "all",
-        "model": "eleven_monolingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "american"
@@ -1236,7 +1236,7 @@
         "name": "Jessie",
         "id": "t0jbNlBVZ17f02VDIeMI",
         "languageCode": "all",
-        "model": "eleven_multilingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "american"
@@ -1245,7 +1245,7 @@
         "name": "Sam",
         "id": "yoZ06aMxZJJ28mfd3POQ",
         "languageCode": "all",
-        "model": "eleven_monolingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "american"
@@ -1254,7 +1254,7 @@
         "name": "Glinda",
         "id": "z9fAnlkpzviPz146aGWa",
         "languageCode": "all",
-        "model": "eleven_multilingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "american"
@@ -1263,7 +1263,7 @@
         "name": "Giovanni",
         "id": "zcAOhNBS3c14rBihAFp1",
         "languageCode": "all",
-        "model": "eleven_multilingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "english-italian"
@@ -1272,7 +1272,7 @@
         "name": "Mimi",
         "id": "zrHiDhphv9ZnVXBqCLjz",
         "languageCode": "all",
-        "model": "eleven_multilingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "english-swedish"
@@ -1281,16 +1281,25 @@
         "name": "Monika Sogam",
         "id": "2zRM7PkgwBPiau2jvVXc",
         "languageCode": "all",
-        "model": "eleven_multilingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "indian"
     },
     {
+        "name": "Ramakrishnan",
+        "id": "3zHlTxFogrxvs41RulkZ",
+        "languageCode": "all",
+        "model": "eleven_multilingual_v2",
+        "provider": "elevenlabs",
+        "lowLatency": false,
+        "accent": "Indian "
+    },
+    {
         "name": "Anjali",
         "id": "9Obr7f4dpFOqW7oOe0Wv",
         "languageCode": "all",
-        "model": "eleven_monolingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "indian"
@@ -1299,7 +1308,7 @@
         "name": "Sara",
         "id": "9j4qoW0xi8IMQue5UZp8",
         "languageCode": "all",
-        "model": "eleven_monolingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "indian"
@@ -1308,7 +1317,16 @@
         "name": "Anashala",
         "id": "A9CmZYiNgVuRYI6jHcKx",
         "languageCode": "all",
-        "model": "eleven_monolingual_v1",
+        "model": "eleven_multilingual_v2",
+        "provider": "elevenlabs",
+        "lowLatency": false,
+        "accent": "indian"
+    },
+    {
+        "name": "Vijay",
+        "id": "AeeJDlfqkNqszhOZyub9",
+        "languageCode": "all",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "indian"
@@ -1317,7 +1335,7 @@
         "name": "Sanjay",
         "id": "E5k6oDZaruAl0DpYuvja",
         "languageCode": "all",
-        "model": "eleven_monolingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "indian"
@@ -1326,7 +1344,7 @@
         "name": "Roshni",
         "id": "Fq3xF89N6IVz3pE1A2d3",
         "languageCode": "all",
-        "model": "eleven_monolingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "indian"
@@ -1335,7 +1353,7 @@
         "name": "Shazia",
         "id": "HAA7dcPAObhIbTdJUCxC",
         "languageCode": "all",
-        "model": "eleven_monolingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "Indian "
@@ -1344,16 +1362,25 @@
         "name": "Lila",
         "id": "JQVLAuuDDy2FoiP2g3Ag",
         "languageCode": "all",
-        "model": "eleven_monolingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "indian"
     },
     {
-        "name": "Jitendra",
+        "name": "Jitu-bhaiya",
         "id": "LibICWVR19ig6BZk257C",
         "languageCode": "all",
-        "model": "eleven_monolingual_v1",
+        "model": "eleven_multilingual_v2",
+        "provider": "elevenlabs",
+        "lowLatency": false,
+        "accent": "indian"
+    },
+    {
+        "name": "Deepak",
+        "id": "N0ZKEXHFJD9d9MxQgHUI",
+        "languageCode": "all",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "indian"
@@ -1362,7 +1389,7 @@
         "name": "Diva",
         "id": "ORNaUqhguAaowiuj6Juf",
         "languageCode": "all",
-        "model": "eleven_monolingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "indian"
@@ -1371,7 +1398,7 @@
         "name": "mari",
         "id": "ORQ3zjV4e5R4y1suG19a",
         "languageCode": "all",
-        "model": "eleven_monolingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "indian"
@@ -1380,7 +1407,7 @@
         "name": "Lilavati",
         "id": "OT7ByqXVgc251PD11k70",
         "languageCode": "all",
-        "model": "eleven_monolingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "indian"
@@ -1389,16 +1416,16 @@
         "name": "Rani ",
         "id": "PnPm4iJGyBEIIbThYFO3",
         "languageCode": "all",
-        "model": "eleven_monolingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "indian"
     },
     {
-        "name": "Anika",
+        "name": "Anika - authentic",
         "id": "QOQGV0NwUO8sk3CJ0VON",
         "languageCode": "all",
-        "model": "eleven_monolingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "indian"
@@ -1407,7 +1434,7 @@
         "name": "Adi",
         "id": "QxH580FDvCrN8VkV7wql",
         "languageCode": "all",
-        "model": "eleven_monolingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "indian"
@@ -1416,16 +1443,16 @@
         "name": "Prisha",
         "id": "R0yMVzYr2Y98JCvt91DE",
         "languageCode": "all",
-        "model": "eleven_monolingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "indian"
     },
     {
-        "name": "Meera",
+        "name": "Meera - high quality, emotive",
         "id": "TTa58Hl9lmhnQEvhp1WM",
         "languageCode": "all",
-        "model": "eleven_monolingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "indian"
@@ -1434,7 +1461,7 @@
         "name": "Ava",
         "id": "WJO0hs8trl0TY3VXSwCl",
         "languageCode": "all",
-        "model": "eleven_monolingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "indian"
@@ -1443,7 +1470,7 @@
         "name": "Sundara",
         "id": "a5vyLYWk517BmFTTk94t",
         "languageCode": "all",
-        "model": "eleven_monolingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "Indian "
@@ -1452,16 +1479,43 @@
         "name": "Shalaka",
         "id": "ckISpxBYkeIFvxQyE57N",
         "languageCode": "all",
-        "model": "eleven_monolingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "Indian "
     },
     {
+        "name": "Rakesh ",
+        "id": "dNxSKjqKjxMSxTicsHAl",
+        "languageCode": "all",
+        "model": "eleven_multilingual_v2",
+        "provider": "elevenlabs",
+        "lowLatency": false,
+        "accent": "indian"
+    },
+    {
+        "name": "Rishabh",
+        "id": "e8K8R54MicuFyiSeiyns",
+        "languageCode": "all",
+        "model": "eleven_multilingual_v2",
+        "provider": "elevenlabs",
+        "lowLatency": false,
+        "accent": "Indian "
+    },
+    {
+        "name": "Vikram",
+        "id": "elaXKhiKoWZo6xP9iPob",
+        "languageCode": "all",
+        "model": "eleven_multilingual_v2",
+        "provider": "elevenlabs",
+        "lowLatency": false,
+        "accent": "indian"
+    },
+    {
         "name": "Preeti",
         "id": "fkbhSHvNl87CE4SB7lsr",
         "languageCode": "all",
-        "model": "eleven_monolingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "indian"
@@ -1470,7 +1524,7 @@
         "name": "Maryam",
         "id": "l0mnKN5hdghur3xo5b7i",
         "languageCode": "all",
-        "model": "eleven_monolingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "indian"
@@ -1479,7 +1533,34 @@
         "name": "Aspara",
         "id": "mmOan6cOuvkl9Q2dbs5V",
         "languageCode": "all",
-        "model": "eleven_monolingual_v1",
+        "model": "eleven_multilingual_v2",
+        "provider": "elevenlabs",
+        "lowLatency": false,
+        "accent": "Indian "
+    },
+    {
+        "name": "Rajesh",
+        "id": "n32p8A7EZ9CiVeRYpBY9",
+        "languageCode": "all",
+        "model": "eleven_multilingual_v2",
+        "provider": "elevenlabs",
+        "lowLatency": false,
+        "accent": "indian"
+    },
+    {
+        "name": "Aaryan",
+        "id": "nXsrfIy6b0jzYz2zmb8V",
+        "languageCode": "all",
+        "model": "eleven_multilingual_v2",
+        "provider": "elevenlabs",
+        "lowLatency": false,
+        "accent": "Indian "
+    },
+    {
+        "name": "Raj",
+        "id": "ntq0vo8TNFM5MAMCwAsu",
+        "languageCode": "all",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "Indian "
@@ -1488,7 +1569,7 @@
         "name": "Kavya",
         "id": "qDGvjpTYd9TeWzpCUX2g",
         "languageCode": "all",
-        "model": "eleven_monolingual_v1",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "indian"
@@ -1497,7 +1578,16 @@
         "name": "Jiya",
         "id": "vPq3KPXSl3LzYlIQl1Ab",
         "languageCode": "all",
-        "model": "eleven_monolingual_v1",
+        "model": "eleven_multilingual_v2",
+        "provider": "elevenlabs",
+        "lowLatency": false,
+        "accent": "indian"
+    },
+    {
+        "name": "Arjun",
+        "id": "w39iYlbRlVOkAIo2y47o",
+        "languageCode": "all",
+        "model": "eleven_multilingual_v2",
         "provider": "elevenlabs",
         "lowLatency": false,
         "accent": "indian"
