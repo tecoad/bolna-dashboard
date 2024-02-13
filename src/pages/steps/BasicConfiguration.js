@@ -10,6 +10,8 @@ import salesAndMarketingJson from '../../data/templates/salesAndMarketing.json';
 import customerServiceJson from '../../data/templates/customerService.json';
 import virtualRMJson from '../../data/templates/virtualRM.json';
 import otherJson from '../../data/templates/others.json';
+import { Mixpanel } from '../../utils/mixpanel';
+
 
 function getPrefilledTemplate(option) {
     switch (option) {
@@ -37,12 +39,18 @@ function BasicConfiguration({ formData, onFormDataChange }) {
     const handleChange = (event) => {
         //console.log(`NAME ${event.target.name}`);
         if (event.target.name === 'assistantTask') {
+            Mixpanel.track('assistantTask', {
+              item: event.target.value
+            });
             onFormDataChange({
                 ...formData, basicConfig: { ...formData.basicConfig, [event.target.name]: event.target.value }, rulesConfig: { ...formData.rulesConfig, prompts: { ...getPrefilledTemplate(event.target.value) } }
             });
             return
 
         } else if (event.target.name === 'assistantType') {
+            Mixpanel.track('assistantType', {
+              item: event.target.value
+            });
             if (event.target.value == "IVR") {
                 var newFormData = { ...formData }
                 newFormData.modelsConfig.llmConfig.model = "gpt-3.5-turbo-1106"
@@ -60,6 +68,9 @@ function BasicConfiguration({ formData, onFormDataChange }) {
     };
 
     const handleRadioChange = (event) => {
+        Mixpanel.track('assistantInvocation', {
+          item: event.target.value
+        });
         let engagementConfig = {}
 
         engagementConfig = {

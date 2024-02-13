@@ -56,7 +56,7 @@ export const CREATE_AGENT_FORM = {
 
 function getVoiceDetails(voice) {
     let selectedVoice = voices.filter(v => v.name == voice)[0]
-    console.log(`voices ${JSON.stringify(voices)}, voice = ${JSON.stringify(voice)}`)
+    //console.log(`voices ${JSON.stringify(voices)}, voice = ${JSON.stringify(voice)}`)
     return selectedVoice
 }
 function getModel(model, modelType, assistantType) {
@@ -66,7 +66,7 @@ function getModel(model, modelType, assistantType) {
         } else {
             model = model.toLowerCase() == "gpt-3.5" ? "gpt-3.5-turbo-16k" : model.toLowerCase()
         }
-        console.log(`Model ${model}`)
+        //console.log(`Model ${model}`)
         return model
     } else {
         //model = model == "Nova-2" ? "deepgram" : model;
@@ -75,7 +75,7 @@ function getModel(model, modelType, assistantType) {
 }
 
 const getToolsConfig = (taskType, extraConfig) => {
-    console.log(`task type = ${taskType} extra config ${JSON.stringify(extraConfig)}`)
+    //console.log(`task type = ${taskType} extra config ${JSON.stringify(extraConfig)}`)
     var llmTaskConfig = {
         "llm_agent": {
             "max_tokens": 100,
@@ -122,9 +122,9 @@ const getToolsConfig = (taskType, extraConfig) => {
         return { api_tools: apiTools }
     }
     else {
-        console.log("SUmmarization task")
+        //console.log("SUmmarization task")
         llmTaskConfig.llm_agent.streaming_model = "gpt-4-1106-preview"
-        console.log("${llmTaskConfig.llm_agent.streaming_model}")
+        //console.log("${llmTaskConfig.llm_agent.streaming_model}")
     }
 
     return llmTaskConfig
@@ -168,7 +168,7 @@ const getElevenLabsConfig = (voiceDetails, agentData) => {
 
 
 const getXTTSConfig = (voiceDetails, agentData) => {
-    console.log(`VOICE ${JSON.stringify(voiceDetails)} Agent Details ${JSON.stringify(agentData)}`)
+    //console.log(`VOICE ${JSON.stringify(voiceDetails)} Agent Details ${JSON.stringify(agentData)}`)
     return {
         voice: voiceDetails.name,
         language: agentData.modelsConfig.asrConfig.language,
@@ -205,7 +205,7 @@ const getProviderConfig = (provider, voiceDetails, agentData) => {
 }
 const getSynthesizerConfig = (agentData) => {
     let voiceDetails = getVoiceDetails(agentData.modelsConfig.ttsConfig.voice)
-    console.log(`Voide details ${JSON.stringify(voiceDetails)}`)
+    //console.log(`Voide details ${JSON.stringify(voiceDetails)}`)
     let synthesizerConfig = {
         provider: voiceDetails.provider,
         provider_config: getProviderConfig(voiceDetails.provider, voiceDetails, agentData),
@@ -358,7 +358,7 @@ const getFollowupTasks = (followUpTasks) => {
 }
 
 export const convertToCreateAgentForm = (payload) => {
-    console.log(`Agent payload ${JSON.stringify(payload)}`)
+    //console.log(`Agent payload ${JSON.stringify(payload)}`)
     let agentTasks = [...payload.tasks]
     const agentData = agentTasks.shift()
     const followupTasks = [...agentTasks]
@@ -412,7 +412,7 @@ export const convertToCreateAgentForm = (payload) => {
         },
         followUpTaskConfig: followupTaskConfig
     };
-    console.log(`Form data ${JSON.stringify(formData)}`)
+    //console.log(`Form data ${JSON.stringify(formData)}`)
     return formData
 }
 

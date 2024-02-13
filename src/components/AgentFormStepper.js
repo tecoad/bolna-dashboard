@@ -11,6 +11,7 @@ import axios from 'axios';
 import { CircularProgress } from '@mui/material';
 import Backdrop from '@mui/material/Backdrop';
 import createApiInstance from '../utils/api';
+import { Mixpanel } from '../utils/mixpanel';
 
 function AgentFormStepper({ initialData, isUpdate, agentId, accessToken }) {
     const [activeStep, setActiveStep] = useState(0);
@@ -95,10 +96,15 @@ function AgentFormStepper({ initialData, isUpdate, agentId, accessToken }) {
         if (activeStep === steps.length - 1) {
             handleComplete()
         }
+
+        Mixpanel.track('click_next', {
+          item: activeStep
+        });
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
 
     const handleBack = () => {
+        Mixpanel.track('click_previous');
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
