@@ -3,6 +3,8 @@ import { TextField, FormControl, InputLabel, Select, MenuItem, Slider, Typograph
 import VoiceLab from '../models/VoiceLab';
 import { getVoiceLabel } from '../../utils/utils';
 import { renderTooltip } from '../../components/CustomTooltip';
+import { Mixpanel } from '../../utils/mixpanel';
+
 
 
 function ModelSettings({ formData, onFormDataChange, llmModels, voices, setVoices, initiallySelectedVoice, initiallySelectedModel, accessToken }) {
@@ -25,13 +27,12 @@ function ModelSettings({ formData, onFormDataChange, llmModels, voices, setVoice
     useEffect(() => {
         if (formData.basicConfig.assistantType == "IVR") {
             let filteredLLMModels = llmModels.filter(model => model.json_mode == "Yes");
-            console.log(`Filtered LLM Model = ${JSON.stringify(filteredLLMModels)}`)
+            //console.log(`Filtered LLM Model = ${JSON.stringify(filteredLLMModels)}`)
             setAvailableLLMModels([...filteredLLMModels]);
         }
     }, [formData])
 
     const handleChange = (type, event) => {
-
         let toChangePair = {}
         let conf = type + "Config"
 
@@ -53,13 +54,18 @@ function ModelSettings({ formData, onFormDataChange, llmModels, voices, setVoice
             }
 
         } else {
-            console.log(`event.target.name = ${event.target.name}, val ${event.target.value} type ${type}`)
+            //console.log(`event.target.name = ${event.target.name}, val ${event.target.value} type ${type}`)
             val = event.target.value
             key = event.target.name
             toChangePair = { [key]: val }
         }
 
-        console.log(`Name ${key} Value ${val}`)
+        Mixpanel.track('advance_setting', {
+          name: key,
+          val: val
+        });
+
+        //console.log(`Name ${key} Value ${val}`)
 
         onFormDataChange({
             ...formData,

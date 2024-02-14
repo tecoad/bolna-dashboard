@@ -2,13 +2,18 @@ import React, { useState, useMemo } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Popover, MenuItem, Stack, ListSubheader, ListItemButton } from '@mui/material';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
+import { Mixpanel } from '../utils/mixpanel';
 
 
-function CreditDialog({ open, handleClose, userInfo }) {
+function CreditDialog({ open, handleClose, userInfo, source }) {
       const [selectedCurrency, setSelectedCurrency] = useState(null);
       
       const handleCurrencySelection = (currency) => {
-        setSelectedCurrency(currency);
+        Mixpanel.identify(userInfo.user_id);
+        Mixpanel.track(`click_${currency}`, {
+          source: source
+        });
+
         // Redirect user to payment link based on selected currency
         if (currency === 'IND') {
             window.open(`https://buy.stripe.com/bIY9E06dv28Z3oA002?client_reference_id=${userInfo.user_id}`);

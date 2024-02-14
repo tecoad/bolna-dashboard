@@ -6,13 +6,13 @@ import PromptEditor from '../../components/PromptEditor';
 function Prompts({ formData, onFormDataChange }) {
 
     const handleEditorChange = (key, content) => {
-        console.log(`Current KEy ${key}`)
+        //console.log(`Current KEy ${key}`)
         onFormDataChange({
             ...formData, rulesConfig: { prompts: { ...formData.rulesConfig.prompts, [key]: content } }
 
         });
-        console.log(`FORM DATA ${key} ${JSON.stringify(formData.rulesConfig.prompts)}`)
-        console.log(`Text ${formData.rulesConfig.prompts[key]}`)
+        //console.log(`FORM DATA ${key} ${JSON.stringify(formData.rulesConfig.prompts)}`)
+        //console.log(`Text ${formData.rulesConfig.prompts[key]}`)
     };
 
     var lines = [
@@ -27,7 +27,7 @@ function Prompts({ formData, onFormDataChange }) {
         children: [{ text: line.content, editable: line.editable }],
     }));
 
-    console.log(`Example conversation ${JSON.stringify(exampleConversation)}`)
+    //console.log(`Example conversation ${JSON.stringify(exampleConversation)}`)
 
     if (formData.rulesConfig.prompts.exampleConversation != null) {
         exampleConversation = formData.rulesConfig.prompts.exampleConversation

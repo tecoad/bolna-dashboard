@@ -35,7 +35,6 @@ const StructuredText = () => {
 
 
 const PromptEditor = ({ value, identifier, onEditorDataChange, helperText }) => {
-    console.log(`INITIAL VALUE ${JSON.stringify(value)}`)
     const editor = useMemo(() => withReact(createEditor()), []);
 
     const initialValue = value ? value : [{ type: 'paragraph', editable: true, children: [{ text: '', editable: true }] }];
@@ -44,7 +43,6 @@ const PromptEditor = ({ value, identifier, onEditorDataChange, helperText }) => 
     const handleChange = (value) => {
         setEditorValue(value);
         onEditorDataChange(identifier, value);
-        console.log(`Stored ${JSON.stringify(value)}`)
     };
 
     const helperItems = helperText.split('\n').map((item, index) => (
@@ -107,7 +105,6 @@ const Element = ({ attributes, children, element }) => {
 
 
 const Leaf = ({ attributes, children, leaf }) => {
-    console.log(`${JSON.stringify(leaf.text)} leaf.editable ${leaf.editable}? `)
     return (
         <span {...attributes} style={{ color: leaf.editable ? 'black' : 'grey' }}>
             {children}

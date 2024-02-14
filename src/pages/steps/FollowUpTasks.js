@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
 import { Typography, Box, FormControl, InputLabel, Select, MenuItem, TextField, FormGroup, FormControlLabel, Checkbox, FormLabel, Chip, Input } from '@mui/material';
 import { renderTooltip } from '../../components/CustomTooltip';
+import { Mixpanel } from '../../utils/mixpanel';
+
 
 function FollowUpTasks({ formData, onFormDataChange }) {
     const [selectedTasks, setSelectedTasks] = useState(formData.followUpTaskConfig.selectedTasks);
     const [selectedNotificationMethods, setSelectedNotificationMethods] = useState(formData.followUpTaskConfig.notificationDetails.notificationMethods);
-    console.log(`Form data follow up tasks ${JSON.stringify(formData)}`)
+
+    //console.log(`Form data follow up tasks ${JSON.stringify(formData)}`)
     const handleTasksChange = (event) => {
         const { name, value } = event.target;
-        console.log(`Got task Chagne event ${name}, ${value}`)
+        Mixpanel.track('agent_tasks', {
+          val: value
+        });
+
         if (name === "extractionDetails") {
             onFormDataChange({
                 ...formData,
@@ -36,7 +42,7 @@ function FollowUpTasks({ formData, onFormDataChange }) {
                 },
             });
 
-            console.log(`Updated notification MEthodss ${JSON.stringify(updatedNotificationMethods)}`)
+            //console.log(`Updated notification MEthodss ${JSON.stringify(updatedNotificationMethods)}`)
         } else if (name === "webhookURL") {
             onFormDataChange({
                 ...formData,
