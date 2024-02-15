@@ -61,8 +61,8 @@ function ModelSettings({ formData, onFormDataChange, llmModels, voices, setVoice
         }
 
         Mixpanel.track('advance_setting', {
-          name: key,
-          val: val
+            name: key,
+            val: val
         });
 
         //console.log(`Name ${key} Value ${val}`)
@@ -85,7 +85,7 @@ function ModelSettings({ formData, onFormDataChange, llmModels, voices, setVoice
         { value: 1, label: 'Highly Creative' },
     ];
 
-    const languages = ['en', 'hi', 'es', 'fr', 'it'];
+    const languages = ['en', 'hi', 'es', 'fr', 'it', "pt-BR"];
     const asrModels = ['whisper', 'deepgram'];
 
     return (
