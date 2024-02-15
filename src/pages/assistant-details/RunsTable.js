@@ -11,15 +11,15 @@ function RunTable({ accessToken }) {
     const [runData, setRunData] = useState([]);
     const [loading, setLoading] = useState(false);
     const agent = location.state?.agent;
-    const agentId = agent?.range.split("#")[1];
+    const agentId = agent?.id;
     const api = createApiInstance(accessToken);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 setLoading(true);
-                const response = await api.get(`/agent/executions?agent_id=${agentId}`);
-                var runs = [...response.data.data]
+                const response = await api.get(`/agent/${agentId}/executions`);
+                var runs = [...response.data]
                 setRunData(runs);
                 setLoading(false);
                 console.log(`Got all executions and this is run data ${JSON.stringify(runData)}`)
@@ -53,7 +53,7 @@ function RunTable({ accessToken }) {
                         <JsonTable
                             sx={{ width: '70%' }}
                             jsonData={runData}
-                            columnsToShow={["range", "conversation_time", "createdAt", "total_cost"]}
+                            columnsToShow={["id", "conversation_time", "createdAt", "total_cost"]}
                             onClickPage="run-details"
                             clickable={true}
                             headersDisplayedAs={["Run ID", "Run Duration (seconds)", "Run Date", "Total Credits Used"]}

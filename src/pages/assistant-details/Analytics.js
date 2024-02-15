@@ -41,7 +41,7 @@ function Analytics({ accessToken, agentId }) {
     //     const headers = {
     //         'Authorization': `Bearer ${accessToken}`,
     //     }
-    //     axios.get(`${API_ENDPOINT}/agent/analytics?agent_id=${agentId}`, headers)
+    //     axios.get(`${API_ENDPOINT}/agent/${agentId}/analytics`, headers)
     //         .then(response => {
 
     //             setAnalyticsData(response.data.analytics);

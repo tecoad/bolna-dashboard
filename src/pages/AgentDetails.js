@@ -23,7 +23,7 @@ function AgentDetails({ accessToken }) {
     const userId = location.state?.userId;
     const [openPlayground, setOpenPlayground] = useState(false);
     const [openWebcall, setOpenWebcall] = useState(false);
-    const agentId = agent?.range.split("#")[1];
+    const agentId = agent?.id;
     const [loading, setLoading] = useState(false);
     const [prompt, setPrompt] = useState(null);
     //const { handleClick } = CallComponent({ agentId, accessToken });
