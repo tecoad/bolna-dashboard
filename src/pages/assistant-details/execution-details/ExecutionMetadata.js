@@ -52,7 +52,7 @@ function ExecutionMetadata({ executionDetails }) {
                     "LLM Details": executionDetails?.usage_breakdown?.llmModel,
                 })}
 
-                {(executionDetails?.average_latency != undefined || executionDetails?.average_latency != null) ? (
+                {(executionDetails?.average_latency != undefined || executionDetails?.average_latency != null || executionDetails?.average_latency != 0) ? (
                     <>
                         {
                             renderSection("Latency Details (In seconds)", {
