@@ -115,7 +115,7 @@ const getToolsConfig = (taskType, extraConfig) => {
         })
         return { api_tools: apiTools }
     } else if (taskType === "extraction") {
-        llmTaskConfig.llm_agent.streaming_model = "gpt-4-1106-preview"
+        llmTaskConfig.llm_agent.streaming_model = "gpt-3.5-turbo-1106" // "gpt-4-1106-preview"
         llmTaskConfig.llm_agent.extraction_details = extraConfig
     } else if ((taskType) === "webhook") {
         apiTools["webhookURL"] = extraConfig["webhookURL"]
@@ -123,7 +123,7 @@ const getToolsConfig = (taskType, extraConfig) => {
     }
     else {
         //console.log("SUmmarization task")
-        llmTaskConfig.llm_agent.streaming_model = "gpt-4-1106-preview"
+        llmTaskConfig.llm_agent.streaming_model = "gpt-3.5-turbo-1106" // "gpt-4-1106-preview"
         //console.log("${llmTaskConfig.llm_agent.streaming_model}")
     }
 
