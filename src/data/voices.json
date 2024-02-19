@@ -900,6 +900,24 @@
         "accent": "american"
     },
     {
+        "name": "Larry",
+        "id": "f1Bv0aZf1CDR0ljsbQEU",
+        "languageCode": "all",
+        "model": "eleven_multilingual_v2",
+        "provider": "elevenlabs",
+        "lowLatency": false,
+        "accent": "american"
+    },
+    {
+        "name": "Santa claus",
+        "id": "Gqe8GJJLg3haJkTwYj2L",
+        "languageCode": "all",
+        "model": "eleven_multilingual_v2",
+        "provider": "elevenlabs",
+        "lowLatency": false,
+        "accent": "american"
+    },
+    {
         "name": "Drew",
         "id": "29vD33N1CtxCmqQRPOHJ",
         "languageCode": "all",
