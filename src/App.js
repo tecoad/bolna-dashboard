@@ -134,7 +134,7 @@ function App() {
             </Route>
 
             <Route path="/dashboard" element={<Dashboard supabase={supabase} userInfo={userInfo} />}>
-              <Route path="my-agents" element={<MyAgents userId={session?.user?.id} accessToken={session?.access_token} />} />
+              <Route path="my-agents" element={<MyAgents user={userInfo} accessToken={session?.access_token} />} />
               <Route path="create-agents" element={<CreateAgents accessToken={session?.access_token} />} />
               <Route path="models" element={<Models accessToken={session?.access_token} />} />
               <Route path="datasets" element={<Datasets session={session} />} />
