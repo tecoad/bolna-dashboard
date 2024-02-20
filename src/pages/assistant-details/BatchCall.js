@@ -10,7 +10,7 @@ import { CloudUpload } from '@mui/icons-material';
 
 
 
-function BatchCall({ agentId, accessToken, user }) {
+function BatchCall({ agentId, accessToken }) {
     const [batches, setBatches] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -20,7 +20,6 @@ function BatchCall({ agentId, accessToken, user }) {
     const [apiSuccess, setApiSuccess] = useState(false);
     const [toRefreshAfterDelete, setToRefreshAfterDelete] = useState(false);
     const api = createApiInstance(accessToken);
-    const isUploadActive = user?.can_upload_batch || false;
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -68,7 +67,7 @@ function BatchCall({ agentId, accessToken, user }) {
             setIsLoading(true);
             try {
                 const response = await api.get(`/batches?agent_id=${agentId}`);
-                setBatches(response.data);
+                setBatches(response.data?.batches);
                 setToRefreshAfterDelete(false);
                 setApiSuccess(false);
               } catch (error) {
@@ -108,14 +107,7 @@ function BatchCall({ agentId, accessToken, user }) {
                     style={{ display: 'none' }}
                   />
                   <label htmlFor="file-input">
-                    {isUploadActive && (
-                      <Button
-                        onClick={handleOpenUploadDialog}
-                        sx={{ backgroundColor: '#50C878', color: 'white', '&:hover': { backgroundColor: '#369456' } }}
-                      >
-                        Upload batch
-                      </Button>
-                    )}
+
 
                   </label>
                 </Box>

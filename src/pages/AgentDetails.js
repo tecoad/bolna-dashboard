@@ -20,8 +20,7 @@ function AgentDetails({ accessToken }) {
     const agent = location.state?.agent;
     var [formData, setFormData] = useState(convertToCreateAgentForm(agent))
     //console.log(`Agent details ${JSON.stringify(agent)}`)
-    const user = location.state?.user;
-    const userId = user.id;
+    const userId = location.state?.userId;
     const [openPlayground, setOpenPlayground] = useState(false);
     const [openWebcall, setOpenWebcall] = useState(false);
     const agentId = agent?.id;
@@ -99,7 +98,7 @@ function AgentDetails({ accessToken }) {
         { name: 'Agent Execution', component: <RunsTable accessToken={accessToken} /> },
         { name: 'Analytics', component: <Analytics accessToken={accessToken} agentId={agentId} /> },
         { name: 'Edit agent details', component: <AgentFormStepper initialData={formData} isUpdate={true} agentId={agentId} accessToken={accessToken} /> },
-        { name: 'Batch call', component: <BatchCall agentId={agentId} accessToken={accessToken} user={user} /> },
+        { name: 'Batch call', component: <BatchCall agentId={agentId} accessToken={accessToken} /> },
     ];
 
     return (
