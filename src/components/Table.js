@@ -32,7 +32,7 @@ function JsonTable({
     columnsToShow,
     tooltipMap,
     actionsToShow = {},
-    user,
+    userId,
     accessToken,
     onClickPage,
     clickable,
@@ -124,7 +124,7 @@ function JsonTable({
             if (onClickPage === "agent-details") {
                 navigate("/dashboard/agent-details", {
                     state: {
-                        user: user,
+                        userId: userId,
                         agent: row
                     }
                 });
