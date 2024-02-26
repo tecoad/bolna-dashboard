@@ -19,6 +19,8 @@ import RunDetails from './pages/assistant-details/RunDetails';
 import BatchDetails from './pages/assistant-details/BatchDetails';
 import createApiInstance from './utils/api';
 import { Mixpanel } from './utils/mixpanel';
+import { DialogContent, Dialog, DialogTitle, DialogActions, Button } from '@mui/material';
+
 
 
 // Create a theme instance.
@@ -58,13 +60,32 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey, options);
 function App() {
   const [session, setSession] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
+  const [isSessionLoaded, setSessionLoaded] = useState(false);
+  const [isUserCalled, userCalled] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+
+  let sentUserRequest = false;
 
   useEffect(() => {
+    if (sentUserRequest == true) {
+      return;
+    }
+    sentUserRequest = true;
+
     const createUser = async (api) => {
+      userCalled(true);
       try {
         const response = await api.post(`/user`);
         if (response.status === 200) {
           const userInfo = response.data.data;
+
+          if (userInfo?.is_first_login) {
+            setShowPopup(true);
+            setTimeout(() => {
+              window.location.reload();
+            }, 6000);
+          }
+
           Mixpanel.identify(userInfo.user_id);
           Mixpanel.track('login');
           Mixpanel.people.set({
@@ -79,19 +100,23 @@ function App() {
         console.error('Error:', error);
       }
     }
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session)
-    })
 
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session)
-      if (session?.access_token) {
-        const api = createApiInstance(session?.access_token);
-        createUser(api);
-      }
-    })
+    if (!session) {
+      setSessionLoaded(true);
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        setSession(session)
+      })
 
-  }, [])
+      supabase.auth.onAuthStateChange((_event, session) => {
+        setSession(session);
+        if (session?.access_token && !isUserCalled) {
+          const api = createApiInstance(session?.access_token);
+          createUser(api);
+        }
+      })
+    }
+
+  }, [session])
 
   const redirectUrl = (process.env.REACT_APP_REDIRECT_URL == null || process.env.REACT_APP_REDIRECT_URL == undefined) ? "https://app.bolna.dev" : process.env.REACT_APP_REDIRECT_URL
 
@@ -147,6 +172,18 @@ function App() {
             </Route>
 
           </Routes>
+
+        {showPopup && (
+          <div>
+            {/* Delete confirmation dialog */}
+            <Dialog open={showPopup} maxWidth="xl">
+              <DialogContent>
+                Setting up your account ...
+              </DialogContent>
+            </Dialog>
+          </div>
+        )}
+
         </div>
       </Router>
     </ThemeProvider>
