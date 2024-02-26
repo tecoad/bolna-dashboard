@@ -34,7 +34,7 @@ const CallComponent = ({ agentId, accessToken }) => {
         }
 
         // Handle the successful response here
-        console.log('API call successful');
+        //console.log('API call successful');
         setOpen(false); // Close the dialog after successful API call
       } catch (error) {
         // Handle errors here
