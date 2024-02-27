@@ -21,7 +21,7 @@ function AgentDetails({ accessToken }) {
     var [formData, setFormData] = useState(convertToCreateAgentForm(agent))
     //console.log(`Agent details ${JSON.stringify(agent)}`)
     const user = location.state?.user;
-    const userId = user.id;
+    const userId = user?.id;
     const [openPlayground, setOpenPlayground] = useState(false);
     const [openWebcall, setOpenWebcall] = useState(false);
     const agentId = agent?.id;
@@ -126,13 +126,13 @@ function AgentDetails({ accessToken }) {
                                         <CallComponent agentId={agentId} accessToken={accessToken} />
                                     ) : (
                                         <>
-                                            {/* Change this to copy-able client.py code
+                                            {/* Change this to copy-able client.py code */}
                                             <Button
-                                                        onClick={handleWebcallOpen}
-                                                        sx={{ marginRight: 2, backgroundColor: '#50C878', color: 'white', '&:hover': { backgroundColor: '#369456' } }}
-                                                    >
-                                                        Webcall
-                                                    </Button> */}
+                                                onClick={handleWebcallOpen}
+                                                sx={{ marginRight: 2, backgroundColor: '#50C878', color: 'white', '&:hover': { backgroundColor: '#369456' } }}
+                                            >
+                                                Webcall
+                                            </Button>
                                         </>
                                     )
                                 }
