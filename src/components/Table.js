@@ -315,16 +315,17 @@ function JsonTable({
                             <Dialog
                               open={copyDialogOpen}
                               onClose={(event) => handleCopyDialogClose(event)}
-                              maxWidth="sm"
+                              fullWidth
                               aria-labelledby="add-copy-dialog"
                             >
                                 <DialogTitle>{copiedRow ? `Copy Agent - ${copiedRow.agent_name}` : 'Copy Agent'}</DialogTitle>
                                 <DialogContent>
 
-                                <Grid container spacing={1}>
+                                <Grid container spacing={0}>
                                   <Grid item xs={12}>
                                     <TextField
                                       autoFocus
+                                      fullWidth
                                       margin="dense"
                                       id="agentName"
                                       label="Agent Name"
