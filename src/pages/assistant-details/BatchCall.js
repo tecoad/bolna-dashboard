@@ -67,7 +67,7 @@ function BatchCall({ agentId, accessToken, user }) {
         const fetchBatches = async (agentId) => {
             setIsLoading(true);
             try {
-                const response = await api.get(`/batches?agent_id=${agentId}`);
+                const response = await api.get(`/batches/${agentId}`);
                 setBatches(response.data);
                 setToRefreshAfterDelete(false);
                 setApiSuccess(false);
