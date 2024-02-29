@@ -103,7 +103,7 @@ function JsonTable({
         try {
             let resourceId = keyUuid;
             if (apiUrl === '/batches') {
-                resourceId = `${agentId}-${keyUuid}`;
+                resourceId = `${agentId}/${keyUuid}`;
             }
             const response = await api.delete(`${apiUrl}/${resourceId}`);
 
