@@ -51,7 +51,9 @@ export const CREATE_AGENT_FORM = {
             smsTemeplate: null,
             webhookURL: null
         },
-        extractionDetails: null
+        extractionDetails: null,
+        extractionModel: "gpt-3.5-turbo-1106",
+        summarization_model: "gpt-3.5-turbo-instruct"
     }
 }
 

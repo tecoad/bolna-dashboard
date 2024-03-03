@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { base64ToBlob, base64ToArrayBuffer } from '../utils/utils';
-import { decodeWav } from 'wav-decoder';
+import { Alert } from '@mui/material';
+import Button from '@mui/material/Button';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import StopIcon from '@mui/icons-material/Stop';
+
 
 function WebsocketComponent({ agentId, accessToken, isOpen }) {
     const [audioStream, setAudioStream] = useState(null);
@@ -8,6 +12,9 @@ function WebsocketComponent({ agentId, accessToken, isOpen }) {
     const [sourceBuffer, setSourceBuffer] = useState(null);
     const audioContext = useRef(null);
     const sampleRate = 24000; // Sample rate of the audio data
+    const isSourceStarted = useRef(false);
+    const [isRecording, setIsRecording] = useState(false);
+
 
     const audioQueue = useRef([]);
     const nextStartTime = useRef(0); // Keep track of when the next audio chunk should start playing
@@ -27,9 +34,11 @@ function WebsocketComponent({ agentId, accessToken, isOpen }) {
                 const currentTime = audioContext.current.currentTime;
                 const startTime = nextStartTime.current > currentTime ? nextStartTime.current : currentTime;
                 newSource.start(startTime);
+                isSourceStarted.current = true; // Set the flag to true
                 nextStartTime.current = startTime + newSource.buffer.duration;
                 source.current = newSource
-                processQueue();
+                newSource.onended = processQueue;
+
             }, (error) => {
                 console.error('Error with decoding audio data', error);
                 processQueue();
@@ -41,7 +50,6 @@ function WebsocketComponent({ agentId, accessToken, isOpen }) {
     useEffect(() => {
         if (!audioContext.current) {
             audioContext.current = new AudioContext({ sampleRate });
-            source.current = audioContext.current.createBufferSource();
         }
 
         if (!socket.current) {
@@ -69,14 +77,12 @@ function WebsocketComponent({ agentId, accessToken, isOpen }) {
                 } else {
                     if (receivedMessage.type == "clear") {
 
-                        if (source.current) {
+                        if (source.current && isSourceStarted.current) {
                             source.current.stop();
                             source.current.disconnect();
                         }
                         audioQueue.current = [];
                         nextStartTime.current = 0;
-                        source.current = audioContext.current.createBufferSource();
-
                     }
                 }
 
@@ -90,15 +96,23 @@ function WebsocketComponent({ agentId, accessToken, isOpen }) {
             socket.current.addEventListener = ("error", (err) => {
                 console.error('WebSocket Error:', err);
                 socket.current.close()
+                if (audioContext.current && audioContext.current.state === "closed") {
+                    return
+                }
                 audioContext.current.close();
-                socket.current = null
+                socket.current = null;
+                audioContext.current = null;
             });
         }
 
         if (!isOpen) {
             socket.current.close()
-            audioContext.current.close();
             console.error('Closing websocket');
+            if (audioContext.current && audioContext.current.state === "closed") {
+                return
+            }
+            audioContext.current.close();
+            audioContext.current = null;
         }
 
 
@@ -107,6 +121,8 @@ function WebsocketComponent({ agentId, accessToken, isOpen }) {
 
     const startRecording = async () => {
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        setIsRecording(true);
+
         setAudioStream(stream);
 
         const recorder = new MediaRecorder(stream, { type: 'audio/webm' });
@@ -129,6 +145,8 @@ function WebsocketComponent({ agentId, accessToken, isOpen }) {
 
     const stopRecording = () => {
         console.log("Stopping")
+        setIsRecording(false);
+
         socket.current.close()
         console.log("Connection stopped")
         mediaRecorder.stop();
@@ -136,9 +154,24 @@ function WebsocketComponent({ agentId, accessToken, isOpen }) {
     };
 
     return (
-        <div>
-            <button onClick={startRecording}>Start Recording</button>
-            <button onClick={stopRecording}>Stop Recording</button>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ margin: '20px' }}>
+
+
+                {isRecording ? (
+                    <Button variant="contained" onClick={stopRecording} style={{ marginRight: '5px', backgroundColor: 'red', color: '#fff' }}>
+                        <StopIcon /> Stop Recording
+                    </Button>
+                ) : (
+                    <Button variant="contained" onClick={startRecording} style={{ marginRight: '5px' }}>
+                        <PlayArrowIcon /> Start Recording
+                    </Button>
+                )}
+
+            </div>
+            <Alert severity="info">Websockets are a bit slower due to our implementation of javacript client. Reach out to us if you need a quicker client at a cost.<br />
+                If you wanna use a quicker stand alone python file check out. <br />
+                <a href="https://docs.bolna.dev/providers#use-python-client" target="_blank" rel="noopener noreferrer"> Python client</a>. </Alert>
         </div>
     );
 }
