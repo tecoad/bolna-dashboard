@@ -7,7 +7,7 @@ const MIXPANEL_CONFIG = {
 
 mixpanel.init(MIXPANEL_TOKEN);
 
-let env_check = false; //process.env.REACT_NODE_ENV === 'production';
+let env_check = process.env.REACT_NODE_ENV === 'production';
 
 let actions = {
   identify: (id) => {
