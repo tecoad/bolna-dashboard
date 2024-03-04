@@ -1,27 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Typography, Box, FormControl, InputLabel, Select, MenuItem, TextField, FormGroup, FormControlLabel, Checkbox, FormLabel, Chip, Input } from '@mui/material';
 import { renderTooltip } from '../../components/CustomTooltip';
 import { Mixpanel } from '../../utils/mixpanel';
 
 
-function FollowUpTasks({ formData, onFormDataChange, llmModels }) {
+function FollowUpTasks({ formData, onFormDataChange }) {
     const [selectedTasks, setSelectedTasks] = useState(formData.followUpTaskConfig.selectedTasks);
     const [selectedNotificationMethods, setSelectedNotificationMethods] = useState(formData.followUpTaskConfig.notificationDetails.notificationMethods);
-    const [followupTaskLLMS, setFollowupTaskLLMS] = useState([])
-
-    useEffect(() => {
-        if (formData.basicConfig.assistantType == "IVR") {
-            let filteredLLMModels = llmModels.filter(model => model.json_mode == "Yes");
-            //console.log(`Filtered LLM Model = ${JSON.stringify(filteredLLMModels)}`)
-            setFollowupTaskLLMS([...filteredLLMModels]);
-        }
-    }, [formData])
 
     //console.log(`Form data follow up tasks ${JSON.stringify(formData)}`)
     const handleTasksChange = (event) => {
         const { name, value } = event.target;
         Mixpanel.track('agent_tasks', {
-            val: value
+          val: value
         });
 
         if (name === "extractionDetails") {
