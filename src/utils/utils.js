@@ -4,7 +4,8 @@ export const CREATE_AGENT_FORM = {
     basicConfig: {
         assistantType: "FreeFlowing",
         assistantName: null,
-        assistantTask: null
+        assistantTask: null,
+        optimizeLatency: false
     },
     modelsConfig: {
         llmConfig: {
@@ -51,7 +52,9 @@ export const CREATE_AGENT_FORM = {
             smsTemeplate: null,
             webhookURL: null
         },
-        extractionDetails: null
+        extractionDetails: null,
+        extractionModel: "gpt-3.5-turbo-1106",
+        summarization_model: "gpt-3.5-turbo-instruct"
     }
 }
 
@@ -232,6 +235,7 @@ export const convertToCreateAgentPayload = (agentData) => {
         "tasks": [
             {
                 "task_type": "conversation",
+                "optimize_latency": agentData.basicConfig.optimizeLatency,
                 "tools_config": {
                     "llm_agent": {
                         "max_tokens": agentData.modelsConfig.llmConfig.maxTokens,
@@ -362,6 +366,7 @@ const getFollowupTasks = (followUpTasks) => {
 export const convertToCreateAgentForm = (payload) => {
     //console.log(`Agent payload ${JSON.stringify(payload)}`)
     let agentTasks = [...payload.tasks]
+    let optimizeLatency = agentTasks[0]?.optimize_latency
     const agentData = agentTasks.shift()
     const followupTasks = [...agentTasks]
     const llmAgent = agentData.tools_config?.llm_agent;
@@ -375,6 +380,7 @@ export const convertToCreateAgentForm = (payload) => {
             assistantType: llmAgent.agent_flow_type === "preprocessed" ? "IVR" : "FreeFlowing",
             assistantName: payload.agent_name,
             assistantTask: payload?.agent_type == undefined || payload?.agent_type == null || !agentTypes.includes(payload.agent_type) ? "Other" : payload.agent_type,
+            optimizeLatency: optimizeLatency,
             agentWelcomeMessage: payload.agent_welcome_message || AGENT_WELCOME_MESSAGE
         },
         modelsConfig: {
@@ -433,9 +439,30 @@ export const base64ToBlob = (base64, contentType) => {
         const byteArray = new Uint8Array(byteNumbers);
         byteArrays.push(byteArray);
     }
-
     return new Blob(byteArrays, { type: contentType });
 }
+
+// export const base64ToArrayBuffer = (base64) => {
+//     const binaryString = atob(base64);
+//     const len = binaryString.length;
+//     const bytes = new Uint8Array(len);
+//     for (let i = 0; i < len; i++) {
+//         bytes[i] = binaryString.charCodeAt(i);
+//     }
+//     const float32Array = new Float32Array(bytes.buffer);
+//     return float32Array.buffer;
+// };
+
+export const base64ToArrayBuffer = (base64) => {
+    const binaryString = window.atob(base64); // Decode base64
+    const len = binaryString.length;
+    const bytes = new Uint8Array(len);
+    for (let i = 0; i < len; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+    }
+    return bytes.buffer;
+}
+
 
 
 // export const getDefaultSampleRate = () => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextField, FormControl, FormLabel, Select, MenuItem, InputLabel, Box, Tooltip, IconButton, Radio, RadioGroup, FormControlLabel, FormGroup } from '@mui/material';
+import { TextField, FormControl, FormLabel, Select, MenuItem, InputLabel, Box, Tooltip, IconButton, Radio, RadioGroup, FormControlLabel, FormGroup, Checkbox } from '@mui/material';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { renderTooltip } from '../../components/CustomTooltip';
 import leadQualificationJson from '../../data/templates/leadQualification.json';
@@ -39,7 +39,7 @@ function BasicConfiguration({ formData, onFormDataChange }) {
         //console.log(`NAME ${event.target.name}`);
         if (event.target.name === 'assistantTask') {
             Mixpanel.track('assistantTask', {
-              item: event.target.value
+                item: event.target.value
             });
             onFormDataChange({
                 ...formData, basicConfig: { ...formData.basicConfig, [event.target.name]: event.target.value }, rulesConfig: { ...formData.rulesConfig, prompts: { ...getPrefilledTemplate(event.target.value) } }
@@ -48,7 +48,7 @@ function BasicConfiguration({ formData, onFormDataChange }) {
 
         } else if (event.target.name === 'assistantType') {
             Mixpanel.track('assistantType', {
-              item: event.target.value
+                item: event.target.value
             });
             if (event.target.value == "IVR") {
                 var newFormData = { ...formData }
@@ -58,6 +58,11 @@ function BasicConfiguration({ formData, onFormDataChange }) {
                 });
                 return
             }
+        } else if (event.target.name === 'optimizeLatency') {
+            onFormDataChange({
+                ...formData, basicConfig: { ...formData.basicConfig, [event.target.name]: event.target.checked }
+            });
+            return
         }
 
         onFormDataChange({
@@ -68,7 +73,7 @@ function BasicConfiguration({ formData, onFormDataChange }) {
 
     const handleRadioChange = (event) => {
         Mixpanel.track('assistantInvocation', {
-          item: event.target.value
+            item: event.target.value
         });
         let engagementConfig = {}
 
@@ -144,6 +149,24 @@ function BasicConfiguration({ formData, onFormDataChange }) {
 
             <Box sx={{ display: 'flex', alignItems: 'center', width: '50%', marginY: 1 }}>
                 <FormControl component="fieldset" fullWidth margin="normal">
+                    <FormGroup>
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    checked={formData.basicConfig.optimizeLatency}
+                                    onChange={handleChange}
+                                    name="optimizeLatency"
+                                />
+                            }
+                            label="Enable Latency Optimizations"
+                        />
+                    </FormGroup>
+                </FormControl>
+                {renderTooltip("Latency optimisation can bring near human like conversation but on an average it's 3X more expensive.")}
+            </Box>
+
+            <Box sx={{ display: 'flex', alignItems: 'center', width: '50%', marginY: 1 }}>
+                <FormControl component="fieldset" fullWidth margin="normal">
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                         <FormLabel component="legend" sx={{ fontWeight: 'bold', marginRight: 2 }}>
                             Agent Invocation
@@ -161,6 +184,9 @@ function BasicConfiguration({ formData, onFormDataChange }) {
                     </Box>
                 </FormControl>
             </Box>
+
+
+
 
         </Box>
     );
