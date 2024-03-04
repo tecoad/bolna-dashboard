@@ -98,7 +98,7 @@ function AgentFormStepper({ initialData, isUpdate, agentId, accessToken }) {
         }
 
         Mixpanel.track('click_next', {
-            item: activeStep
+          item: activeStep
         });
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
@@ -259,7 +259,7 @@ function AgentFormStepper({ initialData, isUpdate, agentId, accessToken }) {
                     onEdgesChange={onEdgesChange}
                 />
             case 2:
-                return <FollowUpTasks formData={formData} onFormDataChange={handleFormDataChange} llmModels={llmModels} />;
+                return <FollowUpTasks formData={formData} onFormDataChange={handleFormDataChange} />;
             case 3:
                 return <ModelSettings accessToken={accessToken} formData={formData} onFormDataChange={handleFormDataChange} llmModels={llmModels} voices={voices} setVoices={setVoices} initiallySelectedVoice={selectedVoice} initiallySelectedModel={selectedLLMModel} />;
             default:

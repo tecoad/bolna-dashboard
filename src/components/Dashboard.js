@@ -21,13 +21,13 @@ import { Mixpanel } from '../utils/mixpanel';
 const drawerWidth = 240;
 const MENU_OPTIONS = [
     {
-        label: 'Add More Credits',
-        icon: 'eva:home-fill',
-        action: 'ADD_CREDITS'
+      label: 'Add More Credits',
+      icon: 'eva:home-fill',
+      action: 'ADD_CREDITS'
     }
-];
+  ];
 
-function Dashboard({ supabase, userInfo = null }) {
+function Dashboard({ supabase, userInfo=null }) {
     const [mobileOpen, setMobileOpen] = useState(false);
     const [accountOpen, setAccountOpen] = useState(null);
     const [openCreditDialog, setOpenCreditDialog] = useState(false);
@@ -49,35 +49,35 @@ function Dashboard({ supabase, userInfo = null }) {
     }
 
     const handleAccountOpen = (event) => {
-        Mixpanel.identify(userInfo?.user_id);
+        Mixpanel.identify(userInfo.user_id);
         Mixpanel.track('open_profile');
         setAccountOpen(event.currentTarget);
-    };
+      };
 
-    const handleAccountClose = () => {
+      const handleAccountClose = () => {
         setAccountOpen(null);
-    };
+      };
 
-    const handleMenuItemClick = (action) => {
+      const handleMenuItemClick = (action) => {
         if (action === 'ADD_CREDITS') {
             Mixpanel.identify(userInfo.user_id);
             Mixpanel.track('click_profile_add_credits');
             setOpenCreditDialog(true);
         }
-    };
+      };
 
-    const handleCreditCloseDialog = () => {
+      const handleCreditCloseDialog = () => {
         setOpenCreditDialog(false);
         setAccountOpen(null);
-    };
+      };
 
-    const handleNavLinkClick = (e) => {
+      const handleNavLinkClick = (e) => {
         //console.log(e.target.innerText);
         // Track event using Mixpanel
         Mixpanel.track('nav_item_clicked', {
-            item: e.target.innerText
+          item: e.target.innerText
         });
-    };
+      };
 
     const drawer = (
         <div>
@@ -109,7 +109,7 @@ function Dashboard({ supabase, userInfo = null }) {
                 <ListItem button component={NavLink} to="integrations" onClick={handleNavLinkClick}>
                     <ListItemIcon><SettingsInputComponentIcon /></ListItemIcon>
                     <ListItemText primary="Integrations" />
-                    <ListItemSecondaryAction sx={{ right: '20%' }}>
+                    <ListItemSecondaryAction sx={{ right: '20%'}}>
                         <Badge
                             badgeContent={<Typography variant="body6">Soon</Typography>}
                             color="info"
@@ -136,44 +136,44 @@ function Dashboard({ supabase, userInfo = null }) {
             <Divider />
 
 
-            <List component="nav" sx={{ display: 'flex' }}>
-                <ListItem disablePadding>
-                    <ListItemButton component="a" target="_blank" href="https://bolna.canny.io/">
-                        <ListItemIcon sx={{ minWidth: 'auto', marginRight: 1, pb: 0 }}>
-                            <LiveHelpIcon /> {/* Use the icon component */}
-                        </ListItemIcon>
+          <List component="nav" sx={{ display: 'flex'}}>
+            <ListItem disablePadding>
+              <ListItemButton component="a" target="_blank" href="https://bolna.canny.io/">
+                  <ListItemIcon sx={{ minWidth: 'auto', marginRight: 1, pb: 0 }}>
+                    <LiveHelpIcon /> {/* Use the icon component */}
+                  </ListItemIcon>
 
-                        <ListItemText primary={<Typography variant="caption">FAQs</Typography>} onClick={handleNavLinkClick} />
-                    </ListItemButton>
-                </ListItem>
-                <ListItem disablePadding>
-                    <ListItemButton component="a" target="_blank" href="https://docs.bolna.dev">
-                        <ListItemIcon sx={{ minWidth: 'auto', marginRight: 1, pb: 0 }}>
-                            <ArticleIcon /> {/* Use the icon component */}
-                        </ListItemIcon>
+                <ListItemText primary={<Typography variant="caption">FAQs</Typography>} onClick={handleNavLinkClick} />
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton component="a" target="_blank" href="https://docs.bolna.dev">
+                  <ListItemIcon sx={{ minWidth: 'auto', marginRight: 1, pb: 0 }}>
+                    <ArticleIcon /> {/* Use the icon component */}
+                  </ListItemIcon>
 
-                        <ListItemText sx={{ lineHeight: 0.5 }} primary={<Typography variant="caption">Read Docs</Typography>} onClick={handleNavLinkClick} />
-                    </ListItemButton>
-                </ListItem>
-            </List>
-            <List component="nav" sx={{ display: 'flex', m: 0, p: 0 }}>
-                <ListItem disablePadding>
-                    <ListItemButton component="a" target="_blank" href="https://discord.gg/yDfcqreByj">
-                        <ListItemIcon sx={{ minWidth: 'auto', marginRight: 1, pb: 0 }}>
-                            <ChatIcon /> {/* Use the icon component */}
-                        </ListItemIcon>
-                        <ListItemText primary={<Typography variant="caption">Chat on Discord</Typography>} onClick={handleNavLinkClick} />
-                    </ListItemButton>
-                </ListItem>
-                <ListItem disablePadding>
-                    <ListItemButton component="a" target="_blank" href="https://forms.gle/xaeX5CpN6L9i64hE6">
-                        <ListItemIcon sx={{ minWidth: 'auto', marginRight: 1, pb: 0 }}>
-                            <SupportIcon /> {/* Use the icon component */}
-                        </ListItemIcon>
-                        <ListItemText sx={{ pb: 0 }} primary={<Typography variant="caption">Contact Us</Typography>} onClick={handleNavLinkClick} />
-                    </ListItemButton>
-                </ListItem>
-            </List>
+                <ListItemText sx={{ lineHeight: 0.5 }} primary={<Typography variant="caption">Read Docs</Typography>} onClick={handleNavLinkClick} />
+              </ListItemButton>
+            </ListItem>
+          </List>
+          <List component="nav" sx={{ display: 'flex', m: 0, p:0 }}>
+            <ListItem disablePadding>
+              <ListItemButton component="a" target="_blank" href="https://discord.gg/yDfcqreByj">
+                  <ListItemIcon sx={{ minWidth: 'auto', marginRight: 1, pb: 0 }}>
+                    <ChatIcon /> {/* Use the icon component */}
+                  </ListItemIcon>
+                <ListItemText primary={<Typography variant="caption">Chat on Discord</Typography>} onClick={handleNavLinkClick} />
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton component="a" target="_blank" href="https://forms.gle/xaeX5CpN6L9i64hE6">
+                <ListItemIcon sx={{ minWidth: 'auto', marginRight: 1, pb: 0 }}>
+                    <SupportIcon /> {/* Use the icon component */}
+                </ListItemIcon>
+                <ListItemText sx={{ pb: 0 }} primary={<Typography variant="caption">Contact Us</Typography>} onClick={handleNavLinkClick} />
+              </ListItemButton>
+            </ListItem>
+          </List>
 
         </div>
     );
@@ -224,24 +224,24 @@ function Dashboard({ supabase, userInfo = null }) {
                     <IconButton
                         onClick={handleAccountOpen}
                         sx={{
-                            width: 40,
-                            height: 40,
-                            ...(accountOpen && {
-                                background: (theme) =>
-                                    `linear-gradient(135deg, ${theme.palette.primary.light} 0%, ${theme.palette.primary.main} 100%)`,
-                            }),
+                        width: 40,
+                        height: 40,
+                        ...(accountOpen && {
+                            background: (theme) =>
+                            `linear-gradient(135deg, ${theme.palette.primary.light} 0%, ${theme.palette.primary.main} 100%)`,
+                        }),
                         }}
                     >
                         <Avatar
-                            src=""
-                            alt={userInfo?.user_info?.name || ''}
-                            sx={{
-                                width: 36,
-                                height: 36,
-                                border: (theme) => `solid 2px ${theme.palette.background.default}`,
-                            }}
+                        src=""
+                        alt={userInfo?.user_info?.name || ''}
+                        sx={{
+                            width: 36,
+                            height: 36,
+                            border: (theme) => `solid 2px ${theme.palette.background.default}`,
+                        }}
                         >
-                            {userInfo?.user_info?.name ? userInfo?.user_info?.name.charAt(0).toUpperCase() : userInfo?.user_info?.email.charAt(0).toUpperCase()}
+                        {userInfo?.user_info?.name ? userInfo?.user_info?.name.charAt(0).toUpperCase() : userInfo?.user_info?.email.charAt(0).toUpperCase()}
                         </Avatar>
                     </IconButton>
 
@@ -252,30 +252,30 @@ function Dashboard({ supabase, userInfo = null }) {
                         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
                         PaperProps={{
-                            sx: {
-                                p: 0,
-                                mt: 1,
-                                ml: 0.75,
-                                width: 200,
-                            },
+                        sx: {
+                            p: 0,
+                            mt: 1,
+                            ml: 0.75,
+                            width: 200,
+                        },
                         }}
 
-                    >
+                        >
                         <Box sx={{ my: 1.5, px: 2 }}>
-                            <Typography variant="subtitle2" noWrap>
-                                {userInfo?.user_info?.name || ''}
-                            </Typography>
-                            <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-                                {userInfo?.user_info?.email || ''}
-                            </Typography>
+                        <Typography variant="subtitle2" noWrap>
+                            {userInfo?.user_info?.name || ''}
+                        </Typography>
+                        <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
+                            {userInfo?.user_info?.email || ''}
+                        </Typography>
                         </Box>
 
                         <Divider sx={{ borderStyle: 'dashed' }} />
 
                         {MENU_OPTIONS.map((option) => (
-                            <MenuItem key={option.label} onClick={() => handleMenuItemClick(option.action)}>
-                                {option.label}
-                            </MenuItem>
+                        <MenuItem key={option.label} onClick={() => handleMenuItemClick(option.action)}>
+                            {option.label}
+                        </MenuItem>
                         ))}
 
                         <CreditDialog open={openCreditDialog} handleClose={handleCreditCloseDialog} userInfo={userInfo} source={"dropdown"} />
@@ -283,12 +283,12 @@ function Dashboard({ supabase, userInfo = null }) {
                         <Divider sx={{ borderStyle: 'dashed', m: 0 }} />
 
                         <MenuItem
-                            disableRipple
-                            disableTouchRipple
-                            onClick={logoutUser}
-                            sx={{ typography: 'body2', color: 'error.main', py: 1.5 }}
+                        disableRipple
+                        disableTouchRipple
+                        onClick={logoutUser}
+                        sx={{ typography: 'body2', color: 'error.main', py: 1.5 }}
                         >
-                            Logout
+                        Logout
                         </MenuItem>
                     </Popover>
 
