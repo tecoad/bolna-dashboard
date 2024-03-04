@@ -1,4 +1,5 @@
 import voices from '../data/voices.json'
+export const AGENT_WELCOME_MESSAGE = "This call is being recorded for quality assurance and training. Please speak now.";
 export const CREATE_AGENT_FORM = {
     basicConfig: {
         assistantType: "FreeFlowing",
@@ -228,8 +229,9 @@ export const get_streaming_model = (llm_model) => {
 
 export const convertToCreateAgentPayload = (agentData) => {
     let payload = {
-        "agent_name": agentData.basicConfig.assistantName,
+        "agent_name": agentData.basicConfig.assistantName || 'My Agent',
         "agent_type": agentData.basicConfig.assistantTask,
+        "agent_welcome_message": agentData.basicConfig.agentWelcomeMessage,
         "tasks": [
             {
                 "task_type": "conversation",
@@ -378,7 +380,8 @@ export const convertToCreateAgentForm = (payload) => {
             assistantType: llmAgent.agent_flow_type === "preprocessed" ? "IVR" : "FreeFlowing",
             assistantName: payload.agent_name,
             assistantTask: payload?.agent_type == undefined || payload?.agent_type == null || !agentTypes.includes(payload.agent_type) ? "Other" : payload.agent_type,
-            optimizeLatency: optimizeLatency
+            optimizeLatency: optimizeLatency,
+            agentWelcomeMessage: payload.agent_welcome_message || AGENT_WELCOME_MESSAGE
         },
         modelsConfig: {
             llmConfig: {

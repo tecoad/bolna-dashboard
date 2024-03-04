@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Typography } from '@mui/material';
-import { DialogContent, Dialog, DialogTitle, DialogActions } from '@mui/material';
+import { Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Typography } from '@mui/material';
+import { DialogContentText, DialogContent, Dialog, DialogTitle, DialogActions, Stack, Alert } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Tooltip from '@mui/material/Tooltip';
 import { IconButton } from '@mui/material';
@@ -9,6 +9,7 @@ import createApiInstance from '../utils/api';
 import TextField from '@mui/material/TextField';
 import EventIcon from '@mui/icons-material/Event';
 import moment from 'moment-timezone';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 
 import dayjs, { Dayjs } from 'dayjs';
@@ -45,10 +46,27 @@ function JsonTable({
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
     const [deleteTarget, setDeleteTarget] = useState(null);
     const [deleteApiUrl, setDeleteApiUrl] = useState(null);
+
+    const [copyDialogOpen, setCopyDialogOpen] = useState(false);
+    const [copiedRow, setCopiedRow] = useState(null);
+    const [formBeingFilled, setFormBeingFilled] = useState(false);
+    const [newAgentName, setNewAgentName] = useState('');
+    const [infoMessage, setInfoMessage] = useState('');
+    const [infoSeverity, setInfoSeverity] = useState('');
+
     const [selectedDateTime, setSelectedDateTime] = React.useState(dayjs());
 
     const api = createApiInstance(accessToken);
 
+
+    const handleFormFieldFocus = () => {
+        setFormBeingFilled(true);
+    };
+
+    // Function to handle form field blur
+    const handleFormFieldBlur = () => {
+        setFormBeingFilled(false);
+    };
 
     const handleDateTimeChange = (newDateTime) => {
         // Handle the date-time change if needed
@@ -85,7 +103,7 @@ function JsonTable({
         try {
             let resourceId = keyUuid;
             if (apiUrl === '/batches') {
-                resourceId = `${agentId}-${keyUuid}`;
+                resourceId = `${agentId}/${keyUuid}`;
             }
             const response = await api.delete(`${apiUrl}/${resourceId}`);
 
@@ -104,12 +122,46 @@ function JsonTable({
         }
     };
 
+    const handleCopy = async (e, agent_data) => {
+        e.stopPropagation();
+        try {
+            const body = {
+                agent_id: agent_data.agent_id,
+                agent_name: newAgentName,
+            };
+            const response = await api.post('/agent/copy', body);
+
+            if (response.data?.state && response.data.state === "success") {
+                setInfoMessage("Agent copied successfully. Please wait ...");
+                setInfoSeverity('success');
+                setTimeout(() => {
+                  window.location.reload(true);
+                }, 5000);
+            } else {
+                setInfoMessage(response.data?.message);
+                setInfoSeverity('error');
+            }
+        } catch (error) {
+            console.error('Error while deleting:', error);
+        }
+    };
+
     const handleDeleteClick = (e, keyUuid, apiUrl) => {
         // Show the delete confirmation dialog
         e.stopPropagation();
         setDeleteDialogOpen(true);
         setDeleteTarget(keyUuid);
         setDeleteApiUrl(apiUrl);
+    };
+
+    const handleCopyClick = (e, agent_id, agent_name) => {
+        // Show the delete confirmation dialog
+        e.stopPropagation();
+        setCopyDialogOpen(true);
+        setNewAgentName(`${agent_name} - Copy`);
+        setInfoMessage('Please refresh the page if the copied agent doesn\'t appear');
+        setInfoSeverity('info');
+        setCopiedRow({ agent_id, agent_name });
     };
 
     const handleDeleteDialogClose = () => {
@@ -119,8 +171,17 @@ function JsonTable({
         setDeleteApiUrl(null);
     };
 
+    const handleCopyDialogClose = (e) => {
+        // Close the delete confirmation dialog without deleting
+        e.stopPropagation();
+        setCopyDialogOpen(false);
+        setCopiedRow(null);
+        setInfoMessage('');
+        setInfoSeverity('');
+    };
+
     const handleRowClick = (row, agentId) => {
-        if (clickable) {
+        if (clickable && !formBeingFilled && !copyDialogOpen) {
             if (onClickPage === "agent-details") {
                 navigate("/dashboard/agent-details", {
                     state: {
@@ -129,14 +190,14 @@ function JsonTable({
                     }
                 });
             } else if (onClickPage === "run-details") {
-                console.log(`Row ${JSON.stringify(row)}`)
+                //console.log(`Row ${JSON.stringify(row)}`)
                 navigate("/dashboard/agent/run-details", {
                     state: {
                         runDetails: row
                     }
                 });
             } else if (onClickPage === "batch-details") {
-                console.log(`Row ${JSON.stringify(row)}`)
+                //console.log(`Row ${JSON.stringify(row)}`)
                 navigate("/dashboard/agent/batch-details", {
                     state: {
                         agentId: agentId,
@@ -202,6 +263,13 @@ function JsonTable({
                                             </IconButton>
                                         )}
 
+                                        {key === 'Copy' && (
+                                            <IconButton onClick={(event) => handleCopyClick(event, row[value.id], row[value.name])} aria-label={`${key} ${row[value.id]}`} sx={{ flexDirection: 'column' }}>
+                                                <ContentCopyIcon />
+                                                <Typography variant="caption">Copy</Typography>
+                                            </IconButton>
+                                        )}
+
                                         {/* Render content for "Schedule" */}
                                         {key === 'Schedule' && (
 
@@ -241,6 +309,47 @@ function JsonTable({
                                     </TableCell>
                                 );
                             })}
+
+                            {/* Copy dialog */}
+                            {setCopiedRow && (
+                            <Dialog
+                              open={copyDialogOpen}
+                              onClose={(event) => handleCopyDialogClose(event)}
+                              fullWidth
+                              aria-labelledby="add-copy-dialog"
+                            >
+                                <DialogTitle>{copiedRow ? `Copy Agent - ${copiedRow.agent_name}` : 'Copy Agent'}</DialogTitle>
+                                <DialogContent>
+
+                                <Grid container spacing={0}>
+                                  <Grid item xs={12}>
+                                    <TextField
+                                      autoFocus
+                                      fullWidth
+                                      margin="dense"
+                                      id="agentName"
+                                      label="Agent Name"
+                                      type="text"
+                                      onFocus={handleFormFieldFocus}
+                                      onBlur={handleFormFieldBlur}
+                                      defaultValue={copiedRow ? `${copiedRow.agent_name} - Copy` : ''}
+                                      onChange={(e) => setNewAgentName(e.target.value)}
+                                    />
+                                  </Grid>
+                                </Grid>
+
+                                <Stack sx={{ width: '100%' }} spacing={2}>
+                                  <Alert severity={infoSeverity}>{infoMessage}</Alert>
+                                </Stack>
+
+                                </DialogContent>
+                                <DialogActions>
+                                    <Button onClick={(event) => handleCopy(event, copiedRow)} color="primary">
+                                        Copy Agent
+                                    </Button>
+                                </DialogActions>
+                            </Dialog>
+                            )}
 
                             {/* Delete confirmation dialog */}
                             <Dialog open={deleteDialogOpen} onClose={handleDeleteDialogClose}>

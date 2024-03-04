@@ -24,7 +24,7 @@ const CallComponent = ({ agentId, accessToken }) => {
   const handleConfirm = async () => {
     if (phoneNumber !== '') {
       try {
-        const response = await api.post('/demo_call', {
+        const response = await api.post('/call', {
           agent_id: agentId,
           recipient_phone_number: phoneNumber
         });
@@ -34,7 +34,7 @@ const CallComponent = ({ agentId, accessToken }) => {
         }
 
         // Handle the successful response here
-        console.log('API call successful');
+        //console.log('API call successful');
         setOpen(false); // Close the dialog after successful API call
       } catch (error) {
         // Handle errors here

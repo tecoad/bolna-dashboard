@@ -12,7 +12,6 @@ import virtualRMJson from '../../data/templates/virtualRM.json';
 import otherJson from '../../data/templates/others.json';
 import { Mixpanel } from '../../utils/mixpanel';
 
-
 function getPrefilledTemplate(option) {
     switch (option) {
         case "Lead Qualification":
@@ -98,11 +97,12 @@ function BasicConfiguration({ formData, onFormDataChange }) {
                         label="Agent Name"
                         variant="outlined"
                         name="assistantName"
-                        value={formData.basicConfig.assistantName || 'My Agent'}
+                        value={formData.basicConfig.assistantName}
+                        defaultValue="My Agent"
                         onChange={handleChange}
                     />
                 </FormControl>
-                {renderTooltip("Agents will refer to themselves with this name")}
+                {renderTooltip("Label to identify the agent")}
             </Box>
 
             <Box sx={{ display: 'flex', alignItems: 'center', width: '50%', marginY: 1 }}>
@@ -130,7 +130,7 @@ function BasicConfiguration({ formData, onFormDataChange }) {
                         labelId="task-label"
                         id="task-select"
                         name="assistantTask"
-                        value={formData.basicConfig.assistantTask || ''}
+                        value={formData.basicConfig.assistantTask || ""}
                         label="Task for Assistant"
                         onChange={handleChange}
                     >
