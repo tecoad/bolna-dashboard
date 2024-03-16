@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const createApiInstance = (token) => {
+const createApiInstance = (token=null) => {
   return axios.create({
     baseURL: process.env.REACT_APP_FAST_API_BACKEND_URL,
     headers: {
