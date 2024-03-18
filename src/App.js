@@ -18,6 +18,7 @@ import AgentDetails from './pages/AgentDetails';
 import RunDetails from './pages/assistant-details/RunDetails';
 import BatchDetails from './pages/assistant-details/BatchDetails';
 import createApiInstance from './utils/api';
+import { PaymentStatusPage } from './utils/payment';
 import { Mixpanel } from './utils/mixpanel';
 import { DialogContent, Dialog, DialogTitle, DialogActions, Button } from '@mui/material';
 
@@ -158,7 +159,7 @@ function App() {
             >
             </Route>
 
-            <Route path="/dashboard" element={<Dashboard supabase={supabase} userInfo={userInfo} />}>
+            <Route path="/dashboard" element={<Dashboard supabase={supabase} userInfo={userInfo} accessToken={session?.access_token} />}>
               <Route path="my-agents" element={<MyAgents user={userInfo} accessToken={session?.access_token} />} />
               <Route path="create-agents" element={<CreateAgents accessToken={session?.access_token} />} />
               <Route path="models" element={<Models accessToken={session?.access_token} />} />
@@ -169,6 +170,7 @@ function App() {
               <Route path="agent-details" element={<AgentDetails accessToken={session?.access_token} />} />
               <Route path="agent/run-details" element={<RunDetails session={session} />} />
               <Route path="agent/batch-details" element={<BatchDetails session={session} accessToken={session?.access_token} />} />
+              <Route path="user/payment" element={<PaymentStatusPage />} />
             </Route>
 
           </Routes>

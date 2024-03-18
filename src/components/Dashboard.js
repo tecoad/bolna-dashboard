@@ -27,7 +27,8 @@ const MENU_OPTIONS = [
     }
   ];
 
-function Dashboard({ supabase, userInfo=null }) {
+function Dashboard({ supabase, accessToken, userInfo=null }) {
+    //console.log("accessToken1", accessToken);
     const [mobileOpen, setMobileOpen] = useState(false);
     const [accountOpen, setAccountOpen] = useState(null);
     const [openCreditDialog, setOpenCreditDialog] = useState(false);
@@ -131,7 +132,7 @@ function Dashboard({ supabase, userInfo=null }) {
                     <ListItemText primary="Add Credits" />
                 </ListItem>
             </List>
-            <CreditDialog open={openCreditDialog} handleClose={handleCreditCloseDialog} userInfo={userInfo} source={"navitem"} />
+            <CreditDialog open={openCreditDialog} handleClose={handleCreditCloseDialog} userInfo={userInfo} source={"navitem"} accessToken={accessToken} />
 
             <Divider />
 
@@ -278,7 +279,7 @@ function Dashboard({ supabase, userInfo=null }) {
                         </MenuItem>
                         ))}
 
-                        <CreditDialog open={openCreditDialog} handleClose={handleCreditCloseDialog} userInfo={userInfo} source={"dropdown"} />
+                        <CreditDialog open={openCreditDialog} handleClose={handleCreditCloseDialog} userInfo={userInfo} source={"dropdown"} accessToken={accessToken} />
 
                         <Divider sx={{ borderStyle: 'dashed', m: 0 }} />
 

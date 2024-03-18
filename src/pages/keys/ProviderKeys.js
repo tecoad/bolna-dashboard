@@ -133,7 +133,6 @@ const ProviderKeys = ({ accessToken, openCreateProviderKey, setOpenCreateProvide
               </Grid>
               <Grid item xs={6}>
                 <TextField
-                  autoFocus
                   margin="dense"
                   id="newProviderKeyValue"
                   label="Provider Key Value"
