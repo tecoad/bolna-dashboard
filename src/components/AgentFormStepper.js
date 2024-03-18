@@ -98,7 +98,7 @@ function AgentFormStepper({ initialData, isUpdate, agentId, accessToken }) {
         }
 
         Mixpanel.track('click_next', {
-          item: activeStep
+            item: activeStep
         });
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
@@ -147,28 +147,30 @@ function AgentFormStepper({ initialData, isUpdate, agentId, accessToken }) {
             ### Agent Description
          ${convertToText(prompts['assistantDescription'])} 
         `
-        if (prompts['exampleConversation'] != null && prompts['exampleConversation'] != undefined) {
+        if (prompts['exampleConversation'] != null && prompts['exampleConversation'] != undefined && prompts['exampleConversation'].length == 1 && prompts['exampleConversation']['children']) {
+            alert(JSON.stringify(prompts['exampleConversation']))
             base_prompt += `\n ### Steps
             ${convertToText(prompts['exampleConversation'])}`
         }
 
-        if (prompts['rules'] != null && prompts['rules'] != undefined) {
+        if (prompts['rules'] != null && prompts['rules'] != undefined && prompts['rules'].length != 0 && prompts['rules'].length == 1 && prompts['rules']['children']) {
             base_prompt += `\n ### Rules
             ${convertToText(prompts['rules'])}`
         }
 
-        if (prompts['objections'] != null && prompts['objections'] != undefined) {
+        if (prompts['objections'] != null && prompts['objections'] != undefined && prompts['objections'].length != 0 && prompts['objections'].length == 1 && prompts['objections']['children']) {
             base_prompt += `\n ### Objections
             ${convertToText(prompts['objections'])}`
         }
 
-        if (prompts['faqs'] != null && prompts['faqs'] != undefined) {
+        if (prompts['faqs'] != null && prompts['faqs'] != undefined && prompts['faqs'].length != 0 && prompts['faqs'].length == 1 && prompts['faqs']['children']) {
             base_prompt += `\n ### FAQs
             ${convertToText(prompts['faqs'])}`
         }
 
         base_prompt += `\n ### Note: \n 1. Just respond with one message at time. Always wait for user responses.`
 
+        console.log(`BASE PROMPT ${base_prompt}`)
         return base_prompt;
     }
 
