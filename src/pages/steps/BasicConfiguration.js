@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextField, FormControl, FormLabel, Select, MenuItem, InputLabel, Box, Tooltip, IconButton, Radio, RadioGroup, FormControlLabel, FormGroup } from '@mui/material';
+import { TextField, FormControl, FormLabel, Select, MenuItem, InputLabel, Box, Tooltip, IconButton, Radio, RadioGroup, FormControlLabel, FormGroup, Checkbox } from '@mui/material';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { renderTooltip } from '../../components/CustomTooltip';
 import leadQualificationJson from '../../data/templates/leadQualification.json';
@@ -58,6 +58,11 @@ function BasicConfiguration({ formData, onFormDataChange }) {
                 });
                 return
             }
+        } else if (event.target.name === 'optimizeLatency') {
+            onFormDataChange({
+                ...formData, basicConfig: { ...formData.basicConfig, [event.target.name]: event.target.checked }
+            });
+            return
         }
 
         onFormDataChange({
@@ -111,11 +116,11 @@ function BasicConfiguration({ formData, onFormDataChange }) {
                         label="Type of Assistant"
                         onChange={handleChange}
                     >
-                        <MenuItem value="IVR">IVR Type</MenuItem>
+                        <MenuItem value="IVR">Intent Classification (IVR)</MenuItem>
                         <MenuItem value="FreeFlowing">Free Flowing</MenuItem>
                     </Select>
                 </FormControl>
-                {renderTooltip('"Free flowing" mimics a natural conversation while "IVR" sticks to a pre-defined script.')}
+                {renderTooltip('"Free flowing" mimics a natural conversation while "Intent Classification" sticks to a pre-defined script.')}
             </Box>
 
             <Box sx={{ display: 'flex', alignItems: 'center', width: '50%', marginY: 1 }}>
@@ -141,6 +146,26 @@ function BasicConfiguration({ formData, onFormDataChange }) {
                 </FormControl>
                 {renderTooltip("Your prompt template will be built according to the agent’s primary task. You do not need to stick to this task")}
             </Box>
+
+            {formData.basicConfig.assistantType === 'FreeFlowing' && (
+            <Box sx={{ display: 'flex', alignItems: 'center', width: '50%', marginY: 1 }}>
+                <FormControl component="fieldset" fullWidth margin="normal">
+                    <FormGroup>
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    checked={formData.basicConfig.optimizeLatency}
+                                    onChange={handleChange}
+                                    name="optimizeLatency"
+                                />
+                            }
+                            label="Enable Latency Optimizations"
+                        />
+                    </FormGroup>
+                </FormControl>
+                {renderTooltip("Latency optimisation can bring near human like conversation but on an average it's 3X more expensive.")}
+            </Box>
+            )}
 
             <Box sx={{ display: 'flex', alignItems: 'center', width: '50%', marginY: 1 }}>
                 <FormControl component="fieldset" fullWidth margin="normal">

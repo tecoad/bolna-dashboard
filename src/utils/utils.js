@@ -4,7 +4,8 @@ export const CREATE_AGENT_FORM = {
     basicConfig: {
         assistantType: "FreeFlowing",
         assistantName: null,
-        assistantTask: null
+        assistantTask: null,
+        optimizeLatency: false
     },
     modelsConfig: {
         llmConfig: {
@@ -232,6 +233,7 @@ export const convertToCreateAgentPayload = (agentData) => {
         "tasks": [
             {
                 "task_type": "conversation",
+                "optimize_latency": agentData.basicConfig.optimizeLatency,
                 "tools_config": {
                     "llm_agent": {
                         "max_tokens": agentData.modelsConfig.llmConfig.maxTokens,
@@ -362,6 +364,7 @@ const getFollowupTasks = (followUpTasks) => {
 export const convertToCreateAgentForm = (payload) => {
     //console.log(`Agent payload ${JSON.stringify(payload)}`)
     let agentTasks = [...payload.tasks]
+    let optimizeLatency = agentTasks[0]?.optimize_latency
     const agentData = agentTasks.shift()
     const followupTasks = [...agentTasks]
     const llmAgent = agentData.tools_config?.llm_agent;
@@ -375,6 +378,7 @@ export const convertToCreateAgentForm = (payload) => {
             assistantType: llmAgent.agent_flow_type === "preprocessed" ? "IVR" : "FreeFlowing",
             assistantName: payload.agent_name,
             assistantTask: payload?.agent_type == undefined || payload?.agent_type == null || !agentTypes.includes(payload.agent_type) ? "Other" : payload.agent_type,
+            optimizeLatency: optimizeLatency,
             agentWelcomeMessage: payload.agent_welcome_message || AGENT_WELCOME_MESSAGE
         },
         modelsConfig: {
