@@ -9,7 +9,6 @@ import createApiInstance from '../../utils/api';
 import { CloudUpload } from '@mui/icons-material';
 
 
-
 function BatchCall({ agentId, accessToken, user }) {
     const [batches, setBatches] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
