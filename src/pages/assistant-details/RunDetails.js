@@ -6,7 +6,7 @@ import axios from 'axios';
 import ExecutionMetadata from './execution-details/ExecutionMetadata';
 import ExecutionLogs from './execution-details/ExecutionLogs';
 
-function RunDetails() {
+function RunDetails({ accessToken }) {
     const location = useLocation();
     const navigate = useNavigate();
     const runDetails = location.state?.runDetails;
@@ -15,7 +15,7 @@ function RunDetails() {
 
     const tabsData = [
         { name: 'Execution Metadata', component: <ExecutionMetadata executionDetails={runDetails} /> },
-        { name: 'Execution Logs', component: <ExecutionLogs /> },
+        { name: 'Execution Logs', component: <ExecutionLogs accessToken={accessToken} runId={runDetails.id} /> },
     ];
 
     return (

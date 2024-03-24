@@ -168,7 +168,7 @@ function App() {
               <Route path="account" element={<Account session={session} />} />
               <Route path="developer" element={<Keys accessToken={session?.access_token} />} />
               <Route path="agent-details" element={<AgentDetails accessToken={session?.access_token} />} />
-              <Route path="agent/run-details" element={<RunDetails session={session} />} />
+              <Route path="agent/run-details" element={<RunDetails accessToken={session?.access_token} />} />
               <Route path="agent/batch-details" element={<BatchDetails session={session} accessToken={session?.access_token} />} />
               <Route path="user/payment" element={<PaymentStatusPage />} />
             </Route>

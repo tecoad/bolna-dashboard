@@ -38,7 +38,7 @@ function ExecutionMetadata({ executionDetails }) {
             {/* Left Side */}
             <Box flex={1}>
                 {renderSection("Metadata", {
-                    "Run ID": executionDetails.range,
+                    "Run ID": executionDetails.id,
                     "Run Duration": `${executionDetails.conversation_time} seconds`,
                     "Run Date": new Date(executionDetails.createdAt).toLocaleDateString(),
                     "Total Credits Used": `${executionDetails.total_cost.toFixed(5)}`,

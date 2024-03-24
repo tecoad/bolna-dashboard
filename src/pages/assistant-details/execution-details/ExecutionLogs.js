@@ -1,29 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, Backdrop, CircularProgress } from '@mui/material';
 import JsonTable from '../../../components/Table';
+import createApiInstance from '../../../utils/api';
 
-function ExecutionLogs({ session }) {
-    const [logs, setAgents] = useState([]);
+
+function ExecutionLogs({ accessToken, runId }) {
+    const [executionLogs, setExecutionLogs] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+    console.log(accessToken);
+    console.log(runId);
+    const api = createApiInstance(accessToken);
 
-    // useEffect(() => {
-    //     const fetchExecutionLogs = async () => {
-    //         setIsLoading(true);
-    //         try {
-    //             const response = await axios.get(`${process.env.REACT_APP_FAST_API_BACKEND_URL}/get_execution_logs?user_id=1`);
-    //             setAgents(response.data.execution_run_logs);
-    //         } catch (error) {
-    //             console.error('Error fetching logs:', error);
-    //             setError(error);
-    //         } finally {
-    //             setIsLoading(false);
-    //         }
-    //     };
-
-    //     fetchExecutionLogs();
-    // }, [session]);
+    useEffect(() => {
+        const fetchExecutionLogs = async () => {
+            setIsLoading(true);
+            try {
+                let [agentId, executionId] = runId.split('#');
+                const response = await api.get(`/agent/${agentId}/execution/${executionId}/log`);
+                setExecutionLogs(response.data.data);
+            } catch (error) {
+                console.error('Error fetching logs:', error);
+                setError(error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        fetchExecutionLogs();
+    }, [accessToken]);
 
 
     if (error) {
@@ -31,12 +36,28 @@ function ExecutionLogs({ session }) {
     }
 
     return (
-        <Box sx={{ p: 2 }}>
-            <Typography variant='h4'> Execution Logs </Typography>
-            <Typography variant='body1'>
-                Coming soon
-            </Typography>
+        <Box>
+            <Typography textAlign={'left'} variant='h4' gutterBottom> Execution Logs </Typography >
+            {
+                isLoading ? (
+                    <Backdrop
+                        sx={{ color: '#fff', zIndex: theme => theme.zIndex.drawer + 1 }}
+                        open={isLoading}
+                    >
+                        <CircularProgress color="inherit" />
+                    </Backdrop>
 
+                ) : (
+                    <Box>
+                        <JsonTable
+                        sx={{ width: '70%' }}
+                        jsonData={executionLogs}
+                        columnsToShow={["Time", "Data", "Direction", "Component", "Model"]}
+                        headersDisplayedAs={["Timestamp", "Data", "Direction", "Component", "Model"]}
+                        />
+                    </Box>
+                )
+            }
         </Box>
     );
 }

@@ -11,6 +11,7 @@ const ProviderKeys = ({ accessToken, openCreateProviderKey, setOpenCreateProvide
   const [newProviderKeyValue, setNewProviderKeyValue] = useState('');
   const [apiSuccess, setApiSuccess] = useState(false);
   const [toRefreshAfterDelete, setToRefreshAfterDelete] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const api = createApiInstance(accessToken);
 
 
@@ -18,6 +19,7 @@ const ProviderKeys = ({ accessToken, openCreateProviderKey, setOpenCreateProvide
     setOpenCreateProviderKey(false);
     setNewProviderKeyName('');
     setNewProviderKeyValue('');
+    setErrorMessage('');
   };
 
   const handleCreateProviderKey = async () => {
@@ -27,9 +29,13 @@ const ProviderKeys = ({ accessToken, openCreateProviderKey, setOpenCreateProvide
         provider_value: newProviderKeyValue,
       };
       const response = await api.post('/providers', body);
-      setApiSuccess(true);
-      handleCloseCreateProviderKey();
+      if (response.status === 200) {
+        setApiSuccess(true);
+        handleCloseCreateProviderKey();
+        setErrorMessage('');
+      }
     } catch (error) {
+      setErrorMessage(error?.response?.data?.message);
       console.error('Error adding Provider:', error);
     }
   };
@@ -144,6 +150,13 @@ const ProviderKeys = ({ accessToken, openCreateProviderKey, setOpenCreateProvide
                 />
               </Grid>
             </Grid>
+
+          {errorMessage && (
+            <DialogContentText style={{ color: 'red' }}>
+              {errorMessage}
+            </DialogContentText>
+          )}
+
           </DialogContent>
           <DialogActions>
             <Button onClick={handleCloseCreateProviderKey} color="secondary">
