@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { TextField, FormControl, FormLabel, Select, MenuItem, InputLabel, Box, Tooltip, IconButton, Radio, RadioGroup, FormControlLabel, FormGroup, Checkbox } from '@mui/material';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { renderTooltip } from '../../components/CustomTooltip';
@@ -35,6 +35,7 @@ function getPrefilledTemplate(option) {
 }
 function BasicConfiguration({ formData, onFormDataChange }) {
     //console.log(`INitial form data ${JSON.stringify(formData)}`)
+
     const handleChange = (event) => {
         //console.log(`NAME ${event.target.name}`);
         if (event.target.name === 'assistantTask') {
@@ -88,6 +89,15 @@ function BasicConfiguration({ formData, onFormDataChange }) {
         });
     };
 
+
+    useEffect(() => {
+        handleChange({"target": {"name": "assistantTask", "value": "Lead Qualification"}})
+        // Invoke handleChange with the default value when the component mounts
+        //onFormDataChange({
+        //    ...formData, basicConfig: { ...formData.basicConfig, ["assistantTask"]: "Lead Qualification" }, rulesConfig: { ...formData.rulesConfig, prompts: { ...getPrefilledTemplate("Lead Qualification") } }
+        //});
+    }, []); // Empty dependency array ensures this effect runs only once after the initial render
+
     return (
         <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
 
@@ -130,7 +140,7 @@ function BasicConfiguration({ formData, onFormDataChange }) {
                         labelId="task-label"
                         id="task-select"
                         name="assistantTask"
-                        value={formData.basicConfig.assistantTask || ""}
+                        value={formData.basicConfig.assistantTask || "Lead Qualification"}
                         label="Task for Assistant"
                         onChange={handleChange}
                     >

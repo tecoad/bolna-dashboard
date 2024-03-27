@@ -25,7 +25,7 @@ function VoiceLab({ setVoices, voices, defaultValue, accessToken }) {
                 text: text,
                 provider: selectedVoice.provider
             }
-            console.log(`selectedVoice ${JSON.stringify(selectedVoice)}`)
+            //console.log(`selectedVoice ${JSON.stringify(selectedVoice)}`)
             if (selectedVoice.provider == "polly") {
                 payload.provider_config = {
                     language: selectedVoice.languageCode,
@@ -107,7 +107,7 @@ function VoiceLab({ setVoices, voices, defaultValue, accessToken }) {
                         getOptionLabel={getVoiceLabel}
                         filterOptions={(options, { inputValue }) => {
                             return options.filter(option => {
-                                console.log(JSON.stringify(option))
+                                //console.log(JSON.stringify(option))
                                 return (
                                     option?.name.toLowerCase().includes(inputValue.toLowerCase()) ||
                                     option?.languageCode.toLowerCase().includes(inputValue.toLowerCase()) ||

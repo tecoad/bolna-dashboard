@@ -27,7 +27,6 @@ function ModelSettings({ formData, onFormDataChange, llmModels, voices, setVoice
     useEffect(() => {
         if (formData.basicConfig.assistantType == "IVR") {
             let filteredLLMModels = llmModels.filter(model => model.json_mode == "Yes");
-            //console.log(`Filtered LLM Model = ${JSON.stringify(filteredLLMModels)}`)
             setAvailableLLMModels([...filteredLLMModels]);
         }
     }, [formData])
