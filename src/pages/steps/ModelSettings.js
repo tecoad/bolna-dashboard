@@ -64,7 +64,7 @@ function ModelSettings({ formData, onFormDataChange, llmModels, voices, setVoice
             val: val
         });
 
-        //console.log(`Name ${key} Value ${val}`)
+        console.log(`Name ${key} Value ${val}`)
 
         onFormDataChange({
             ...formData,

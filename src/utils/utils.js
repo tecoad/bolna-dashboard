@@ -25,7 +25,7 @@ export const CREATE_AGENT_FORM = {
         },
         ttsConfig: {
             voice: '',
-            bufferSize: '40',
+            bufferSize: '100',
             streaming: true
         }
     },

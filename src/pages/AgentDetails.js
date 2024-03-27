@@ -64,7 +64,7 @@ function AgentDetails({ accessToken }) {
                 }
 
                 // Log the updated formData
-                console.log(`Updated formData ${JSON.stringify(newFormData)}`);
+                //console.log(`Updated formData ${JSON.stringify(newFormData)}`);
 
             } catch (error) {
                 console.error('Error fetching prompt data:', error);
