@@ -91,12 +91,8 @@ function BasicConfiguration({ formData, onFormDataChange }) {
 
 
     useEffect(() => {
-        handleChange({"target": {"name": "assistantTask", "value": "Lead Qualification"}})
-        // Invoke handleChange with the default value when the component mounts
-        //onFormDataChange({
-        //    ...formData, basicConfig: { ...formData.basicConfig, ["assistantTask"]: "Lead Qualification" }, rulesConfig: { ...formData.rulesConfig, prompts: { ...getPrefilledTemplate("Lead Qualification") } }
-        //});
-    }, []); // Empty dependency array ensures this effect runs only once after the initial render
+        handleChange({"target": {"name": "assistantTask", "value": "Lead Qualification"}});
+    }, []);
 
     return (
         <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
