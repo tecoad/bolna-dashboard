@@ -91,7 +91,9 @@ function BasicConfiguration({ formData, onFormDataChange }) {
 
 
     useEffect(() => {
-        handleChange({"target": {"name": "assistantTask", "value": "Lead Qualification"}});
+        if (!formData.basicConfig.assistantTask) {
+            handleChange({"target": {"name": "assistantTask", "value": "Lead Qualification"}});
+        }
     }, []);
 
     return (
