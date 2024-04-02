@@ -155,7 +155,6 @@ function BasicConfiguration({ formData, onFormDataChange }) {
                 {renderTooltip("Your prompt template will be built according to the agent’s primary task. You do not need to stick to this task")}
             </Box>
 
-            {formData.basicConfig.assistantType === 'FreeFlowing' && (
             <Box sx={{ display: 'flex', alignItems: 'center', width: '50%', marginY: 1 }}>
                 <FormControl component="fieldset" fullWidth margin="normal">
                     <FormGroup>
@@ -173,7 +172,6 @@ function BasicConfiguration({ formData, onFormDataChange }) {
                 </FormControl>
                 {renderTooltip("Latency optimisation can bring near human like conversation but on an average it's 3X more expensive.")}
             </Box>
-            )}
 
             <Box sx={{ display: 'flex', alignItems: 'center', width: '50%', marginY: 1 }}>
                 <FormControl component="fieldset" fullWidth margin="normal">
